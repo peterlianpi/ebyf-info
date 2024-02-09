@@ -2,15 +2,10 @@ import { UserInfo } from "@/app/models/UserInfo";
 import { mongoose } from "mongoose";
 
 export async function GET() {
+  mongoose.connect(process.env.MONGO_URL);
+
   try {
-    // Conect to the MongoDB database
-    await mongoose.connect(process.env.MONGO_URL);
-
-    // Fetch the user information from the database
     const userInfo = await UserInfo.find().lean();
-
-    // Close the user information from the database
-    await mongoose.connection.close();
 
     return Response.json(userInfo);
   } catch (error) {

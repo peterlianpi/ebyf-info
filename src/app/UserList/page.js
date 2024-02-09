@@ -1,10 +1,16 @@
 "use client";
 import React from "react";
-import { useUsers } from "@/components/UsersContext";
+
 import UserItem from "@/components/UserItem";
+import { useUsers } from "@/components/useUsers";
 
 export default function UserListPage() {
-  const users = useUsers();
+  const { users, usersLoading } = useUsers();
+
+  if (usersLoading) {
+    return "Loading user info...";
+  }
+  console.log(users);
 
   return (
     <div
@@ -12,7 +18,7 @@ export default function UserListPage() {
     flex-col"
     >
       <p className="text-3xl font-extrabold">Members</p>
-      {users?.map((user) => (
+      {users.map((user) => (
         <div key={user._id} className="">
           <UserItem user={user} />
         </div>
