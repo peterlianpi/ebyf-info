@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React from "react";
 import { useUsers } from "@/components/UsersContext";
 import UserItem from "@/components/UserItem";
 
@@ -13,7 +12,7 @@ export default function UserListPage() {
     flex-col"
     >
       <p className="text-3xl font-extrabold">Members</p>
-      {users.map((user) => (
+      {users?.map((user) => (
         <div key={user._id} className="">
           <UserItem user={user} />
         </div>
