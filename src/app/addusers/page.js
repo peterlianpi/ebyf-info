@@ -29,7 +29,7 @@ const AddUserInfoForm = () => {
 
   useEffect(() => {
     if (image.length === 0) {
-      setImage("/google.png");
+      setImage("/profile.png");
     }
   }, [image]);
 

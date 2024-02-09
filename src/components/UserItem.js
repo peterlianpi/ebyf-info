@@ -3,9 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { useUsers } from "./UsersContext";
+import Phone from "./icons/Phone";
 
 export default function UserItem() {
-  const {users} = useUsers();
+  const users = useUsers();
 
   console.log("Users :", users);
   function handleCall(phone) {
@@ -13,20 +14,33 @@ export default function UserItem() {
   }
 
   return (
-    <div className="flex max-w-md gap-2 mx-auto">
+    <div
+      className="flex max-w-md gap-2 mx-auto
+    flex-col"
+    >
+      <p className="text-3xl font-extrabold">Members</p>
       {users.map((user) => (
-        <div key={user._id} className="">
-          <div className="">
-            <Image src={user.image} alt="alt" width={250} height={250} />
+        <div
+          key={user._id}
+          className="flex items-center py-4 justify-start px-2"
+        >
+          <Image
+            className="rounded-full w-[20%]"
+            src={user.image}
+            alt="alt"
+            width={75}
+            height={75}
+          />
+
+          <div className="ml-2 w-[65%]">
+            <div className="font-semibold text-xl ">{user.name}</div>
+            <div className="text-gray-600">{user.role}</div>
           </div>
-          <div className="">Name :{user.name}</div>
           <div>
-            <p>Phone Number: {user.phone} </p>
-            <button onClick={() => handleCall(user.phone)}>Call</button>
+            <div onClick={() => handleCall(user.phone)}>
+              <Phone />
+            </div>
           </div>
-          <div className="">Role : {user.role}</div>
-          <div className="">Veng : {user.veng}</div>
-          <div className="">Facebook Profile : {user.fb}</div>
         </div>
       ))}
     </div>
