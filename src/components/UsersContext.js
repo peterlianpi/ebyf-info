@@ -24,7 +24,7 @@ export const UsersProvider = ({ children }) => {
     fetchUsers();
 
     // Set up polling to fetch users every 5 seconds (adjust as needed)
-    const intervalId = setInterval(fetchUsers, 5000);
+    const intervalId = setInterval(fetchUsers, 50000);
     // Clean up interval on component unmount
     return () => clearInterval(intervalId);
   }, []);

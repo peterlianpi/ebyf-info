@@ -10,6 +10,7 @@ export async function GET() {
     const userInfo = await UserInfo.find().lean();
 
     // Close the user information from the database
+    await mongoose.connection.close();
 
     return Response.json(userInfo);
   } catch (error) {
