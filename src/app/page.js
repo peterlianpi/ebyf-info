@@ -1,11 +1,11 @@
-import UserItem from "@/components/UserItem";
 import { UsersProvider } from "@/components/UsersContext";
+import UserListPage from "./UserList/page";
 
 export default function Home() {
   return (
     <>
       <UsersProvider>
-        <UserItem />
+        <UserListPage />
       </UsersProvider>
     </>
   );
