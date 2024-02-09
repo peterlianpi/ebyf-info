@@ -3,7 +3,7 @@ import "./globals.css";
 import AppProvider from "@/components/AppContext";
 import Header from "@/components/layout/Header";
 import { Toaster } from "react-hot-toast";
-
+import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -25,6 +25,7 @@ export default function RootLayout({ children }) {
             </footer>
           </AppProvider>
         </main>
+        <Analytics />
       </body>
     </html>
   );
