@@ -2,9 +2,8 @@ import { UserInfo } from "@/app/models/UserInfo";
 import { mongoose } from "mongoose";
 
 export async function GET() {
-  mongoose.connect(process.env.MONGO_URL);
-
   try {
+    await mongoose.connect(process.env.MONGO_URL);
     const userInfo = await UserInfo.find().lean();
 
     return Response.json(userInfo);
