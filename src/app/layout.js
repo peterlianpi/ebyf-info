@@ -3,7 +3,6 @@ import "./globals.css";
 import AppProvider from "@/components/AppContext";
 import Header from "@/components/layout/Header";
 import { Toaster } from "react-hot-toast";
-import { UsersProvider } from "@/components/UsersContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

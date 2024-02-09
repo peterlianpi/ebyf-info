@@ -7,7 +7,6 @@ export async function GET() {
   try {
     const userInfo = await UserInfo.find().lean();
 
-    console.log(userInfo);
     return Response.json(userInfo);
   } catch (error) {
     console.error("Error fetching users :", error);
