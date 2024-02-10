@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { User } from "@/app/models/User";
 import { UserInfo } from "@/app/models/UserInfo";
+import { mongooseConnect } from "@/app/libs/mongoose";
 
 export async function PUT(req) {
-  mongoose.connect(process.env.MONGO_URL);
+  await mongooseConnect();
   const data = await req.json();
-  const { name, image, ...otherUserInfo } = data;
+  const { name, image } = data;
 
   const session = await getServerSession(authOptions);
   const email = session?.user?.email;
@@ -22,7 +22,7 @@ export async function PUT(req) {
 }
 
 export async function GET() {
-  mongoose.connect(process.env.MONGO_URL);
+  await mongooseConnect();
   const session = await getServerSession(authOptions);
   const email = session?.user?.email;
   if (!email) {

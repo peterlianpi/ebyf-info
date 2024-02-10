@@ -1,8 +1,8 @@
 import { User } from "@/app/models/User";
-import mongoose from "mongoose";
+import { mongooseConnect } from "@/app/libs/mongoose";
 
 export async function POST(req) {
-  mongoose.connect(process.env.MONGO_URL);
+  await mongooseConnect();
   const body = await req.json();
   const pass = body.password;
   if (!pass?.length || pass.length < 5) {

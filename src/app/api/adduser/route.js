@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import { mongooseConnect } from "@/app/libs/mongoose";
 import { UserInfo } from "@/app/models/UserInfo";
 
 export async function POST(req) {
   try {
-    mongoose.connect(process.env.MONGO_URL);
+    await mongooseConnect();
 
     // Extract user information from the request body
     const data = await req.json();
