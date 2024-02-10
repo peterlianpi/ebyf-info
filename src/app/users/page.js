@@ -7,20 +7,46 @@ import Image from "next/image";
 import Edit from "@/components/icons/Edit";
 import Delete from "@/components/icons/Delete";
 import { toast } from "react-hot-toast";
+import { useUsers } from "@/components/useUsers";
+import Refresh from "@/components/icons/Refresh";
+import { useSession } from "next-auth/react";
 
 export default function UsersPage() {
   const { data, loading } = useProfile();
-  const [users, setUsers] = useState();
+
+  const { users, usersLoading, fetchUsers } = useUsers();
+  const session = useSession();
+  const [deleted, setDeleted] = useState(false);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { status } = session;
 
   useEffect(() => {
-    fetch("/api/users").then((response) => {
-      response.json().then((users) => {
-        setUsers(users);
+    if (status === "authenticated") {
+      fetch("/api/profile").then((response) => {
+        response.json().then((data) => {
+          setIsAdmin(data.admin);
+        });
       });
-    });
+    }
+  }, [session, status]);
+
+  const handleRefresh = () => {
+    fetchUsers();
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
-  if (loading) {
+  useEffect(() => {
+    if (deleted) {
+      fetchUsers();
+      setDeleted(false);
+    }
+  }, [deleted, fetchUsers]);
+
+  if (loading || usersLoading) {
     return "Loading user info";
   }
   if (!data.admin) {
@@ -28,7 +54,6 @@ export default function UsersPage() {
   }
 
   async function handleDelete(user) {
-    console.log("User to delete : ", user);
     const id = user._id;
     const name = user.name;
     const savingPromise = new Promise(async (resolve, reject) => {
@@ -39,7 +64,8 @@ export default function UsersPage() {
       });
 
       if (response.ok) {
-        setUsers(users.filter((u) => u._id !== id));
+        // setUsers(users.filter((u) => u._id !== id));
+        setDeleted(true);
         resolve();
       } else reject();
     });
@@ -52,7 +78,16 @@ export default function UsersPage() {
 
   return (
     <section className="mt-8 max-w-md mx-auto">
-      <UserTabs isAdmin={true} />
+      <UserTabs isAdmin={isAdmin} />
+      <div className="flex items-center justify-start">
+        <p className="text-3xl font-extrabold w-[80%]">All Members</p>
+        <button
+          className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-[60px] w-[60px] "
+          onClick={handleRefresh}
+        >
+          <Refresh />
+        </button>
+      </div>
       <div className="mt-8">
         {users?.length > 0 &&
           users.map((user) => (

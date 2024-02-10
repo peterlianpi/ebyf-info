@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 
 import UserTabs from "@/components/layout/UserTabs";
 import UserForm from "@/components/layout/UserForm";
-import { useUsers } from "@/components/useUsers";
 
 function ProfilePage() {
   const session = useSession();
@@ -34,7 +33,7 @@ function ProfilePage() {
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/profile", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Context-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (response.ok) resolve();
@@ -47,7 +46,7 @@ function ProfilePage() {
     });
   }
 
-  if (status === "loading" && !profileFetched) {
+  if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
   if (status === "unauthenticated") {

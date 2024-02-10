@@ -10,7 +10,7 @@ const AddUserInfoForm = () => {
   const session = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
   const { status } = session;
-  const { userAdded, setUserAdded, fetchUsers } = useUsers();
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -23,8 +23,9 @@ const AddUserInfoForm = () => {
   }, [session, status]);
 
   async function handleProfileInfoUpdate(ev, data) {
+    setName(data?.name);
     ev.preventDefault();
-    setUserAdded(false);
+
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/users", {
         method: "POST",
@@ -32,7 +33,6 @@ const AddUserInfoForm = () => {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        setUserAdded(true);
         resolve();
       } else {
         const data = await response.json();
@@ -41,7 +41,7 @@ const AddUserInfoForm = () => {
     });
     await toast.promise(savingPromise, {
       loading: "Saving...",
-      success: "Profile saved!",
+      success: `${name} profile saved!`,
       error: (error) => {
         return typeof error === "string" ? error : "Error";
       },

@@ -3,13 +3,14 @@
 import { useProfile } from "@/components/UseProfile";
 import UserForm from "@/components/layout/UserForm";
 import UserTabs from "@/components/layout/UserTabs";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 export default function EditUserPage() {
   const { loading, data } = useProfile();
   const [user, setUser] = useState(null);
+  const [saved, setSaved] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -31,14 +32,21 @@ export default function EditUserPage() {
         body: JSON.stringify({ ...data, _id: id }),
       });
 
-      if (response.ok) resolve();
-      else reject();
+      if (response.ok) {
+        resolve();
+        setSaved(true);
+      } else reject();
     });
     await toast.promise(savingPromise, {
       loading: "Saving...",
       success: "Profile saved!",
       error: "Error",
     });
+  }
+
+  if (saved) {
+    setSaved(false);
+    return redirect("/users");
   }
 
   if (loading) {

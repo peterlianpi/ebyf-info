@@ -9,17 +9,31 @@ export default function UserForm({ user, onSave }) {
   const inputFileRef = useRef(null);
   const [userName, setUserName] = useState(user?.name || "");
   const [image, setImage] = useState(user?.image || "");
+  const [email, setEmail] = useState(user?.email || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [role, setRole] = useState(user?.role || "");
   const [veng, setVeng] = useState(user?.veng || "");
   const [fb, setFb] = useState(user?.fb || "");
   const path = usePathname();
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     if (image.length === 0) {
       setImage("/profile.png");
     }
   }, [image]);
+
+  if (saved && path === "/addusers") {
+    // Reset form fields
+    setUserName("");
+    setEmail("");
+    setImage("");
+    setPhone("");
+    setRole("");
+    setVeng("");
+    setFb("");
+    setSaved(false);
+  }
 
   async function handleFileChange(ev) {
     ev.preventDefault();
@@ -79,16 +93,18 @@ export default function UserForm({ user, onSave }) {
         </div>
         <form
           className="grow"
-          onSubmit={(ev) =>
+          onSubmit={(ev) => {
             onSave(ev, {
               name: userName,
               image,
               phone,
+              email,
               role,
               veng,
               fb,
-            })
-          }
+            });
+            setSaved(true);
+          }}
         >
           <label>Full name</label>
           <input
@@ -102,8 +118,9 @@ export default function UserForm({ user, onSave }) {
             type="email"
             disabled={path === "/profile" ? true : ""}
             placeholder="Email address"
-            value={user?.email}
+            value={email}
             className=""
+            onChange={(ev) => setEmail(ev.target.value)}
           />
           <label>Phone</label>
           <input
