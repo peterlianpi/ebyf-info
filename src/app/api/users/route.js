@@ -60,11 +60,12 @@ export async function PUT(req) {
 // Delete function to delete user information
 export async function DELETE(req) {
   try {
-    if (req.query?.id) {
-      await UserInfo.deleteOne({ _id: req.query?.id });
-      return Response.json(true);
-    }
+    const id = await req.json();
+    await connectToDatabase();
+    await UserInfo.deleteOne({ _id: id });
+
+    return Response.json(true);
   } catch (error) {
-    return handleError(error, "Error updating user information");
+    return handleError(error, "Error deleting user information");
   }
 }

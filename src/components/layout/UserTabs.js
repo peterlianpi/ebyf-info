@@ -22,7 +22,7 @@ function UserTabs({ isAdmin }) {
               className={path === "/addusers" ? "active" : ""}
               href={"/addusers"}
             >
-              Add Users Info
+              Add Users
             </Link>
             <Link
               className={path.includes("/users") ? "active" : ""}

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useUsers() {
   const [users, setUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState(true);
+  const [userAdded, setUserAdded] = useState(false);
 
   const fetchUsers = async () => {
     setUsersLoading(true);
@@ -26,5 +27,5 @@ export function useUsers() {
     }
   };
 
-  return { usersLoading, users, fetchUsers };
+  return { usersLoading, users, fetchUsers, userAdded, setUserAdded };
 }

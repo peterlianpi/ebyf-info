@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 
-export default function UserForm({ user, onSave, onUpload }) {
+export default function UserForm({ user, onSave }) {
   const inputFileRef = useRef(null);
   const [userName, setUserName] = useState(user?.name || "");
   const [image, setImage] = useState(user?.image || "");
@@ -12,6 +13,13 @@ export default function UserForm({ user, onSave, onUpload }) {
   const [role, setRole] = useState(user?.role || "");
   const [veng, setVeng] = useState(user?.veng || "");
   const [fb, setFb] = useState(user?.fb || "");
+  const path = usePathname();
+
+  useEffect(() => {
+    if (image.length === 0) {
+      setImage("/profile.png");
+    }
+  }, [image]);
 
   async function handleFileChange(ev) {
     ev.preventDefault();
@@ -82,17 +90,18 @@ export default function UserForm({ user, onSave, onUpload }) {
             })
           }
         >
-          <label>First and last name</label>
+          <label>Full name</label>
           <input
             type="text"
             value={userName}
             onChange={(ev) => setUserName(ev.target.value)}
-            placeholder="First and last name"
+            placeholder="Full name"
           />
           <label>Email</label>
           <input
             type="email"
-            disabled={true}
+            disabled={path === "/profile" ? true : ""}
+            placeholder="Email address"
             value={user?.email}
             className=""
           />

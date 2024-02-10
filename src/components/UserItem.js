@@ -18,9 +18,9 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center py-4 justify-start px-2">
+    <section className="flex items-center  justify-start px-2 h-[75px] my-4">
       <Image
-        className="rounded-full w-[20%]"
+        className="rounded-full h-[65px] w-[65px] "
         src={user.image}
         alt="alt"
         width={75}
