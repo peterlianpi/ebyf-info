@@ -12,6 +12,7 @@ export default function Header() {
   if (userName && userName.includes(" ")) {
     userName = userName.split(" ")[0];
   }
+  console.log("Header Session : ", session);
 
   return (
     <header className="flex items-center justify-between mb-4">

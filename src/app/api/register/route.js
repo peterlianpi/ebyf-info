@@ -1,5 +1,6 @@
 import { User } from "@/app/models/User";
 import { mongooseConnect } from "@/app/libs/mongoose";
+import bcrypt from "bcrypt";
 
 export async function POST(req) {
   await mongooseConnect();
