@@ -19,8 +19,11 @@ export default function UserListPage() {
       });
   };
 
+  // Ensure that this function is only executed in the client-side
   useEffect(() => {
-    fetchUsers();
+    if (typeof window !== "undefined") {
+      fetchUsers();
+    }
   }, []);
 
   if (usersLoading) {
