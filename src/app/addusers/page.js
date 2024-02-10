@@ -37,7 +37,7 @@ const AddUserInfoForm = () => {
     ev.preventDefault();
 
     const savingPromise = new Promise(async (resolve, reject) => {
-      const response = await fetch("/api/adduser", {
+      const response = await fetch("/api/users", {
         method: "POST",
         headers: { "Context-Type": "application/json" },
         body: JSON.stringify({
