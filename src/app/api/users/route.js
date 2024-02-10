@@ -1,5 +1,6 @@
 import { mongooseConnect } from "@/app/libs/mongoose";
 import { UserInfo } from "@/app/models/UserInfo";
+export const dynamic = "force-dynamic"; // defaults to auto
 
 export async function GET() {
   try {
