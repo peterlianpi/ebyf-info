@@ -4,9 +4,8 @@ import { UserInfo } from "@/app/models/UserInfo";
 export async function GET() {
   try {
     await mongooseConnect();
-    const userInfo = await UserInfo.find().lean();
 
-    return Response.json(userInfo);
+    return Response.json(await UserInfo.find().lean());
   } catch (error) {
     console.error("Error fetching users :", error);
     return Response.json({ error: "Failed to fetch users" }, { status: 500 });

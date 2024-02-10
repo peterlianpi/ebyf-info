@@ -10,7 +10,9 @@ export function useUsers() {
     setUsersLoading(true);
 
     try {
-      const response = await fetch("/api/users");
+      const response = await fetch("/api/users", {
+        method: "GET",
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
