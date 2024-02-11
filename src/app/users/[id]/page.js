@@ -56,7 +56,7 @@ export default function EditUserPage() {
     return "Not an admin";
   }
   return (
-    <section className="mt-8 max-w-2xl">
+    <section className="mt-8 max-w-md mx-auto">
       <UserTabs isAdmin={true} />
       <div className="mt-8">
         <UserForm user={user} onSave={handleSaveButtonClick} />

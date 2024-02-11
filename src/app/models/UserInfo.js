@@ -6,6 +6,7 @@ const UserInfoSchema = new Schema(
     image: { type: String },
     name: { type: String },
     phone: { type: String },
+    position: { type: String },
     role: { type: String },
     veng: { type: String },
     fb: { type: String },

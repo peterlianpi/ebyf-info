@@ -56,13 +56,15 @@ function RegisterPage() {
           placeholder="Full name"
           value={name}
           onChange={(ev) => setName(ev.target.value)}
+          required
           disabled={creatingUser}
         />
         <input
           type="text"
-          placeholder="email"
+          placeholder="username or email"
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
+          required
           disabled={creatingUser}
         />
         <input
@@ -70,6 +72,7 @@ function RegisterPage() {
           placeholder="password"
           value={password}
           onChange={(ev) => setPassword(ev.target.value)}
+          required
           disabled={creatingUser}
         />
         <button type="submit" disabled={creatingUser}>

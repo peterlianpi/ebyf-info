@@ -10,6 +10,12 @@ function UserTabs({ isAdmin }) {
         <Link className={path === "/profile" ? "active" : ""} href={"/profile"}>
           Profile
         </Link>
+        <Link
+          className={path === "/addusers" ? "active" : ""}
+          href={"/addusers"}
+        >
+          Add Users
+        </Link>
         {isAdmin && (
           <>
             <Link
@@ -18,12 +24,7 @@ function UserTabs({ isAdmin }) {
             >
               Categories
             </Link>
-            <Link
-              className={path === "/addusers" ? "active" : ""}
-              href={"/addusers"}
-            >
-              Add Users
-            </Link>
+
             <Link
               className={path.includes("/users") ? "active" : ""}
               href={"/users"}

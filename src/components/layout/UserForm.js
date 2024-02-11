@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useProfile } from "../UseProfile";
 
 export default function UserForm({ user, onSave }) {
   const inputFileRef = useRef(null);
@@ -12,10 +13,12 @@ export default function UserForm({ user, onSave }) {
   const [email, setEmail] = useState(user?.email || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [role, setRole] = useState(user?.role || "");
+  const [position, setPosition] = useState(user?.position || "");
   const [veng, setVeng] = useState(user?.veng || "");
   const [fb, setFb] = useState(user?.fb || "");
   const path = usePathname();
   const [saved, setSaved] = useState(false);
+  const { isAdmin } = useProfile();
 
   useEffect(() => {
     if (image.length === 0) {
@@ -30,6 +33,7 @@ export default function UserForm({ user, onSave }) {
     setImage("");
     setPhone("");
     setRole("");
+    setPosition("");
     setVeng("");
     setFb("");
     setSaved(false);
@@ -65,9 +69,9 @@ export default function UserForm({ user, onSave }) {
 
   return (
     <div>
-      <div className="flex gap-2">
-        <div>
-          <div className="relative p-2 rounded-lg max-w-[120px]">
+      <div className="flex flex-col max-w-md gap-2">
+        <div className=" w-[250px]  mx-auto">
+          <div className="relative p-2 rounded-lg ">
             {image && (
               <Image
                 className="w-full h-full mb-1 rounded-lg"
@@ -100,6 +104,7 @@ export default function UserForm({ user, onSave }) {
               phone,
               email,
               role,
+              position,
               veng,
               fb,
             });
@@ -112,6 +117,7 @@ export default function UserForm({ user, onSave }) {
             value={userName}
             onChange={(ev) => setUserName(ev.target.value)}
             placeholder="Full name"
+            required
           />
           <label>Email</label>
           <input
@@ -128,6 +134,7 @@ export default function UserForm({ user, onSave }) {
             placeholder="Phone number"
             value={phone}
             onChange={(ev) => setPhone(ev.target.value)}
+            required
           />
           <label>Role</label>
           <input
@@ -135,6 +142,18 @@ export default function UserForm({ user, onSave }) {
             placeholder="Role"
             value={role}
             onChange={(ev) => setRole(ev.target.value)}
+          />
+          <label>Position</label>
+          <input
+            type="text"
+            placeholder="Position"
+            disabled={
+              (path === "/profile" || path === "/addusers") && !isAdmin
+                ? true
+                : ""
+            }
+            value={position}
+            onChange={(ev) => setPosition(ev.target.value)}
           />
           <label>Veng</label>
           <input
