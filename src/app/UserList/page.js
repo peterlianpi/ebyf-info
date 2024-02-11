@@ -33,6 +33,7 @@ export default function UserListPage() {
             <button
               className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-[60px] w-[60px] "
               onClick={handleRefresh}
+              aria-label="Refresh"
             >
               <Refresh />
             </button>

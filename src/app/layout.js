@@ -5,11 +5,19 @@ import Header from "@/components/layout/Header";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Metadata, Viewport } from "next";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "EBYF Contact Info",
-  description: "EBYF Contact Info",
+  manifest: "/manifest.json",
+  title: "EBYF Contacts Info",
+  description:
+    "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.",
+};
+
+export const viewport = {
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({ children }) {

@@ -12,7 +12,6 @@ export default function Header() {
   if (userName && userName.includes(" ")) {
     userName = userName.split(" ")[0];
   }
-  
 
   return (
     <header className="flex items-center justify-between mb-4">
