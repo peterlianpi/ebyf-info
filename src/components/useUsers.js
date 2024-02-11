@@ -13,12 +13,16 @@ export function useUsers() {
     try {
       const response = await fetch("/api/users", {
         method: "GET",
+        headers: {
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
+        },
       });
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
       const users = await response.json();
       setUsers(users);
+      setUserAdded(true);
       setUsersLoading(false);
     } catch (error) {
       console.error("Error fetching users : ", error);
@@ -27,5 +31,12 @@ export function useUsers() {
     }
   };
 
-  return { usersLoading, users, fetchUsers, userAdded, setUserAdded };
+  return {
+    usersLoading,
+    users,
+    fetchUsers,
+    userAdded,
+    setUserAdded,
+    setUsersLoading,
+  };
 }

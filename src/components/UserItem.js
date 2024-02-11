@@ -50,7 +50,7 @@ export default function UserItem({ user }) {
       </div>
       {/* {Modal to display user details} */}
       {selectedUser && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 max-w-md">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
           <div className="bg-white p-4 rounded-lg w-[320px]">
             <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
             {selectedUser.email && (

@@ -3,23 +3,20 @@
 import { useProfile } from "@/components/UseProfile";
 import UserForm from "@/components/layout/UserForm";
 import UserTabs from "@/components/layout/UserTabs";
+import { useUsers } from "@/components/useUsers";
 import { redirect, useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 export default function EditUserPage() {
-  const { loading, data } = useProfile();
-  const [user, setUser] = useState(null);
-  const [saved, setSaved] = useState(false);
+  const { loading, isAdmin } = useProfile();
+  const { users, usersLoading, fetchUsers } = useUsers();
   const { id } = useParams();
+  const user = users.find((u) => u._id === id);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    fetch("/api/users").then((res) =>
-      res.json().then((users) => {
-        const user = users.find((u) => u._id === id);
-        setUser(user);
-      })
-    );
+    fetchUsers();
   }, []);
 
   async function handleSaveButtonClick(ev, data) {
@@ -49,15 +46,15 @@ export default function EditUserPage() {
     return redirect("/users");
   }
 
-  if (loading) {
+  if (loading || usersLoading) {
     return "Loading user profile";
   }
-  if (!data.admin) {
+  if (!isAdmin) {
     return "Not an admin";
   }
   return (
     <section className="mt-8 max-w-md mx-auto">
-      <UserTabs isAdmin={true} />
+      <UserTabs isAdmin={isAdmin} />
       <div className="mt-8">
         <UserForm user={user} onSave={handleSaveButtonClick} />
       </div>

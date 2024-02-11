@@ -1,5 +1,6 @@
 import { mongooseConnect } from "@/app/libs/mongoose";
 import { UserInfo } from "@/app/models/UserInfo";
+import { verify } from "crypto";
 
 // Set dynamic to "force-dynamic" to ensure server-side rendering (SSR) for this route
 export const dynamic = "force-dynamic";
@@ -13,14 +14,44 @@ async function connectToDatabase() {
 function handleError(error, errorMessage, statusCode = 500) {
   console.error(errorMessage, error);
   return Response.json({ error: errorMessage }, { status: statusCode });
+} // Middleware function to authenticate requests with API key
+function authenticate(req) {
+  const publicKey = req.headers.get("x-api-key");
+  const apiKey = process.env.NEXT_PRIVATE_API_KEY;
+
+  try {
+    if (!publicKey || publicKey !== apiKey) {
+      throw new Error("Unauthorized: Invalid API Key");
+    }
+  } catch (error) {
+    throw new Error("Unauthorized: Invalid API Key");
+  }
 }
 
 // GET function to fetch user information
-export async function GET() {
+export async function GET(req) {
   try {
+    authenticate(req);
     await connectToDatabase();
 
-    const users = await UserInfo.find().lean();
+    // const users = await UserInfo.find().lean();
+
+    // Find all user info documents and only return specific fields
+    const users = await UserInfo.find(
+      {},
+      {
+        name: 1,
+        email: 1,
+        role: 1,
+        position: 1,
+        image: 1,
+        veng: 1,
+        fb: 1,
+        phone: 1,
+        _id: 1,
+      }
+    ).lean();
+
     return Response.json(users);
   } catch (error) {
     return handleError(error, "Error fetching users");

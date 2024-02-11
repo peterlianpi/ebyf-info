@@ -12,24 +12,10 @@ import Refresh from "@/components/icons/Refresh";
 import { useSession } from "next-auth/react";
 
 export default function UsersPage() {
-  const { data, loading } = useProfile();
+  const { loading, isAdmin } = useProfile();
 
   const { users, usersLoading, fetchUsers } = useUsers();
-  const session = useSession();
   const [deleted, setDeleted] = useState(false);
-
-  const [isAdmin, setIsAdmin] = useState(false);
-  const { status } = session;
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      fetch("/api/profile").then((response) => {
-        response.json().then((data) => {
-          setIsAdmin(data.admin);
-        });
-      });
-    }
-  }, [session, status]);
 
   const handleRefresh = () => {
     fetchUsers();
@@ -49,7 +35,7 @@ export default function UsersPage() {
   if (loading || usersLoading) {
     return "Loading user info";
   }
-  if (!data.admin) {
+  if (!isAdmin) {
     return "Not an admin";
   }
 

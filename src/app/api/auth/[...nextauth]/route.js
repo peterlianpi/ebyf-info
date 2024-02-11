@@ -5,12 +5,9 @@ import { User } from "@/app/models/User";
 import bcrypt from "bcrypt";
 import GoogleProvider from "next-auth/providers/google";
 import { mongooseConnect } from "@/app/libs/mongoose";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import clientPromise from "@/app/libs/mongodb";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

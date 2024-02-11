@@ -19,6 +19,25 @@ export default function UserForm({ user, onSave }) {
   const path = usePathname();
   const [saved, setSaved] = useState(false);
   const { isAdmin } = useProfile();
+  const vengList = [
+    "Kadesh",
+    "Joppa",
+    "Salem",
+    "Hermon",
+    "Canaan",
+    "Eden",
+    "Shechem",
+    "Hebron",
+    "Galilee",
+    "Nazareth",
+    "Lebanon",
+    "Gilgal",
+    "Bethel",
+    "Bethsaida",
+    "Macedonia",
+    "Zion",
+    "Carmel",
+  ];
 
   useEffect(() => {
     if (image.length === 0) {
@@ -156,12 +175,18 @@ export default function UserForm({ user, onSave }) {
             onChange={(ev) => setPosition(ev.target.value)}
           />
           <label>Veng</label>
-          <input
-            type="text"
-            placeholder="Veng"
+          <select
+            className=""
             value={veng}
             onChange={(ev) => setVeng(ev.target.value)}
-          />
+          >
+            <option value="">Select Veng</option>
+            {vengList.map((vengItem) => (
+              <option key={vengItem} value={vengItem}>
+                {vengItem}
+              </option>
+            ))}
+          </select>
           <label>Facebook Profile</label>
           <input
             type="text"
