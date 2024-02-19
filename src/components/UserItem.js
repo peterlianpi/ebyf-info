@@ -19,7 +19,7 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center bg-gray-100 hover:bg-slate-200  rounded-lg  justify-start px-2 h-[90px]  ">
+    <section className="flex items-center   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-2 h-[90px]  ">
       <Image
         className="rounded-full h-[65px] w-[65px] "
         src={image}
@@ -35,12 +35,12 @@ export default function UserItem({ user }) {
         <div className="font-semibold text-md ">{name}</div>
         {position ? (
           position === "Veng Uk" ? (
-            <div className="text-gray-600">{user.veng}</div>
+            <div className="">{user.veng}</div>
           ) : (
-            <div className="text-gray-600">{position}</div>
+            <div className="">{position}</div>
           )
         ) : (
-          <div className="text-gray-600">{role}</div>
+          <div className="">{role}</div>
         )}
       </div>
       <div>

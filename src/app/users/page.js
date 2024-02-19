@@ -9,7 +9,6 @@ import Delete from "@/components/icons/Delete";
 import { toast } from "react-hot-toast";
 import { useUsers } from "@/components/useUsers";
 import Refresh from "@/components/icons/Refresh";
-import { useSession } from "next-auth/react";
 
 export default function UsersPage() {
   const { loading, isAdmin } = useProfile();
@@ -79,7 +78,7 @@ export default function UsersPage() {
           users.map((user) => (
             <div
               key={user._id}
-              className="bg-gray-100 rounded-lg mb-2 py-4 items-center justify-around gap-2 flex h-[80px] "
+              className="  rounded-lg border-2 hover:bg-primary-foreground mb-2 py-4 items-center justify-around gap-2 flex h-[80px] "
             >
               <div className="ml-2">
                 <Image
@@ -91,7 +90,7 @@ export default function UsersPage() {
                 />
               </div>
               <div className="w-[50%]">
-                <div className="text-gray-900">
+                <div className=" ">
                   {!!user.name && <span className="">{user.name}</span>}
                   {!user.name && <span className="italic">No name</span>}
                 </div>

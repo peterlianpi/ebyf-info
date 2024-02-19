@@ -75,27 +75,13 @@
   }
 }
 
-section.hero {
-  @apply grid;
-  grid-template-columns: 0.4fr 0.6fr;
-}
-
 input[type="email"],
 input[type="tel"],
 input[type="password"],
 input[type="text"],
 select {
   @apply block w-full mb-2 rounded-xl;
-  @apply p-2 bg-gray-200 border border-gray-300;
-}
-
-button {
-  @apply block w-full font-semibold text-gray-700;
-  @apply px-6 py-2 border border-gray-300 rounded-xl;
-}
-button[type="submit"],
-.submit {
-  @apply text-white border-primary bg-primary;
+  @apply p-2 bg-secondary border border-gray-300;
 }
 
 input[type="email"]:disabled,
@@ -118,8 +104,8 @@ button[type="submit"]:disabled,
 }
 
 div.tabs > * {
-  @apply px-2 py-2  text-gray-700 bg-gray-300 rounded-full;
+  @apply px-2 py-2      rounded-full;
 }
 div.tabs > *.active {
-  @apply text-white bg-primary;
+  @apply text-white bg-secondary;
 }

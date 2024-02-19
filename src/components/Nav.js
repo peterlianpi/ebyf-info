@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 import { signOut, useSession } from "next-auth/react";
+import { Button } from "./ui/button";
 
 const links = [
   { path: "/", name: "Home" },
@@ -45,32 +46,6 @@ const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
           </Link>
         );
       })}
-      <nav className="flex items-center gap-4 font-semibold text-gray-500">
-        {status === "authenticated" && (
-          <>
-            <Link href={"/profile"} className="whitespace-nowrap">
-              Hello, {userName}
-            </Link>
-            <button
-              onClick={() => signOut()}
-              className="px-8 py-2 text-white rounded-full bg-primary"
-            >
-              Logout
-            </button>
-          </>
-        )}
-        {status !== "authenticated" && (
-          <>
-            <Link href={"/login"}>Login</Link>
-            <Link
-              href={"/register"}
-              className="px-8 py-2 text-white rounded-full bg-primary"
-            >
-              Register
-            </Link>
-          </>
-        )}
-      </nav>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useProfile } from "../UseProfile";
+import { Button } from "../ui/button";
 
 export default function UserForm({ user, onSave }) {
   const inputFileRef = useRef(null);
@@ -195,9 +196,9 @@ export default function UserForm({ user, onSave }) {
             onChange={(ev) => setFb(ev.target.value)}
           />
 
-          <button type="submit" className="">
+          <Button type="submit" className="w-full">
             Save
-          </button>
+          </Button>
         </form>
       </div>
     </div>
