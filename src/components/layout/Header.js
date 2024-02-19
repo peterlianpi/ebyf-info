@@ -2,56 +2,55 @@
 
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export default function Header() {
-  const session = useSession();
-  const status = session?.status;
-  const userData = session.data?.user;
-  let userName = userData?.name || userData?.email;
+// components
+import ThemeToggler from "../ThemeToggler";
+import Logo from "../Logo";
+import Nav from "../Nav";
+import MobileNav from "../MobileNav";
+import { usePathname } from "next/navigation";
 
-  if (userName && userName.includes(" ")) {
-    userName = userName.split(" ")[0];
-  }
+const Header = () => {
+  const [header, setHeader] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const scrollYPos = window.addEventListener("scroll", () => {
+      window.scrollY > 50 ? setHeader(true) : setHeader(false);
+    });
+    // remove event
+    return () => window.removeEventListener("scroll", scrollYPos);
+  }, []);
 
   return (
-    <header className="flex items-center justify-between mb-4">
-      <nav className="flex items-center ">
-        <Link className="text-2xl font-semibold text-primary" href="/">
-          EBYF Info
-        </Link>
-        <div className="hidden md:flex md:items-center md:gap-8 md:font-semibold md:text-gray-500 md:pl-16">
-          <Link href={"/"}>Home</Link>
-          <Link href={"/makaite"}>Makai 12</Link>
-          <Link href={"/vengukte"}>Veng</Link>
-          <Link href={"/library"}>Library</Link>
+    <header
+      className={`${
+        header
+          ? "py-4 bg-white shadow-lg dark:bg-accent"
+          : "py-6 dark:bg-transparent "
+      } sticky top-0 z-30 transition-all ${pathname === "/" && "bg-[#fef9f5]"}`}
+    >
+      <div className="container mx-auto">
+        <div className="flex justify-evenly items-center">
+          <Logo />
+          <div className="flex items-center gap-x-6">
+            {/* nav */}
+            <Nav
+              containerStyles="hidden xl:flex gap-x-8 items-center"
+              linkStyles="relative hover:text-primary transition-all"
+              underlineStyles="absolute left-0 top-full h-[2px] bg-primary w-full"
+            />
+            <ThemeToggler />
+            {/* mobile nav */}
+            <div className="xl:hidden ">
+              <MobileNav />
+            </div>
+          </div>
         </div>
-      </nav>
-      <nav className="flex items-center gap-4 font-semibold text-gray-500">
-        {status === "authenticated" && (
-          <>
-            <Link href={"/profile"} className="whitespace-nowrap">
-              Hello, {userName}
-            </Link>
-            <button
-              onClick={() => signOut()}
-              className="px-8 py-2 text-white rounded-full bg-primary"
-            >
-              Logout
-            </button>
-          </>
-        )}
-        {status !== "authenticated" && (
-          <>
-            <Link href={"/login"}>Login</Link>
-            <Link
-              href={"/register"}
-              className="px-8 py-2 text-white rounded-full bg-primary"
-            >
-              Register
-            </Link>
-          </>
-        )}
-      </nav>
+      </div>
     </header>
   );
-}
+};
+
+export default Header;
