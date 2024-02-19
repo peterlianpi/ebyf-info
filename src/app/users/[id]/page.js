@@ -1,6 +1,7 @@
 "use client";
 
 import { useProfile } from "@/components/UseProfile";
+import Loading from "@/components/icons/Loading";
 import UserForm from "@/components/layout/UserForm";
 import UserTabs from "@/components/layout/UserTabs";
 import { useUsers } from "@/components/useUsers";
@@ -47,7 +48,11 @@ export default function EditUserPage() {
   }
 
   if (loading || usersLoading) {
-    return "Loading user profile";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   if (!isAdmin) {
     return "Not an admin";

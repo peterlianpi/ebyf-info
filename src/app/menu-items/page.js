@@ -1,11 +1,16 @@
 "use client";
 import { useProfile } from "@/components/UseProfile";
+import Loading from "@/components/icons/Loading";
 import UserTabs from "@/components/layout/UserTabs";
 
 function MenuItemsPage() {
   const { loading, data } = useProfile();
   if (loading) {
-    return "Loading user info...";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   if (!data.admin) {
     return "Not an admin";

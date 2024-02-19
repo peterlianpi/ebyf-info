@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import UserItem from "@/components/UserItem";
-import Refresh from "@/components/icons/Refresh";
 import Remove from "../icons/Remove";
+import Search from "../icons/Search";
 
 export default function SearchBox({ users }) {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
@@ -25,11 +25,14 @@ export default function SearchBox({ users }) {
     <>
       {/* Search input field */}
       <div className="flex items-center  relative h-14">
+        <div className="absolute left-2">
+          {searchQuery === "" && <Search />}
+        </div>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search by name or veng..."
+          placeholder="        Search by name or veng..."
           className="w-full p-2 border border-gray-300 rounded mt-2"
         />
         {searchQuery !== "" && (

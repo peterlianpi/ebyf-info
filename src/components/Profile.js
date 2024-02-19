@@ -30,10 +30,11 @@ const Profile = () => {
               </Link>
             </Button>
             <Button
+              asChild
               className="min-w-[100px]  px-2 py-1 h-full"
               onClick={() => signOut()}
             >
-              Logout
+              <Link href={"/"}>Logout </Link>
             </Button>
           </div>
         )}

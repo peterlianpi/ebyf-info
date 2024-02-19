@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Phone from "./icons/Phone";
+import { Button } from "./ui/button";
 
 export default function UserItem({ user }) {
   const { name, role, position, phone, image } = user;
@@ -21,7 +22,7 @@ export default function UserItem({ user }) {
   return (
     <section className="flex items-center   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-2 h-[90px]  ">
       <Image
-        className="rounded-full h-[65px] w-[65px] "
+        className="rounded-full h-[65px] w-[65px] bg-white border border-blue-600"
         src={image}
         alt="alt"
         width={75}
@@ -51,7 +52,7 @@ export default function UserItem({ user }) {
       {/* {Modal to display user details} */}
       {selectedUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
-          <div className="bg-white p-4 rounded-lg w-[320px]">
+          <div className="bg-secondary text-primary p-4 rounded-lg w-[320px]">
             <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
             {selectedUser.email && (
               <p className="mb-2">Email: {selectedUser.email}</p>
@@ -83,7 +84,9 @@ export default function UserItem({ user }) {
             )}
 
             {/* Add more details as needed */}
-            <button onClick={handleCloseModal}>Close</button>
+            <Button onClick={handleCloseModal} className="w-full">
+              Close
+            </Button>
           </div>
         </div>
       )}

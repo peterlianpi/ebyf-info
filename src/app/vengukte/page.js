@@ -1,5 +1,6 @@
 "use client";
 import UserItem from "@/components/UserItem";
+import Loading from "@/components/icons/Loading";
 import { useUsers } from "@/components/useUsers";
 import React, { useEffect, useState } from "react";
 
@@ -12,7 +13,11 @@ function VenguktePage() {
   }, []);
 
   if (usersLoading) {
-    return "Loading user info...";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   return (
     <>

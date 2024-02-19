@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import UserTabs from "@/components/layout/UserTabs";
 import UserForm from "@/components/layout/UserForm";
 import { useProfile } from "@/components/UseProfile";
+import Loading from "@/components/icons/Loading";
 
 function ProfilePage() {
   const { loading, user, isAdmin, profileFetched, status } = useProfile();
@@ -30,7 +31,11 @@ function ProfilePage() {
   }
 
   if (status === "loading" || !profileFetched) {
-    return "Loading...";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   if (status === "unauthenticated") {
     return redirect("/login");

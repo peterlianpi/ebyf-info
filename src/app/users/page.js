@@ -9,6 +9,7 @@ import Delete from "@/components/icons/Delete";
 import { toast } from "react-hot-toast";
 import { useUsers } from "@/components/useUsers";
 import Refresh from "@/components/icons/Refresh";
+import Loading from "@/components/icons/Loading";
 
 export default function UsersPage() {
   const { loading, isAdmin } = useProfile();
@@ -32,7 +33,11 @@ export default function UsersPage() {
   }, [deleted, fetchUsers]);
 
   if (loading || usersLoading) {
-    return "Loading user info";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   if (!isAdmin) {
     return "Not an admin";

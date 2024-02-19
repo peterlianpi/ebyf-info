@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { Send } from "lucide-react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Socials from "../Socials";
 import SearchBox from "./SearchBox";
 import { useUsers } from "../useUsers";
+import Loading from "../icons/Loading";
 
 // components
 
@@ -20,7 +18,11 @@ const Hero = () => {
   }, []);
 
   if (usersLoading) {
-    return "Loading user info...";
+    return (
+      <div className="flex items-center text-center max-w-md mx-auto justify-center">
+        <Loading />
+      </div>
+    );
   }
   return (
     <section className="py-12   h-[84vh] xl:pt-28 bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
