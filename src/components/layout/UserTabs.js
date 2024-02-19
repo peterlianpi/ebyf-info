@@ -28,28 +28,30 @@ function UserTabs({ isAdmin }) {
   const path = usePathname();
   return (
     <>
-      <div className="flex justify-center gap-2 mx-auto tabs items-center text-sm">
-        {links.map((link, index) => {
-          return (
-            <Link
-              key={index}
-              href={link.path}
-              className={`capitalize ${linkStyles}`}
-            >
-              {link.path === path && (
-                <motion.span
-                  initial={{ y: "-100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ type: "tween" }}
-                  layoutId="underline"
-                  className={`${underlineStyles}`}
-                />
-              )}
-              {link.name}
-            </Link>
-          );
-        })}
-      </div>
+      {isAdmin && (
+        <div className="flex justify-center gap-2 mx-auto tabs items-center text-sm">
+          {links.map((link, index) => {
+            return (
+              <Link
+                key={index}
+                href={link.path}
+                className={`capitalize ${linkStyles}`}
+              >
+                {link.path === path && (
+                  <motion.span
+                    initial={{ y: "-100%" }}
+                    animate={{ y: 0 }}
+                    transition={{ type: "tween" }}
+                    layoutId="underline"
+                    className={`${underlineStyles}`}
+                  />
+                )}
+                {link.name}
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }
