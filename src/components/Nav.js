@@ -12,6 +12,8 @@ const links = [
   { path: "/", name: "Home" },
   { path: "/makaite", name: "Makai" },
   { path: "/vengukte", name: "Venguk" },
+  { path: "/blood", name: "Sisan" },
+  { path: "/library", name: "Library" },
 ];
 const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
   const session = useSession();

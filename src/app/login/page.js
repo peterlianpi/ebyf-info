@@ -38,16 +38,16 @@ function LoginPage() {
           onChange={(ev) => setPassword(ev.target.value)}
           disabled={loginInProgress}
         />
-        <Button type="submit" disabled={loginInProgress}>
+        <Button className="w-[100%]" type="submit" disabled={loginInProgress}>
           Login
         </Button>
-        <div className="my-2 text-center text-gray-500">
+        <div className="my-4 text-center text-gray-500">
           or login with provider
         </div>
         <Button
           type="button"
           onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="flex justify-center gap-4"
+          className="flex justify-center gap-4 w-[100%]"
         >
           <Image src={"/google.png"} alt={""} width={"24"} height={"24"} />
           Login with Google

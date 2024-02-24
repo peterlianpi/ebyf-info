@@ -25,7 +25,7 @@ const Hero = () => {
     );
   }
   return (
-    <section className="py-12   h-[84vh] xl:pt-28 bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
+    <section className="py-12   h-[84vh]   bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
       <div className="container mx-auto">
         <div className="flex justify-between gap-x-4">
           {/* text */}
@@ -34,7 +34,7 @@ const Hero = () => {
               EBYF Contacts Info
             </div>
 
-            <p className="subtitle max-w-[490px] mx-auto xl:mx-0">
+            <p className="subtitle max-w-[490px] mx-auto mb-4 ">
               EBYF Contacts Info: Easily connect with church youth. No more
               typing numbers—just tap and call.
             </p>
@@ -45,7 +45,7 @@ const Hero = () => {
 
             {/* socials */}
             <Socials
-              containerStyles="flex gap-x-6 mx-auto xl:mx-0"
+              containerStyles="flex gap-x-6 mx-auto  "
               iconsStyles="text-foreground text-[22px] hover:text-primary transition-all"
             />
           </div>

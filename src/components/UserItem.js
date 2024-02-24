@@ -34,14 +34,19 @@ export default function UserItem({ user }) {
         onClick={() => handleUserClick(user)}
       >
         <div className="font-semibold text-md ">{name}</div>
+
         {position ? (
           position === "Veng Uk" ? (
-            <div className="">{user.veng}</div>
+            <div className="">
+              {user.veng} {position}
+            </div>
           ) : (
             <div className="">{position}</div>
           )
+        ) : role.includes("Member") ? (
+          <div className="">{role.split(",")[0]}</div>
         ) : (
-          <div className="">{role}</div>
+          <div className="">{user.veng}</div>
         )}
       </div>
       <div>
