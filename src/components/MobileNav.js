@@ -18,7 +18,7 @@ const MobileNav = () => {
             <Logo />
             <Profile />
             <Nav
-              containerStyles="flex flex-col items-left gap-y-4"
+              containerStyles="flex flex-col items-left gap-y-2"
               linkStyles="text-2xl"
             />
           </div>

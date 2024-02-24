@@ -1,11 +1,9 @@
-"use client";
-
+import React from "react";
 import {
   RiYoutubeFill,
   RiLinkedinFill,
   RiGithubFill,
   RiFacebookFill,
-  RiInstallFill,
   RiInstagramFill,
 } from "react-icons/ri";
 import Link from "next/link";
@@ -13,37 +11,50 @@ import Link from "next/link";
 const icons = [
   {
     path: "https://www.youtube.com/@peterpausianlian",
-    name: <RiYoutubeFill />,
+    icon: <RiYoutubeFill />,
+    label: "YouTube",
   },
   {
     path: "/",
-    name: <RiLinkedinFill />,
+    icon: <RiLinkedinFill />,
+    label: "LinkedIn",
   },
   {
     path: "https://github.com/peterlianpi",
-    name: <RiGithubFill />,
+    icon: <RiGithubFill />,
+    label: "GitHub",
   },
   {
     path: "https://facebook.com/p.lianpi",
-    name: <RiFacebookFill />,
+    icon: <RiFacebookFill />,
+    label: "Facebook",
   },
   {
-    path: "https://facebook.com/peterpausianlian",
-    name: <RiInstagramFill />,
+    path: "https://instagram.com/peterpausianlian",
+    icon: <RiInstagramFill />,
+    label: "Instagram",
   },
 ];
 
 const Socials = ({ containerStyles, iconsStyles }) => {
   return (
-    <div className={`${containerStyles}`}>
-      {icons.map((icon, index) => {
-        return (
-          <Link key={index} href={icon.path} target="_blank">
-            <div className={`${iconsStyles}`}>{icon.name}</div>
+    <>
+      <span className="mb-4">Made with ❤ by Peter</span>
+      <div className={`${containerStyles}`}>
+        {icons.map((social, index) => (
+          <Link
+            key={index}
+            href={social.path}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className={`${iconsStyles}`} aria-label={social.label}>
+              {social.icon}
+            </div>
           </Link>
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 
