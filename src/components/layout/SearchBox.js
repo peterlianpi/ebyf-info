@@ -36,17 +36,22 @@ export default function SearchBox({ users }) {
           className="w-full p-2 border border-gray-300 rounded mt-2"
         />
         {searchQuery !== "" && (
-          <div className="absolute w-6 h-6 right-4 " onClick={clearSearchQuery}>
+          <div
+            className="absolute w-6 h-6 right-4  "
+            onClick={clearSearchQuery}
+          >
             <Remove />
           </div>
         )}
       </div>
 
-      {filteredUsers.map((user) => (
-        <div key={user._id} className="">
-          {<UserItem user={user} />}
-        </div>
-      ))}
+      <div style={{ maxHeight: "250px", overflowY: "scroll" }}>
+        {filteredUsers.map((user) => (
+          <div key={user._id} className="">
+            {<UserItem user={user} />}
+          </div>
+        ))}
+      </div>
       <hr />
       {/* Rest of your rendering logic */}
     </>
