@@ -14,6 +14,7 @@ const links = [
   { path: "/vengukte", name: "Venguk" },
   { path: "/blood", name: "Sisan" },
   { path: "/library", name: "Library" },
+  { path: "/policy", name: "Policy" },
 ];
 const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
   const session = useSession();
@@ -46,7 +47,6 @@ const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
             )}
             {link.name}
           </Link>
-          
         );
       })}
     </div>
