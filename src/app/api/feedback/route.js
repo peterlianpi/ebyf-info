@@ -1,7 +1,5 @@
-// feedbackController.js
-
 import { Feedback } from "@/app/models/Feedback";
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 export async function submitFeedback(req, res) {
   try {
