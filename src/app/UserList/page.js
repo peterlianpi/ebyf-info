@@ -6,9 +6,10 @@ import Refresh from "@/components/icons/Refresh";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import Loading from "@/components/icons/Loading";
 
 export default function UserListPage() {
-  const { users, fetchUsers } = useUsers();
+  const { users, fetchUsers, usersLoading } = useUsers();
 
   const handleRefresh = () => {
     fetchUsers();
@@ -18,31 +19,33 @@ export default function UserListPage() {
   }, []);
   return (
     <>
-      <div className="flex flex-col max-w-md gap-2 mx-auto">
-        <div className="">
-          <div className="flex items-center justify-start">
-            <p className="text-3xl font-extrabold w-[80%]">All Members</p>
-            <button
-              className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-[60px] w-[60px] "
-              onClick={handleRefresh}
-              aria-label="Refresh"
-            >
-              <Refresh />
-            </button>
-          </div>
-          {users?.map((user) => (
-            <div key={user._id} className="my-2">
-              {user && <UserItem user={user} />}
+      {!usersLoading && users && (
+        <div className="flex flex-col max-w-md gap-2 mx-auto">
+          <div className="">
+            <div className="flex items-center justify-start">
+              <p className="text-3xl font-extrabold w-[80%]">All Members</p>
+              <button
+                className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-[60px] w-[60px] "
+                onClick={handleRefresh}
+                aria-label="Refresh"
+              >
+                <Refresh />
+              </button>
             </div>
-          ))}
-        </div>
-        <hr />
+            {users?.map((user) => (
+              <div key={user._id} className="my-2">
+                {user && <UserItem user={user} />}
+              </div>
+            ))}
+          </div>
+          <hr />
 
-        <hr />
-        <Link href={"/addusers"}>
-          <Button className="w-full">Add Participants</Button>
-        </Link>
-      </div>
+          <hr />
+          <Link href={"/addusers"}>
+            <Button className="w-full">Add Participants</Button>
+          </Link>
+        </div>
+      )}
     </>
   );
 }

@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +31,7 @@ export default function RootLayout({ children }) {
               <Toaster />
               <Header />
               {children}
-              <footer className="p-8 mt-16 text-center text-gray-500 border-t">
-                &copy; 2024 All rights reserved
-              </footer>
+              <Footer />
             </AppProvider>
           </main>
         </ThemeProvider>
