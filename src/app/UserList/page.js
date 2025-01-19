@@ -18,7 +18,7 @@ export default function UserListPage() {
     fetchUsers();
   }, []);
 
-  console.log("Users : ", users);
+   
   return (
     <>
       {!usersLoading && users && (
