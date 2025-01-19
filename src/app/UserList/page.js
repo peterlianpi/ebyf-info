@@ -3,10 +3,7 @@
 import UserItem from "@/components/UserItem";
 import { useUsers } from "@/components/useUsers";
 import Refresh from "@/components/icons/Refresh";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
-import Loading from "@/components/icons/Loading";
 
 export default function UserListPage() {
   const { users, fetchUsers, usersLoading } = useUsers();
