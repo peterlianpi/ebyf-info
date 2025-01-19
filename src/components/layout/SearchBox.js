@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-
 import UserItem from "@/components/UserItem";
 import Remove from "../icons/Remove";
 import Search from "../icons/Search";
 
-export default function SearchBox({ users }) {
+export default function SearchBox({ users, isFetchingComplete }) {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
 
   // Function to filter users based on search query
-  const filteredUsers = users.filter((user) => {
-    return (
-      searchQuery !== "" &&
-      (user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.vengName.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  });
+  const filteredUsers =
+    isFetchingComplete && searchQuery !== ""
+      ? users.filter((user) => {
+          return (
+            user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user?.vengName?.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        })
+      : [];
 
   // Function to clear the search query
   const clearSearchQuery = () => {
@@ -32,14 +33,18 @@ export default function SearchBox({ users }) {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="        Search by name or veng..."
-          className="w-full p-2 border border-gray-300 rounded mt-2"
+          placeholder={
+            isFetchingComplete
+              ? "        Search by name or veng..."
+              : "Loading users..."
+          }
+          disabled={!isFetchingComplete} // Disable input while fetching users
+          className={`w-full border border-gray-300 rounded mt-2 ${
+            isFetchingComplete ? "" : "bg-gray-100 cursor-not-allowed"
+          }`}
         />
-        {searchQuery !== "" && (
-          <div
-            className="absolute w-6 h-6 right-4  "
-            onClick={clearSearchQuery}
-          >
+        {searchQuery !== "" && isFetchingComplete && (
+          <div className="absolute w-6 h-6 right-4" onClick={clearSearchQuery}>
             <Remove />
           </div>
         )}

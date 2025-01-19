@@ -33,6 +33,8 @@ const Hero = () => {
     );
   }
 
+  console.log("All users : ", users);
+
   return (
     <section className="  py-12 h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
       <div className="container mx-auto  ">
@@ -46,7 +48,7 @@ const Hero = () => {
               typing numbers—just tap and call.
             </p>
             <div className="mb-8">
-              <SearchBox users={users} />
+              <SearchBox users={users} isFetchingComplete={!usersLoading} />
             </div>
             <Socials
               containerStyles="flex gap-x-6 mx-auto"
