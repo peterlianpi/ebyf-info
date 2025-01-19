@@ -28,11 +28,24 @@ function LibraryPage() {
               Library Vai Contacts
             </p>
           </div>
-          {users.map((user) => (
-            <div key={user._id} className="mb-2">
-              {user.role.includes("Library") && <UserItem user={user} />}
-            </div>
-          ))}
+          {users.map((user) => {
+            // Filter roles: only keep those that include 'Library'
+            const filteredRoles = user.roles.filter((role) =>
+              role.name.includes("Library")
+            );
+
+            // Only render UserItem if there are valid filtered roles
+            return filteredRoles.length > 0 ? (
+              <div key={user._id} className="my-2">
+                <UserItem
+                  user={{
+                    ...user,
+                    roles: filteredRoles, // Pass only the filtered roles
+                  }}
+                />
+              </div>
+            ) : null; // Don't render if no valid roles
+          })}
         </div>
       </div>
     </>
