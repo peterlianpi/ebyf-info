@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AppProvider from "@/components/AppContext";
 import Header from "@/components/layout/Header";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
@@ -27,12 +26,10 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <main className="max-w-4xl p-4 mx-auto">
-            <AppProvider>
-              <Toaster />
-              <Header />
-              {children}
-              <Footer />
-            </AppProvider>
+            <Toaster />
+            <Header />
+            {children}
+            <Footer />
           </main>
         </ThemeProvider>
         <Analytics />

@@ -12,7 +12,7 @@ export default function SearchBox({ users }) {
     return (
       searchQuery !== "" &&
       (user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.veng.toLowerCase().includes(searchQuery.toLowerCase()))
+        user.vengName.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
 

@@ -8,7 +8,6 @@ import { useUsers } from "../useUsers";
 import Loading from "../icons/Loading";
 import FeedbackForm from "./FeedbackForm";
 import Close from "../icons/Close";
-import UserListPage from "@/app/UserList/page";
 
 const Hero = () => {
   const { users, usersLoading, fetchUsers } = useUsers();

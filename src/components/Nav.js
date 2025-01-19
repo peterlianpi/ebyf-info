@@ -5,26 +5,16 @@ import { usePathname } from "next/navigation";
 // framer motion
 import { motion } from "framer-motion";
 
-import { signOut, useSession } from "next-auth/react";
-import { Button } from "./ui/button";
-
 const links = [
   { path: "/", name: "Home" },
   { path: "/makaite", name: "Makai" },
   { path: "/vengukte", name: "Venguk" },
   { path: "/blood", name: "Sisan" },
+  { path: "/mopuan", name: "Mopuan" },
   { path: "/library", name: "Library" },
   { path: "/policy", name: "Policy" },
 ];
 const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
-  const session = useSession();
-  const status = session?.status;
-  const userData = session.data?.user;
-  let userName = userData?.name || userData?.email;
-
-  if (userName && userName.includes(" ")) {
-    userName = userName.split(" ")[0];
-  }
   const path = usePathname();
 
   return (

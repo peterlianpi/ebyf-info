@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Phone from "./icons/Phone";
 import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { User } from "lucide-react";
 
 export default function UserItem({ user }) {
-  const { name, role, position, phone, image } = user;
+  const { name, roles, phone, image, vengName, fbLink } = user;
   const [selectedUser, setSelectedUser] = useState(null);
 
   function handleCall(phone) {
@@ -20,14 +22,13 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-2 h-[90px]  ">
-      <Image
-        className="rounded-full h-[65px] w-[65px] bg-white border border-blue-600"
-        src={image}
-        alt="alt"
-        width={75}
-        height={75}
-      />
+    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
+      <Avatar className=" border border-emerald-600">
+        <AvatarImage src={image} />
+        <AvatarFallback className="bg-sky-500">
+          <User className="text-white" />
+        </AvatarFallback>
+      </Avatar>
 
       <div
         className="ml-2 w-[64%] cursor-pointer"
@@ -35,18 +36,28 @@ export default function UserItem({ user }) {
       >
         <div className="font-semibold text-md ">{name}</div>
 
-        {position ? (
-          position === "Veng Uk" ? (
-            <div className="">
-              {user.veng} {position}
-            </div>
-          ) : (
-            <div className="">{position}</div>
-          )
-        ) : role.includes("Member") ? (
-          <div className="">{role.split(",")[0]}</div>
+        {roles && roles.length > 0 ? (
+          roles
+            .filter(
+              (role) =>
+                role.name.includes("Veng Uk") || role.name.includes("EBYF")
+            ) // Filter roles that include "Veng Uk" or "EBYF"
+            .map((role, index) => {
+              if (role.name.includes("Veng Uk")) {
+                return (
+                  <div key={index}>
+                    {role.name.includes("EBYF") && "EBYF - "}
+                    {vengName ? `${vengName} ` : null}
+                    {role.name.replace("EBYF -", "").trim()}{" "}
+                    {/* Remove "Veng Uk" if included */}
+                  </div>
+                );
+              } else if (role.name.includes("EBYF")) {
+                return <div key={index}>{role.name}</div>;
+              }
+            })
         ) : (
-          <div className="">{user.veng}</div>
+          <div>No Role</div>
         )}
       </div>
       <div>
@@ -63,18 +74,43 @@ export default function UserItem({ user }) {
               <p className="mb-2">Email: {selectedUser.email}</p>
             )}
             {selectedUser.phone && (
-              <p className="mb-2">Phone: {selectedUser.phone}</p>
+              <div className="mb-2">
+                <p>Phone:</p>
+                {selectedUser.phone.split(",").map((num, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between mr-4 mb-2"
+                  >
+                    <span className="mr-2">{num.trim()}</span>
+                    <div onClick={() => handleCall(num.trim())}>
+                      <Phone />
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
-            {selectedUser.position && (
-              <p className="mb-2">Position: {selectedUser.position}</p>
+
+            {selectedUser.roles && selectedUser.roles.length > 0 && (
+              <p className="mb-2">
+                <p>Roles:</p>
+                <div>
+                  {selectedUser.roles.map((role, index) => (
+                    <div key={index}>
+                      {role.name.includes("EBYF") && "EBYF - "}
+                      {vengName ? `${vengName} ` : null}
+                      {role.name.replace("EBYF -", "").trim()}{" "}
+                    </div>
+                  ))}
+                </div>
+              </p>
             )}
-            {selectedUser.veng && (
-              <p className="mb-2">Veng: {selectedUser.veng}</p>
+            {selectedUser.vengName && (
+              <p className="mb-2">Veng: {selectedUser.vengName}</p>
             )}
-            {selectedUser.fb && (
+            {selectedUser.fbLink && (
               <div className="flex p-4 justify-center">
                 <a
-                  href={selectedUser.fb}
+                  href={selectedUser.fbLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

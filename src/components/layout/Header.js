@@ -10,7 +10,6 @@ import Logo from "../Logo";
 import Nav from "../Nav";
 import MobileNav from "../MobileNav";
 import { usePathname } from "next/navigation";
-import Profile from "../Profile";
 
 const Header = () => {
   const [header, setHeader] = useState(false);
@@ -43,9 +42,7 @@ const Header = () => {
               underlineStyles="absolute left-0 top-full h-[2px] bg-primary w-full"
             />
             <ThemeToggler />
-            <div className="hidden xl:flex">
-              <Profile />
-            </div>
+
             {/* mobile nav */}
             <div className="xl:hidden ">
               <MobileNav />

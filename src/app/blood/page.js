@@ -1,8 +1,9 @@
 "use client";
+
 import UserItem from "@/components/UserItem";
 import Loading from "@/components/icons/Loading";
 import { useUsers } from "@/components/useUsers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 function BloodPage() {
   const { users, usersLoading, fetchUsers } = useUsers();
@@ -19,6 +20,7 @@ function BloodPage() {
       </div>
     );
   }
+
   return (
     <>
       <div className="flex flex-col max-w-md gap-2 mx-auto">
@@ -30,7 +32,9 @@ function BloodPage() {
           </div>
           {users.map((user) => (
             <div key={user._id} className="mb-2">
-              {user.role.includes("Blood") && <UserItem user={user} />}
+              {user.roles?.some((role) => role.name.includes("Blood")) && (
+                <UserItem user={user} />
+              )}
             </div>
           ))}
         </div>

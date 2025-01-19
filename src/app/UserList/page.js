@@ -17,6 +17,8 @@ export default function UserListPage() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  console.log("Users : ", users);
   return (
     <>
       {!usersLoading && users && (
@@ -39,11 +41,6 @@ export default function UserListPage() {
             ))}
           </div>
           <hr />
-
-          <hr />
-          <Link href={"/addusers"}>
-            <Button className="w-full">Add Participants</Button>
-          </Link>
         </div>
       )}
     </>

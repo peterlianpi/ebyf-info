@@ -1,13 +1,14 @@
 "use client";
+
 import UserItem from "@/components/UserItem";
 import Loading from "@/components/icons/Loading";
 import { useUsers } from "@/components/useUsers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-function VenguktePage() {
+function MopuanPage() {
   const { users, usersLoading, fetchUsers } = useUsers();
 
-  // Ensure that this function is only executed on the client-side
+  // Ensure that this function is only executed in the client-side
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -25,12 +26,13 @@ function VenguktePage() {
       <div className="flex flex-col max-w-md gap-2 mx-auto">
         <div className="">
           <div className="flex items-center justify-start">
-            <p className="text-2xl font-extrabold w-[80%]">Veng-Uk te</p>
+            <p className="text-2xl font-extrabold w-[80%]">
+              Mopuan Vai Contacts
+            </p>
           </div>
           {users.map((user) => (
             <div key={user._id} className="mb-2">
-              {/* Check if the user has the "Veng Uk" role */}
-              {user.roles?.some(role => role.name.includes("Veng Uk")) && (
+              {user.roles?.some((role) => role.name.includes("Mopuan")) && (
                 <UserItem user={user} />
               )}
             </div>
@@ -41,4 +43,4 @@ function VenguktePage() {
   );
 }
 
-export default VenguktePage;
+export default MopuanPage;
