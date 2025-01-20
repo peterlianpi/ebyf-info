@@ -1,19 +1,53 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Footer from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const APP_NAME = "EBYF Contacts Info";
+const APP_DEFAULT_TITLE = "EBYF Contacts Info";
+const APP_TITLE_TEMPLATE = "%s - EBYF Contacts Info";
+const APP_DESCRIPTION =
+  "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.";
+
 export const metadata = {
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
   manifest: "/manifest.json",
-  title: "EBYF Contacts Info",
-  description:
-    "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
 };
 
 export const viewport = {

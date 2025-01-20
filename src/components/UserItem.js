@@ -23,8 +23,8 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
-      <Avatar className=" border border-emerald-600">
+    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[120px]  ">
+      <Avatar className="border border-emerald-600">
         <AvatarImage src={image} />
         <AvatarFallback className="bg-sky-500">
           <User className="text-white" />
@@ -35,7 +35,7 @@ export default function UserItem({ user }) {
         className="ml-2 w-[64%] cursor-pointer"
         onClick={() => handleUserClick(user)}
       >
-        <div className="font-semibold text-md ">{name}</div>
+        <div className="font-semibold text-sm ">{name}</div>
 
         {roles && roles.length > 0 ? (
           roles
@@ -51,13 +51,17 @@ export default function UserItem({ user }) {
               // If the role contains "EBYF - Veng Uk", include the veng name
               if (role.role.name.includes("Veng Uk")) {
                 return (
-                  <div key={index}>
+                  <div key={index} className="text-xs">
                     {`EBYF - ${veng?.name ? `${veng.name} ` : ""}Veng Uk`}
                   </div>
                 );
               }
               // For other valid EBYF roles
-              return <div key={index}>{role.role.name}</div>;
+              return (
+                <div className="text-xs" key={index}>
+                  {role.role.name}
+                </div>
+              );
             })
         ) : (
           <div>No Role</div>
@@ -70,8 +74,8 @@ export default function UserItem({ user }) {
       </div>
       {/* {Modal to display user details} */}
       {selectedUser && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
-          <div className="bg-secondary text-primary p-4 rounded-lg w-[320px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
+          <div className="bg-secondary text-primary p-4 rounded-lg w-[350px]">
             <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
             {selectedUser?.email && (
               <p className="mb-2">Email: {selectedUser?.email}</p>
@@ -99,7 +103,7 @@ export default function UserItem({ user }) {
                 <div>
                   {selectedUser?.roles.map((role, index) =>
                     role.role.name.includes("Veng Uk") ? (
-                      <div key={index}>
+                      <div className="text-sm" key={index}>
                         {"EBYF - "}
                         {veng?.name ? `${veng.name} ` : ""}
                         {role.role.name.replace("EBYF -", "").trim()}
@@ -110,7 +114,7 @@ export default function UserItem({ user }) {
                         />
                       </div>
                     ) : (
-                      <div key={index}>
+                      <div className="text-sm" key={index}>
                         {role.role.name}
                         <br />
                         <PeriodDisplay

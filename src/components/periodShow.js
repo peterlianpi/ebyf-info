@@ -12,7 +12,7 @@ const PeriodDisplay = ({ startedAt, endedAt }) => {
 
   return (
     <div>
-      <p className="text-sm p-4">
+      <p className="text-xs p-4">
         From : {formatDate(startedAt)} To : {formatDate(endedAt)}
       </p>
     </div>
