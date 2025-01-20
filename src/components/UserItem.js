@@ -35,7 +35,7 @@ export default function UserItem({ user }) {
         className="ml-2 w-[64%] cursor-pointer"
         onClick={() => handleUserClick(user)}
       >
-        <div className="font-semibold text-sm ">{name}</div>
+        <div className="font-semibold text-base max-md:text-sm ">{name}</div>
 
         {roles && roles.length > 0 ? (
           roles
@@ -51,14 +51,14 @@ export default function UserItem({ user }) {
               // If the role contains "EBYF - Veng Uk", include the veng name
               if (role.role.name.includes("Veng Uk")) {
                 return (
-                  <div key={index} className="text-xs">
+                  <div key={index} className="text-sm max-md:text-xs">
                     {`EBYF - ${veng?.name ? `${veng.name} ` : ""}Veng Uk`}
                   </div>
                 );
               }
               // For other valid EBYF roles
               return (
-                <div className="text-xs" key={index}>
+                <div className="text-sm max-md:text-xs" key={index}>
                   {role.role.name}
                 </div>
               );
@@ -98,12 +98,12 @@ export default function UserItem({ user }) {
             )}
 
             {selectedUser?.roles && selectedUser?.roles.length > 0 && (
-              <p className="mb-2">
+              <div className="mb-2">
                 <p>Roles:</p>
                 <div className="h-40 overflow-auto">
                   {selectedUser?.roles.map((role, index) =>
                     role.role.name.includes("Veng Uk") ? (
-                      <div className="text-sm" key={index}>
+                      <div className="max-md:text-sm" key={index}>
                         {"EBYF - "}
                         {veng?.name ? `${veng.name} ` : ""}
                         {role.role.name.replace("EBYF -", "").trim()}
@@ -114,7 +114,7 @@ export default function UserItem({ user }) {
                         />
                       </div>
                     ) : (
-                      <div className="text-sm" key={index}>
+                      <div className="max-md:text-sm" key={index}>
                         {role.role.name}
                         <br />
                         <PeriodDisplay
@@ -125,7 +125,7 @@ export default function UserItem({ user }) {
                     )
                   )}
                 </div>
-              </p>
+              </div>
             )}
             {selectedUser?.veng?.name && (
               <p className="mb-2">Veng: {selectedUser.veng.name}</p>
