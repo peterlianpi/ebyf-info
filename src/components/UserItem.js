@@ -9,7 +9,7 @@ import { User } from "lucide-react";
 import PeriodDisplay from "./periodShow";
 
 export default function UserItem({ user }) {
-  const { name, number, roles, phone, image, veng, fbLink } = user;
+  const {id, name, number, roles, phone, image, veng, fbLink } = user;
   const [selectedUser, setSelectedUser] = useState(null);
 
   function handleCall(phone) {
@@ -23,7 +23,7 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
+    <section key={id} className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
       <Avatar className="border -z-1 border-emerald-600">
         <AvatarImage src={image} />
         <AvatarFallback className="bg-sky-500">
