@@ -12,7 +12,7 @@ export default function SearchBox({ users, isFetchingComplete }) {
       ? users.filter((user) => {
           return (
             user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user?.vengName?.toLowerCase().includes(searchQuery.toLowerCase())
+            user?.veng?.name.toLowerCase().includes(searchQuery.toLowerCase())
           );
         })
       : [];
