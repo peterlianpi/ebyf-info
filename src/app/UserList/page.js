@@ -6,7 +6,10 @@ import Refresh from "@/components/icons/Refresh";
 import { useEffect } from "react";
 
 export default function UserListPage() {
-  const { users, fetchUsers, usersLoading } = useUsers();
+  const { users, fetchUsers, usersLoading } = useUsers("");
+
+  // Filter users based on the role "Veng Uk"
+  const filteredUsers = users.sort((a, b) => a.id - b.id); // Sort users by number in ascending order;
 
   const handleRefresh = () => {
     fetchUsers();
@@ -15,7 +18,6 @@ export default function UserListPage() {
     fetchUsers();
   }, []);
 
-   
   return (
     <>
       {!usersLoading && users && (
@@ -31,7 +33,7 @@ export default function UserListPage() {
                 <Refresh />
               </button>
             </div>
-            {users?.map((user) => (
+            {filteredUsers?.map((user) => (
               <div key={user._id} className="my-2">
                 {user && <UserItem user={user} />}
               </div>

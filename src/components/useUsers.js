@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useEffect } from "react";
 
-export function useUsers() {
+export function useUsers(route = "") {
   const [users, setUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState(true);
   const [userAdded, setUserAdded] = useState(false);
@@ -12,8 +11,8 @@ export function useUsers() {
     setUsersLoading(true);
 
     try {
-      // Fetch data from the API
-      const response = await fetch(`${domain}/api/ebyf`, {
+      // Fetch data from the API based on the provided route
+      const response = await fetch(`${domain}/api/ebyf${route}`, {
         method: "GET",
         headers: {
           "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
@@ -26,21 +25,20 @@ export function useUsers() {
 
       const data = await response.json();
 
-      // Combine users and update state
-      const { ebyfVengUkte, ebyfMakaite } = data;
-      const users = [...ebyfVengUkte, ...ebyfMakaite];
-      setUsers(users);
+      const usersData = data?.members || []; // Assuming 'members' is the data field
+
+      setUsers(usersData);
 
       // Save to localStorage for offline use
-      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem(`users_${route}`, JSON.stringify(usersData));
 
       setUserAdded(true);
       setUsersLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
 
-      // Fallback: use cached data from localStorage
-      const cachedUsers = localStorage.getItem("users");
+      // Fallback: use cached data from localStorage based on route
+      const cachedUsers = localStorage.getItem(`users_${route}`);
       if (cachedUsers) {
         setUsers(JSON.parse(cachedUsers));
       } else {
@@ -54,7 +52,7 @@ export function useUsers() {
   useEffect(() => {
     // Check for offline mode and use cached data if available
     if (!navigator.onLine) {
-      const cachedUsers = localStorage.getItem("users");
+      const cachedUsers = localStorage.getItem(`users_${route}`);
       if (cachedUsers) {
         setUsers(JSON.parse(cachedUsers));
         setUsersLoading(false);
@@ -62,7 +60,7 @@ export function useUsers() {
     } else {
       fetchUsers(); // Fetch from API if online
     }
-  }, []);
+  }, [route]); // Trigger effect when route changes
 
   return {
     usersLoading,

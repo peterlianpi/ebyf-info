@@ -6,9 +6,10 @@ import Phone from "./icons/Phone";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User } from "lucide-react";
+import PeriodDisplay from "./periodShow";
 
 export default function UserItem({ user }) {
-  const { name, roles, phone, image, vengName, fbLink } = user;
+  const { name, number, roles, phone, image, veng, fbLink } = user;
   const [selectedUser, setSelectedUser] = useState(null);
 
   function handleCall(phone) {
@@ -40,21 +41,23 @@ export default function UserItem({ user }) {
           roles
             .filter(
               (role) =>
-                role.name.includes("Veng Uk") || role.name.includes("EBYF")
-            ) // Filter roles that include "Veng Uk" or "EBYF"
+                // Filter EBYF roles and exclude unwanted ones
+                role.role.name.includes("EBYF") &&
+                !["Blood", "Library", "Mopuan", "Sunday"].some((excludedRole) =>
+                  role.role.name.includes(excludedRole)
+                )
+            )
             .map((role, index) => {
-              if (role.name.includes("Veng Uk")) {
+              // If the role contains "EBYF - Veng Uk", include the veng name
+              if (role.role.name.includes("Veng Uk")) {
                 return (
                   <div key={index}>
-                    {role.name.includes("EBYF") && "EBYF - "}
-                    {vengName ? `${vengName} ` : null}
-                    {role.name.replace("EBYF -", "").trim()}{" "}
-                    {/* Remove "Veng Uk" if included */}
+                    {`EBYF - ${veng?.name ? `${veng.name} ` : ""}Veng Uk`}
                   </div>
                 );
-              } else if (role.name.includes("EBYF")) {
-                return <div key={index}>{role.name}</div>;
               }
+              // For other valid EBYF roles
+              return <div key={index}>{role.role.name}</div>;
             })
         ) : (
           <div>No Role</div>
@@ -70,13 +73,13 @@ export default function UserItem({ user }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
           <div className="bg-secondary text-primary p-4 rounded-lg w-[320px]">
             <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
-            {selectedUser.email && (
-              <p className="mb-2">Email: {selectedUser.email}</p>
+            {selectedUser?.email && (
+              <p className="mb-2">Email: {selectedUser?.email}</p>
             )}
-            {selectedUser.phone && (
+            {selectedUser?.phone && (
               <div className="mb-2">
                 <p>Phone:</p>
-                {selectedUser.phone.split(",").map((num, index) => (
+                {selectedUser?.phone.split(",").map((num, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between mr-4 mb-2"
@@ -90,27 +93,43 @@ export default function UserItem({ user }) {
               </div>
             )}
 
-            {selectedUser.roles && selectedUser.roles.length > 0 && (
+            {selectedUser?.roles && selectedUser?.roles.length > 0 && (
               <p className="mb-2">
                 <p>Roles:</p>
                 <div>
-                  {selectedUser.roles.map((role, index) => (
-                    <div key={index}>
-                      {role.name.includes("EBYF") && "EBYF - "}
-                      {vengName ? `${vengName} ` : null}
-                      {role.name.replace("EBYF -", "").trim()}{" "}
-                    </div>
-                  ))}
+                  {selectedUser?.roles.map((role, index) =>
+                    role.role.name.includes("Veng Uk") ? (
+                      <div key={index}>
+                        {"EBYF - "}
+                        {veng?.name ? `${veng.name} ` : ""}
+                        {role.role.name.replace("EBYF -", "").trim()}
+                        <br />{" "}
+                        <PeriodDisplay
+                          startedAt={role.startedAt}
+                          endedAt={role.endedAt}
+                        />
+                      </div>
+                    ) : (
+                      <div key={index}>
+                        {role.role.name}
+                        <br />
+                        <PeriodDisplay
+                          startedAt={role.startedAt}
+                          endedAt={role.endedAt}
+                        />
+                      </div>
+                    )
+                  )}
                 </div>
               </p>
             )}
-            {selectedUser.vengName && (
-              <p className="mb-2">Veng: {selectedUser.vengName}</p>
+            {selectedUser?.veng?.name && (
+              <p className="mb-2">Veng: {selectedUser.veng.name}</p>
             )}
-            {selectedUser.fbLink && (
+            {selectedUser?.fbLink && (
               <div className="flex p-4 justify-center">
                 <a
-                  href={selectedUser.fbLink}
+                  href={selectedUser?.fbLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

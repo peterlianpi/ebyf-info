@@ -33,7 +33,7 @@ const Hero = () => {
     );
   }
 
-  console.log("All users : ", users);
+ 
 
   return (
     <section className="  py-12 h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">

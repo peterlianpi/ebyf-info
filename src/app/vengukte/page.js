@@ -5,7 +5,16 @@ import { useUsers } from "@/components/useUsers";
 import React, { useEffect, useState } from "react";
 
 function VenguktePage() {
-  const { users, usersLoading, fetchUsers } = useUsers();
+  const { users, usersLoading, fetchUsers } = useUsers("/vengukte"); // Modify route as needed
+
+  // Filter users based on the role "Veng Uk"
+  const filteredUsers = users
+    .filter((user) =>
+      user.roles.some((role) => role.role.name.includes("Veng Uk"))
+    )
+    .sort((a, b) => a.number - b.number); // Sort users by number in ascending order;
+
+ 
 
   // Ensure that this function is only executed on the client-side
   useEffect(() => {
@@ -25,14 +34,11 @@ function VenguktePage() {
       <div className="flex flex-col max-w-md gap-2 mx-auto">
         <div className="">
           <div className="flex items-center justify-start">
-            <p className="text-2xl font-extrabold w-[80%]">Veng-Uk te</p>
+            <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
           </div>
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <div key={user._id} className="mb-2">
-              {/* Check if the user has the "Veng Uk" role */}
-              {user.roles?.some(role => role.name.includes("Veng Uk")) && (
-                <UserItem user={user} />
-              )}
+              <UserItem user={user} />
             </div>
           ))}
         </div>

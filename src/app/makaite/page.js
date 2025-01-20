@@ -6,7 +6,13 @@ import Loading from "@/components/icons/Loading";
 import React, { useEffect } from "react";
 
 function MakaitePage() {
-  const { users, usersLoading, fetchUsers } = useUsers();
+  const { users, usersLoading, fetchUsers } = useUsers("/makaite"); // Modify route as needed
+
+
+   // Filter users based on the role "Veng Uk"
+   const filteredUsers = users.filter((user) =>
+    user.roles.some((role) => role.role.name.includes("EBYF -"))
+  ).sort((a, b) => a.number - b.number); // Sort users by number in ascending order;
 
   // Ensure that this function is only executed on the client-side
   useEffect(() => {
@@ -26,26 +32,13 @@ function MakaitePage() {
       <div className="flex flex-col max-w-md gap-2 mx-auto">
         <div className="">
           <div className="flex items-center justify-start">
-            <p className="text-2xl font-extrabold w-[80%]">Makai te</p>
+            <p className="text-2xl mb-4 font-extrabold w-[80%]">Makai te</p>
           </div>
-          {users.map((user) => {
-            // Filter roles: only keep those that include 'EBYF' but not 'Veng Uk'
-            const filteredRoles = user.roles.filter(
-              (role) => role.name.includes("EBYF") && !role.name.includes("Veng Uk")
-            );
-
-            // Only render UserItem if there are valid filtered roles
-            return filteredRoles.length > 0 ? (
-              <div key={user._id} className="my-2">
-                <UserItem
-                  user={{
-                    ...user,
-                    roles: filteredRoles, // Pass only the filtered roles
-                  }}
-                />
-              </div>
-            ) : null; // Don't render if no valid roles
-          })}
+          {filteredUsers.map((user) => (
+            <div key={user.number} className="mb-2">
+              <UserItem user={user} />
+            </div>
+          ))}
         </div>
       </div>
     </>
