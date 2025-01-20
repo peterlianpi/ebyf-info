@@ -25,16 +25,6 @@ const Hero = () => {
     setShowFeedbackForm(false);
   };
 
-  if (usersLoading) {
-    return (
-      <div className="flex items-center text-center max-w-md mx-auto justify-center">
-        <Loading />
-      </div>
-    );
-  }
-
- 
-
   return (
     <section className="  py-12 h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
       <div className="container mx-auto  ">
