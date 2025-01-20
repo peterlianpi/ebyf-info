@@ -23,8 +23,8 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[120px]  ">
-      <Avatar className="border border-emerald-600">
+    <section className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
+      <Avatar className="border -z-1 border-emerald-600">
         <AvatarImage src={image} />
         <AvatarFallback className="bg-sky-500">
           <User className="text-white" />
@@ -100,7 +100,7 @@ export default function UserItem({ user }) {
             {selectedUser?.roles && selectedUser?.roles.length > 0 && (
               <p className="mb-2">
                 <p>Roles:</p>
-                <div>
+                <div className="h-40 overflow-auto">
                   {selectedUser?.roles.map((role, index) =>
                     role.role.name.includes("Veng Uk") ? (
                       <div className="text-sm" key={index}>
