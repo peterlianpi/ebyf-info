@@ -43,7 +43,7 @@ function BloodPage() {
             </p>
           </div>
           {users.map((user) => (
-            <div key={user._id} className="mb-2">
+            <div key={user.id} className="mb-2">
               <UserItem user={user} />
             </div>
           ))}

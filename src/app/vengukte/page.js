@@ -45,7 +45,7 @@ function VenguktePage() {
             <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
           </div>
           {filteredUsers.map((user) => (
-            <div key={user._id} className="mb-2">
+            <div key={user.id} className="mb-2">
               <UserItem user={user} />
             </div>
           ))}

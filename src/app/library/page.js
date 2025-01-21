@@ -49,13 +49,13 @@ function LibraryPage() {
 
             // Only render UserItem if there are valid filtered roles
             return filteredRoles.length > 0 ? (
-              <div key={user._id} className="my-2">
-                <p>
+              <div key={user.id} className="my-2">
+                <div>
                   <PeriodDisplay
                     startedAt={filteredRoles[0].startedAt}
                     endedAt={filteredRoles[0].endedAt}
                   />
-                </p>
+                </div>
                 <UserItem user={user} />
               </div>
             ) : null; // Don't render if no valid roles

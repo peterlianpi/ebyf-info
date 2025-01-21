@@ -52,7 +52,7 @@ export default function SearchBox({ users, isFetchingComplete }) {
 
       <div style={{ maxHeight: "250px", overflowY: "scroll" }}>
         {filteredUsers.map((user) => (
-          <div key={user._id} className="">
+          <div key={user.id} className="">
             {<UserItem user={user} />}
           </div>
         ))}

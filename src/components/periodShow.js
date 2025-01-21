@@ -1,7 +1,7 @@
 import React from "react";
 
 const PeriodDisplay = ({ startedAt, endedAt }) => {
-  if (!startedAt || !endedAt) return <div>No Period Available</div>;
+  if (!startedAt) return <div>No Period Available</div>;
 
   const formatDate = (dateString) =>
     new Date(dateString).toLocaleDateString("en-US", {
@@ -13,7 +13,8 @@ const PeriodDisplay = ({ startedAt, endedAt }) => {
   return (
     <div>
       <p className="text-xs p-4">
-        From : {formatDate(startedAt)} To : {formatDate(endedAt)}
+        From : {formatDate(startedAt)} To :{" "}
+        {endedAt ? formatDate(endedAt) : "Present"}
       </p>
     </div>
   );

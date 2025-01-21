@@ -63,7 +63,7 @@ export default function UserListPage() {
               </button>
             </div>
             {filteredUsers?.map((user) => (
-              <div key={user._id} className="my-2">
+              <div key={user.id} className="my-2">
                 {user && <UserItem user={user} />}
               </div>
             ))}
