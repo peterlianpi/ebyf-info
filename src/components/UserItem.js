@@ -52,7 +52,7 @@ export default function UserItem({ user }) {
               if (role.role.name.includes("Veng Uk")) {
                 return (
                   <div key={index} className="text-sm max-md:text-xs">
-                    {`EBYF - ${veng?.name ? `${veng.name} ` : ""}Veng Uk`}
+                    {`EBYF - ${veng ? `${veng} ` : ""}Veng Uk`}
                   </div>
                 );
               }
@@ -105,7 +105,7 @@ export default function UserItem({ user }) {
                     role.role.name.includes("Veng Uk") ? (
                       <div className="max-md:text-sm" key={index}>
                         {"EBYF - "}
-                        {veng?.name ? `${veng.name} ` : ""}
+                        {veng ? `${veng} ` : ""}
                         {role.role.name.replace("EBYF -", "").trim()}
                         <br />{" "}
                         <PeriodDisplay
@@ -127,8 +127,8 @@ export default function UserItem({ user }) {
                 </div>
               </div>
             )}
-            {selectedUser?.veng?.name && (
-              <p className="mb-2">Veng: {selectedUser.veng.name}</p>
+            {selectedUser?.veng && (
+              <p className="mb-2">Veng: {selectedUser.veng}</p>
             )}
             {selectedUser?.fbLink && (
               <div className="flex p-4 justify-center">
