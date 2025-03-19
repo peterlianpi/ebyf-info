@@ -1,9 +1,10 @@
 "use client";
 
-import UserItem from "@/components/UserItem";
-import { useUsers } from "@/components/useUsers";
+ 
+import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import UserItem from "@/components/user-item";
 
 function MakaitePage() {
   const { users, usersLoading, fetchUsers } = useUsers("/makaite"); // Modify route as needed

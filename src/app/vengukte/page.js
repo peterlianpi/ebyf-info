@@ -1,7 +1,8 @@
 "use client";
-import UserItem from "@/components/UserItem";
+
 import { Skeleton } from "@/components/ui/skeleton";
-import { useUsers } from "@/components/useUsers";
+import UserItem from "@/components/user-item";
+import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function VenguktePage() {
@@ -20,21 +21,7 @@ function VenguktePage() {
   }, []);
 
   if (usersLoading) {
-    return (
-      <div className="flex flex-col max-w-md gap-2 mx-auto">
-        <div className="">
-          <div className="flex items-center justify-start">
-            <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingComponent />;
   }
 
   return (
@@ -56,3 +43,21 @@ function VenguktePage() {
 }
 
 export default VenguktePage;
+
+export const LoadingComponent = () => {
+  return (
+    <div className="flex flex-col max-w-md gap-2 mx-auto">
+      <div className="">
+        <div className="flex items-center justify-start">
+          <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
+        </div>
+      </div>
+    </div>
+  );
+};

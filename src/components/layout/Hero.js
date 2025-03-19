@@ -1,21 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Socials from "../Socials";
-import SearchBox from "./SearchBox";
-import { useUsers } from "../useUsers";
-import Loading from "../icons/Loading";
 import FeedbackForm from "./FeedbackForm";
 import Close from "../icons/Close";
+import SearchBox from "@/features/all-members/member-search";
 
 const Hero = () => {
-  const { users, usersLoading, fetchUsers } = useUsers();
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const handleFeedbackButtonClick = () => {
     setShowFeedbackForm(true);
@@ -38,7 +31,7 @@ const Hero = () => {
               typing numbers—just tap and call.
             </p>
             <div className="mb-8">
-              <SearchBox users={users} isFetchingComplete={!usersLoading} />
+              <SearchBox />
             </div>
             <Socials
               containerStyles="flex gap-x-6 mx-auto"

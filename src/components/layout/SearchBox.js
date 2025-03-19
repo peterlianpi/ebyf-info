@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import UserItem from "@/components/UserItem";
+ 
 import Remove from "../icons/Remove";
 import Search from "../icons/Search";
+import UserItem from "../user-item";
 
 export default function SearchBox({ users, isFetchingComplete }) {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query

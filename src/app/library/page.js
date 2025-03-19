@@ -1,8 +1,9 @@
 "use client";
-import UserItem from "@/components/UserItem";
+
 import PeriodDisplay from "@/components/periodShow";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useUsers } from "@/components/useUsers";
+import UserItem from "@/components/user-item";
+import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function LibraryPage() {

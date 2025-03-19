@@ -9,6 +9,7 @@ const links = [
   { path: "/", name: "Home" },
   { path: "/makaite", name: "Makai" },
   { path: "/vengukte", name: "Venguk" },
+  { path: "/talent", name: "Talent" },
   { path: "/blood", name: "Sisan" },
   { path: "/mopuan", name: "Mopuan" },
   { path: "/library", name: "Library" },

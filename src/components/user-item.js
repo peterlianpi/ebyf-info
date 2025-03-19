@@ -9,7 +9,7 @@ import { User } from "lucide-react";
 import PeriodDisplay from "./periodShow";
 
 export default function UserItem({ user }) {
-  const {id, name, number, roles, phone, image, veng, fbLink } = user;
+  const { id, name, number, roles, phone, image, veng, fbLink } = user;
   const [selectedUser, setSelectedUser] = useState(null);
 
   function handleCall(phone) {
@@ -23,7 +23,10 @@ export default function UserItem({ user }) {
     setSelectedUser(null);
   }
   return (
-    <section key={id} className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  ">
+    <section
+      key={id}
+      className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  "
+    >
       <Avatar className="border -z-1 border-emerald-600">
         <AvatarImage src={image} />
         <AvatarFallback className="bg-sky-500">
@@ -43,19 +46,11 @@ export default function UserItem({ user }) {
               (role) =>
                 // Filter EBYF roles and exclude unwanted ones
                 role.role.name.includes("EBYF") &&
-                !["Blood", "Library", "Mopuan", "Sunday"].some((excludedRole) =>
-                  role.role.name.includes(excludedRole)
+                !["Blood", "Library", "Mopuan", "Sunday", "Talent", "Sum"].some(
+                  (excludedRole) => role.role.name.includes(excludedRole)
                 )
             )
             .map((role, index) => {
-              // If the role contains "EBYF - Veng Uk", include the veng name
-              if (role.role.name.includes("Veng Uk")) {
-                return (
-                  <div key={index} className="text-sm max-md:text-xs">
-                    {`EBYF - ${veng ? `${veng} ` : ""}Veng Uk`}
-                  </div>
-                );
-              }
               // For other valid EBYF roles
               return (
                 <div className="text-sm max-md:text-xs" key={index}>
@@ -101,29 +96,16 @@ export default function UserItem({ user }) {
               <div className="mb-2">
                 <p>Roles:</p>
                 <div className="h-40 overflow-auto">
-                  {selectedUser?.roles.map((role, index) =>
-                    role.role.name.includes("Veng Uk") ? (
-                      <div className="max-md:text-sm" key={index}>
-                        {"EBYF - "}
-                        {veng ? `${veng} ` : ""}
-                        {role.role.name.replace("EBYF -", "").trim()}
-                        <br />{" "}
-                        <PeriodDisplay
-                          startedAt={role.startedAt}
-                          endedAt={role.endedAt}
-                        />
-                      </div>
-                    ) : (
-                      <div className="max-md:text-sm" key={index}>
-                        {role.role.name}
-                        <br />
-                        <PeriodDisplay
-                          startedAt={role.startedAt}
-                          endedAt={role.endedAt}
-                        />
-                      </div>
-                    )
-                  )}
+                  {selectedUser?.roles.map((role, index) => (
+                    <div className="max-md:text-sm" key={index}>
+                      {role.role.name}
+                      <br />
+                      <PeriodDisplay
+                        startedAt={role.startedAt}
+                        endedAt={role.endedAt}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

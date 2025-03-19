@@ -1,8 +1,8 @@
 "use client";
 
-import UserItem from "@/components/UserItem";
+import UserItem from "@/components/user-item";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useUsers } from "@/components/useUsers";
+import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function MopuanPage() {

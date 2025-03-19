@@ -12,7 +12,7 @@ export function useUsers(route = "") {
 
     try {
       // Fetch data from the API based on the provided route
-      const response = await fetch(`${domain}/api/ebyf${route}`, {
+      const response = await fetch(`${domain}/api/ebyf${route}&orgId=1`, {
         method: "GET",
         headers: {
           "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
@@ -25,7 +25,8 @@ export function useUsers(route = "") {
 
       const data = await response.json();
 
-      const usersData = data?.members || []; // Assuming 'members' is the data field
+      const usersData = data?.members 
+      // || []; // Assuming 'members' is the data field
 
       setUsers(usersData);
 
