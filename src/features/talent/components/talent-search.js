@@ -43,9 +43,10 @@ export default function SearchBox() {
           YF Talent 2025
         </h1>
         <h3 className="mt-2 text-sm text-gray-500">
-          Each home selects <strong>two members</strong> for{" "}
-          <strong>YF Talent 2025</strong>, with contributions collected{" "}
-          <strong>quarterly</strong>. Search below to see if you're on the list.
+          Each home selects <strong>two members</strong> for
+          <strong>YF Talent 2025</strong>, with contributions collected
+          <strong>quarterly</strong>. Search below to see if you&apos;re on the
+          list.
         </h3>
       </div>
 
