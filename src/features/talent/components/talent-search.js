@@ -43,11 +43,8 @@ export default function SearchBox() {
           YF Talent 2025
         </h1>
         <h3 className="mt-2 text-sm text-gray-500">
-          Each home selects <strong>two members</strong> for
-          <strong>YF Talent 2025</strong>, with contributions collected
-          <strong>quarterly</strong>. Search below to see if you&apos;re on the
-          list.
-        </h3>
+          Each home selects <strong>two members</strong> for <strong>YF Talent 2025</strong>, with contributions collected <strong>quarterly</strong>. Search below to see if you&apos;re on the list.
+     </h3>
       </div>
 
       {/* Search Input Field */}
@@ -59,7 +56,7 @@ export default function SearchBox() {
           onChange={handleSearchQueryChange}
           placeholder="Search Your Name..."
           className="w-full rounded-md border-none hover:border-none mt-2"
-          disabled={usersLoading}
+          // disabled={usersLoading}
         />
         {searchQuery !== "" && !usersLoading && (
           <Button
