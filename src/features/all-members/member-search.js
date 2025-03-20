@@ -73,7 +73,7 @@ export default function SearchBox() {
         style={{ maxHeight: "250px", overflowY: "scroll" }}
         className="space-y-2"
       >
-        {users.length === 0 && usersLoading
+        {users.length === 0 || usersLoading
           ? null
           : users.map((user) => <UserItem key={user.id} user={user} />)}
       </div>
