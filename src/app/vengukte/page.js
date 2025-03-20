@@ -6,7 +6,7 @@ import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function VenguktePage() {
-  const { users, usersLoading, fetchUsers } = useUsers("/vengukte"); // Modify route as needed
+  const { users, usersLoading, fetchUsers } = useUsers("/vengukte?orgId=1"); // Modify route as needed
 
   // Filter users based on the role "Veng Uk"
   const filteredUsers = users

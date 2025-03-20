@@ -6,7 +6,7 @@ import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function BloodPage() {
-  const { users, usersLoading, fetchUsers } = useUsers("/blood"); // Modify route as needed
+  const { users, usersLoading, fetchUsers } = useUsers("/blood?orgId=1"); // Modify route as needed
 
   // Ensure that this function is only executed in the client-side
   useEffect(() => {

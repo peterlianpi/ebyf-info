@@ -7,7 +7,7 @@ import { useUsers } from "@/hooks/useUsers";
 import React, { useEffect } from "react";
 
 function LibraryPage() {
-  const { users, usersLoading, fetchUsers } = useUsers("/library"); // Modify route as needed
+  const { users, usersLoading, fetchUsers } = useUsers("/library?orgId=1"); // Modify route as needed
 
   // Ensure that this function is only executed in the client-side
   useEffect(() => {

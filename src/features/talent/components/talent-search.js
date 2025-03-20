@@ -13,7 +13,7 @@ export default function SearchBox() {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery); // Debounced state for search query
   const { users, usersLoading } = useUsers(
-    `/talent?searchQuery=${debouncedSearchQuery}`
+    `/talent?searchQuery=${debouncedSearchQuery}&orgId=1`
   ); // Use the debounced query
 
   // Handle the search query change

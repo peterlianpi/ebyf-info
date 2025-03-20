@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import UserItem from "@/components/user-item";
 
 function MakaitePage() {
-  const { users, usersLoading, fetchUsers } = useUsers("/makaite"); // Modify route as needed
+  const { users, usersLoading, fetchUsers } = useUsers("/makaite?orgId=1"); // Modify route as needed
 
   // Filter users based on the role "Veng Uk"
   const filteredUsers = users

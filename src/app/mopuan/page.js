@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 
 function MopuanPage() {
   // Pass the route to fetch users for a specific role or endpoint
-  const { users, usersLoading, fetchUsers } = useUsers("/mopuan"); // Modify route as needed
+  const { users, usersLoading, fetchUsers } = useUsers("/mopuan?orgId=1"); // Modify route as needed
 
   // Ensure that this function is only executed in the client-side
   useEffect(() => {
