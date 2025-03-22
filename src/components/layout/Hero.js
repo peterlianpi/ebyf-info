@@ -3,21 +3,11 @@
 import React, { useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Socials from "../Socials";
-import FeedbackForm from "./FeedbackForm";
 import Close from "../icons/Close";
 import SearchBox from "@/features/all-members/member-search";
+import FeedbackForm from "@/features/feedback/components/feedback";
 
 const Hero = () => {
-  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-
-  const handleFeedbackButtonClick = () => {
-    setShowFeedbackForm(true);
-  };
-
-  const handleCloseFeedbackForm = () => {
-    setShowFeedbackForm(false);
-  };
-
   return (
     <section className="  py-12 h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none">
       <div className="container mx-auto  ">
@@ -45,27 +35,8 @@ const Hero = () => {
         </div>
 
         <div className="mb-20 text-center">
-          <button
-            onClick={handleFeedbackButtonClick}
-            className="bg-primary text-primary-foreground py-3 px-6 rounded-md shadow-md hover:bg-primary-dark transition-all"
-          >
-            Provide Feedback
-          </button>
+          <FeedbackForm />
         </div>
-
-        {showFeedbackForm && (
-          <div className="max-full mx-auto fixed top-0 left-0 right-0  h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-primary-foreground p-8 rounded-md relative">
-              <button
-                className="absolute top-2 right-2 w-10 h-10"
-                onClick={handleCloseFeedbackForm}
-              >
-                <Close />
-              </button>
-              <FeedbackForm />
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
