@@ -79,71 +79,73 @@ export default function FeedbackForm() {
       <DialogTrigger asChild>
         <Button variant="outline">Give Feedback</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md space-y-4">
-        <h2 className="text-lg font-semibold">Submit Your Feedback</h2>
+      <DialogContent className="max-w-md max-md:w-[330px] rounded-lg">
+        <div className="w-full space-y-4">
+          <h2 className="text-lg font-semibold">Submit Your Feedback</h2>
 
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="anonymous"
-            checked={anonymous}
-            onCheckedChange={(checked) => setAnonymous(!!checked)}
-          />
-          <Label htmlFor="anonymous">Submit Anonymously</Label>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="anonymous"
+              checked={anonymous}
+              onCheckedChange={(checked) => setAnonymous(!!checked)}
+            />
+            <Label htmlFor="anonymous">Submit Anonymously</Label>
+          </div>
+
+          {!anonymous && (
+            <>
+              <div>
+                <Label>Name</Label>
+                <Input
+                  type="text"
+                  placeholder="Enter your name..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <Label>Email (Optional)</Label>
+                <Input
+                  type="email"
+                  placeholder="Enter your email..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {emailError && (
+                  <p className="text-red-500 text-sm">{emailError}</p>
+                )}
+              </div>
+
+              <div>
+                <Label>Phone (Optional)</Label>
+                <Input
+                  type="tel"
+                  placeholder="Enter your phone number..."
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </>
+          )}
+
+          <div>
+            <Label>Feedback</Label>
+            <Textarea
+              placeholder="Write your feedback here..."
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+          </div>
+
+          <Button
+            onClick={handleSubmit}
+            disabled={loading || !feedback.trim()}
+            className="w-full"
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
         </div>
-
-        {!anonymous && (
-          <>
-            <div>
-              <Label>Name</Label>
-              <Input
-                type="text"
-                placeholder="Enter your name..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <Label>Email (Optional)</Label>
-              <Input
-                type="email"
-                placeholder="Enter your email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {emailError && (
-                <p className="text-red-500 text-sm">{emailError}</p>
-              )}
-            </div>
-
-            <div>
-              <Label>Phone (Optional)</Label>
-              <Input
-                type="tel"
-                placeholder="Enter your phone number..."
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
-          </>
-        )}
-
-        <div>
-          <Label>Feedback</Label>
-          <Textarea
-            placeholder="Write your feedback here..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-        </div>
-
-        <Button
-          onClick={handleSubmit}
-          disabled={loading || !feedback.trim()}
-          className="w-full"
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </Button>
       </DialogContent>
     </Dialog>
   );
