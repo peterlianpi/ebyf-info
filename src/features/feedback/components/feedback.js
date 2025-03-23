@@ -94,7 +94,7 @@ export default function FeedbackForm() {
 
           {!anonymous && (
             <>
-              <div>
+              <div className="space-y-2">
                 <Label>Name</Label>
                 <Input
                   type="text"
@@ -104,7 +104,7 @@ export default function FeedbackForm() {
                 />
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label>Email (Optional)</Label>
                 <Input
                   type="email"
@@ -117,7 +117,7 @@ export default function FeedbackForm() {
                 )}
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label>Phone (Optional)</Label>
                 <Input
                   type="tel"
@@ -129,7 +129,7 @@ export default function FeedbackForm() {
             </>
           )}
 
-          <div>
+          <div className="space-y-2">
             <Label>Feedback</Label>
             <Textarea
               placeholder="Write your feedback here..."
