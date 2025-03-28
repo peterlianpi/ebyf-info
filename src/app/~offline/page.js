@@ -5,8 +5,10 @@ const FallbackPage = () => (
     <Head>
       <title>EBYF Contacts Info</title>
     </Head>
-    <h1>This is offline fallback page</h1>
-    <h2>When offline, any page route will fallback to this page</h2>
+    <p className="font-semibold text-center mt-4">This is offline fallback page</p>
+    <p className="text-center mt-4">
+      When offline, any page route will fallback to this page
+    </p>
   </>
 );
 

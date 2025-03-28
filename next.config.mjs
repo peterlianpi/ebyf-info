@@ -5,7 +5,12 @@ import withPWAInit from "@ducanh2912/next-pwa";
 // Initialize the PWA configuration
 const withPWA = withPWAInit({
   sw: "service-worker.js",
-  cacheOnFrontEndNav:true,
+  cacheStartUrl: true,
+  dynamicStartUrl: true,
+  dynamicStartUrlRedirect: true,
+  extendDefaultRuntimeCaching: true,
+  register: true,
+  cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
