@@ -4,8 +4,7 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 // Initialize the PWA configuration
 const withPWA = withPWAInit({
-  dest: "public",
-  cacheOnFrontEndNavigation: true,
+  cacheOnFrontEndNav:true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
@@ -15,12 +14,12 @@ const withPWA = withPWAInit({
   },
   fallbacks: {
     // Configure fallbacks for different file types
-    document: "/~offline", // Fallback for failed page requests
-    data: "/fallback.json", // Fallback for JSON files
-    image: "/fallback.webp", // Fallback for images
-    audio: "/fallback.mp3", // Fallback for audio files
-    video: "/fallback.mp4", // Fallback for video files
-    font: "/fallback-font.woff2", // Fallback for fonts
+    document: "/_offline", // Fallback for failed page requests
+    // data: "/fallback.json", // Fallback for JSON files
+    // image: "/fallback.webp", // Fallback for images
+    // audio: "/fallback.mp3", // Fallback for audio files
+    // video: "/fallback.mp4", // Fallback for video files
+    // font: "/fallback-font.woff2", // Fallback for fonts
   },
 });
 
