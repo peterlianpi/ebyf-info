@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Fallback = () => (
+const FallbackPage = () => (
   <>
     <Head>
       <title>EBYF Contacts Info</title>
@@ -10,4 +10,4 @@ const Fallback = () => (
   </>
 );
 
-export default Fallback;
+export default FallbackPage;

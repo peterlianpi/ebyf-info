@@ -1,20 +1,20 @@
-import withPWAInit from "@ducanh2912/next-pwa";
-
 /** @type {import('next').NextConfig} */
+
+import withPWAInit from "@ducanh2912/next-pwa";
 
 // Initialize the PWA configuration
 const withPWA = withPWAInit({
+  sw: "service-worker.js",
   cacheOnFrontEndNav:true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: false,
   workboxOptions: {
     disableDevLogs: true,
   },
   fallbacks: {
     // Configure fallbacks for different file types
-    document: "/_offline", // Fallback for failed page requests
+    document: "/~offline", // Fallback for failed page requests
     // data: "/fallback.json", // Fallback for JSON files
     // image: "/fallback.webp", // Fallback for images
     // audio: "/fallback.mp3", // Fallback for audio files
