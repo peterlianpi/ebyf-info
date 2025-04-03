@@ -10,9 +10,8 @@ const links = [
   { path: "/makaite", name: "Makai" },
   { path: "/vengukte", name: "Venguk" },
   { path: "/talent", name: "Talent" },
-  { path: "/blood", name: "Sisan" },
-  { path: "/mopuan", name: "Mopuan" },
-  { path: "/library", name: "Library" },
+  { path: "/contacts", name: "Contacts" },
+  { path: "/hun-gelna", name: "Service" },
   { path: "/policy", name: "Policy" },
 ];
 const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {

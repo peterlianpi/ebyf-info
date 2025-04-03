@@ -43,3 +43,5 @@ public/workbox-7144475a.js.map
 /public/fallback-*.js
 .env
 .env
+public/service-worker.js
+public/swe-worker-development.js
