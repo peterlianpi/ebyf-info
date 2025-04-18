@@ -53,6 +53,23 @@ const withPWA = withPWAInit({
           cacheableResponse: { statuses: [0, 200] },
         },
       },
+
+      {
+        urlPattern: /^https?:\/\/(.*)\/api\/.*$/, // Matches any external API with /api/
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "external-api-cache",
+          networkTimeoutSeconds: 3,
+          expiration: {
+            maxEntries: 50,
+            maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+
       {
         urlPattern: /\.(?:js|css)$/,
         handler: "StaleWhileRevalidate",
