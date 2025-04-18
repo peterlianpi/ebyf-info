@@ -9,7 +9,7 @@ function HunGelnaPage() {
 
   // Fetch image URL when the component mounts
   useEffect(() => {
-    setImageUrl("/zo-hun.png"); // Image stored in the public folder
+    setImageUrl("/yf-service.png"); // Image stored in the public folder
   }, []);
 
   // Function to handle image download

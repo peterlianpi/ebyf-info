@@ -16,6 +16,21 @@ const withPWA = withPWAInit({
   swcMinify: true,
   workboxOptions: {
     disableDevLogs: true,
+    additionalManifestEntries: [
+      { url: "/", revision: null },
+    { url: "/favicon.ico", revision: null },
+    { url: "/contacts", revision: null },
+    { url: "/policy", revision: null },
+    { url: "/makaite", revision: null },
+    { url: "/talent", revision: null },
+    { url: "/vengukte", revision: null },
+    { url: "/~offline", revision: null },
+    // Precache icons from public folder
+    { url: "/manifest.json", revision: null },
+    { url: "/icons/icon-192x192.png", revision: null },
+    { url: "/icons/icon-384x384.png", revision: null },
+    { url: "/icons/icon-512x512.png", revision: null },
+    ],
   },
   fallbacks: {
     // Configure fallbacks for different file types

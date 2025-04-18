@@ -11,7 +11,7 @@ const links = [
   { path: "/vengukte", name: "Venguk" },
   { path: "/talent", name: "Talent" },
   { path: "/contacts", name: "Contacts" },
-  { path: "/hun-gelna", name: "Service" },
+  // { path: "/hun-gelna", name: "Service" },
   { path: "/policy", name: "Policy" },
 ];
 const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {

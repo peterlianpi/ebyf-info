@@ -24,42 +24,41 @@ export function useUsers(route = "") {
       }
 
       const data = await response.json();
+      const usersData = data?.members || [];
 
-      const usersData = data?.members 
-      // || []; // Assuming 'members' is the data field
-
+      // Update state and localStorage for offline use
       setUsers(usersData);
-
-      // Save to localStorage for offline use
       localStorage.setItem(`users_${route}`, JSON.stringify(usersData));
 
       setUserAdded(true);
-      setUsersLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
 
-      // Fallback: use cached data from localStorage based on route
+      // Fallback: use cached data from localStorage if offline or network error
       const cachedUsers = localStorage.getItem(`users_${route}`);
       if (cachedUsers) {
         setUsers(JSON.parse(cachedUsers));
       } else {
-        setUsers([]);
+        setUsers([]); // Set an empty array if no cached data is available
       }
-
+    } finally {
+      // Set loading to false after the fetch completes (either success or error)
       setUsersLoading(false);
     }
   };
 
   useEffect(() => {
     // Check for offline mode and use cached data if available
-    if (!navigator.onLine) {
+    if (navigator.onLine) {
+      fetchUsers(); // Fetch from API if online
+    } else {
       const cachedUsers = localStorage.getItem(`users_${route}`);
       if (cachedUsers) {
         setUsers(JSON.parse(cachedUsers));
         setUsersLoading(false);
+      } else {
+        setUsers([]); // Optionally set empty users if no cached data
       }
-    } else {
-      fetchUsers(); // Fetch from API if online
     }
   }, [route]); // Trigger effect when route changes
 

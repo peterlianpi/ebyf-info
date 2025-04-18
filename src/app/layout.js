@@ -7,14 +7,17 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
+// Font
 const inter = Inter({ subsets: ["latin"] });
 
+// Metadata Constants
 const APP_NAME = "EBYF Contacts Info";
 const APP_DEFAULT_TITLE = "EBYF Contacts Info";
 const APP_TITLE_TEMPLATE = "%s - EBYF Contacts Info";
 const APP_DESCRIPTION =
   "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.";
 
+// Metadata Object (for use with the new Metadata API)
 export const metadata = {
   applicationName: APP_NAME,
   title: {
@@ -54,9 +57,13 @@ export const viewport = {
   themeColor: "#FFFFFF",
 };
 
+// RootLayout Component
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* You can include other elements in <head> here if needed */}
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <main className="max-w-4xl p-4 mx-auto">
