@@ -1,4 +1,4 @@
-import SearchBox from "@/features/talent/components/talent-search";
+import SearchBox from "@/features/talen/components/talen-search";
 import React from "react";
 
 const TalentPage = () => {

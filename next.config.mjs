@@ -25,7 +25,7 @@ const withPWA = withPWAInit({
       { url: "/contacts", revision: null },
       { url: "/policy", revision: null },
       { url: "/makaite", revision: null },
-      { url: "/talent", revision: null },
+      { url: "/talen", revision: null },
       { url: "/vengukte", revision: null },
       { url: "/~offline", revision: null },
       { url: "/icons/icon-192x192.png", revision: null },

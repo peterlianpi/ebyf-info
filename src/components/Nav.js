@@ -9,7 +9,7 @@ const links = [
   { path: "/", name: "Home" },
   { path: "/makaite", name: "Makai" },
   { path: "/vengukte", name: "Venguk" },
-  { path: "/talent", name: "Talent" },
+  { path: "/talen", name: "Talen" },
   { path: "/contacts", name: "Contacts" },
   // { path: "/hun-gelna", name: "Service" },
   { path: "/policy", name: "Policy" },

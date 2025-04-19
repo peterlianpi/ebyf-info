@@ -40,11 +40,14 @@ export default function SearchBox() {
       {/* Title Section */}
       <div className="text-center">
         <h1 className="text-2xl font-semibold font-sans text-primary">
-          YF Talent 2025
+          YF Talen 2025
         </h1>
         <h3 className="mt-2 text-sm text-gray-500">
-          Each home selects <strong>two members</strong> for <strong>YF Talent 2025</strong>, with contributions collected <strong>quarterly</strong>. Search below to see if you&apos;re on the list.
-     </h3>
+          Each home selects <strong>two members</strong> for{" "}
+          <strong>YF Talen 2025</strong>, with contributions collected{" "}
+          <strong>quarterly</strong>. Search below to see if you&apos;re on the
+          list.
+        </h3>
       </div>
 
       {/* Search Input Field */}
