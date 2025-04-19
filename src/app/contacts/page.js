@@ -48,36 +48,32 @@ function CombinedContactsPage() {
         </div>
       ) : (
         <div>
-          {users.map((user) => (
-            <div key={user.id} className="mb-2">
-              {/* Conditionally render PeriodDisplay only for Library */}
-              {activeTab.label === "Library" ? (
-                users.map((user) => {
-                  // Filter roles: only keep those that include 'Library'
-                  const filteredRoles = user.roles.filter((role) =>
-                    role.role.name.includes("Library")
-                  );
+          {/* Conditionally render PeriodDisplay only for Library */}
+          {activeTab.label === "Library"
+            ? users.map((user) => {
+                // Filter roles: only keep those that include 'Library'
+                const filteredRoles = user.roles.filter((role) =>
+                  role.role.name.includes("Library")
+                );
 
-                  // Only render UserItem if there are valid filtered roles
-                  return filteredRoles.length > 0 ? (
-                    <div key={user.id} className="my-2">
-                      <div>
-                        <PeriodDisplay
-                          startedAt={filteredRoles[0].startedAt}
-                          endedAt={filteredRoles[0].endedAt}
-                        />
-                      </div>
-                      <UserItem user={user} />
+                // Only render UserItem if there are valid filtered roles
+                return filteredRoles.length > 0 ? (
+                  <div key={user.id} className="my-2">
+                    <div>
+                      <PeriodDisplay
+                        startedAt={filteredRoles[0].startedAt}
+                        endedAt={filteredRoles[0].endedAt}
+                      />
                     </div>
-                  ) : null; // Don't render if no valid roles
-                })
-              ) : (
+                    <UserItem user={user} />
+                  </div>
+                ) : null; // Don't render if no valid roles
+              })
+            : users.map((user) => (
                 <div key={user.id} className="my-2">
                   <UserItem user={user} />
                 </div>
-              )}
-            </div>
-          ))}
+              ))}
         </div>
       )}
     </div>
