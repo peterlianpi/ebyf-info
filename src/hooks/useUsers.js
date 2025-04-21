@@ -18,21 +18,16 @@ export function useUsers() {
   const [lastSync, setLastSync] = useState(null);
   const [newMembersCount, setNewMembersCount] = useState(0);
 
-  // 🔁 Merge old users with new ones based on ID
+  // 🔁 Merge users based on unique ID (no longer sets count)
   const mergeUsers = (oldUsers = [], updates = []) => {
     const idMap = new Map(oldUsers.map((u) => [u.id, u]));
-    let newCount = 0;
-
     updates.forEach((user) => {
-      if (!idMap.has(user.id)) newCount++;
       idMap.set(user.id, user);
     });
-
-    setNewMembersCount(newCount);
     return Array.from(idMap.values());
   };
 
-  // 🌐 Fetch updated users from the server using lastSync
+  // 🌐 Fetch users updated since the last sync
   const fetchUsers = async () => {
     setUsersLoading(true);
     const lastSyncFromDB = (await getFromDB(SYNC_KEY)) || null;
@@ -54,8 +49,9 @@ export function useUsers() {
       if (!res.ok) throw new Error("Failed to fetch users");
 
       const data = await res.json();
-      const updates = data?.members || [];
+      const updates = Array.isArray(data?.members) ? data.members : [];
       const newLastSync = data?.lastSync || new Date().toISOString();
+      const totalMembers = data?.totalMembers || 0;
 
       const existingEncrypted = await getFromDB(USERS_KEY);
       const existingDecrypted = existingEncrypted
@@ -72,12 +68,11 @@ export function useUsers() {
 
       setUsers(mergedUsers);
       setUserAdded(true);
+      setNewMembersCount(totalMembers);
       setLastSync(newLastSync);
 
-      toast.dismiss(); // Remove loading toast
-      toast.success(
-        `Synced successfully! ${newMembersCount} new members added`
-      );
+      toast.dismiss();
+      toast.success(`Synced successfully! ${totalMembers} members total`);
     } catch (err) {
       console.error("Sync failed:", err);
       const fallbackEncrypted = await getFromDB(USERS_KEY);
@@ -92,7 +87,7 @@ export function useUsers() {
     }
   };
 
-  // 🧠 Load local users first, then sync if online
+  // 🧠 Load local users first, then sync online
   useEffect(() => {
     (async () => {
       try {
@@ -114,6 +109,7 @@ export function useUsers() {
       } catch (err) {
         toast.error("Failed to load local users.");
         console.error("useEffect error:", err);
+        setUsersLoading(false);
       }
     })();
   }, []);

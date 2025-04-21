@@ -11,7 +11,6 @@ export default function UserListPage() {
 
   // Filter users based on the role "Veng Uk"
   const filteredUsers = users.sort((a, b) => a.id - b.id); // Sort users by number in ascending order;
-  console.log("users : ", filteredUsers);
 
   const handleRefresh = () => {
     fetchUsers();
