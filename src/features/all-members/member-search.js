@@ -8,13 +8,50 @@ import Search from "@/components/icons/Search";
 import Remove from "@/components/icons/Remove";
 import UserItem from "@/components/user-item";
 import { BounceLoader } from "react-spinners";
+import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 
 export default function SearchBox() {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery); // Debounced state for search query
-  const { users, usersLoading } = useUsers(
-    `?searchQuery=${debouncedSearchQuery}&orgId=1`
-  ); // Use the debounced query
+  const { usersLoading, setUsersLoading } = useUsers(); // Use the debounced query
+  const [users, setUsers] = useState([]); // State to hold filtered users
+
+  // Debounce input changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 1000); // 1 second debounce
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Fetch users using local filter function
+  useEffect(() => {
+    const fetchFilteredUsers = async () => {
+      if (!debouncedSearchQuery.trim()) {
+        setUsers([]); // If query is empty, clear the users
+        return;
+      }
+
+      setUsersLoading(true);
+      try {
+        const members = await filterLocalMembersByRole({
+          keywords: "EBYF",
+          searchQuery: debouncedSearchQuery,
+        });
+        setUsers(members);
+      } catch (error) {
+        console.error("Error fetching users:", error); // Log any errors
+      } finally {
+        setUsersLoading(false);
+      }
+    };
+
+    if (debouncedSearchQuery) {
+      fetchFilteredUsers();
+    } else {
+      setUsers([]);
+    }
+  }, [debouncedSearchQuery]); // Trigger this effect when debouncedSearchQuery changes
 
   // Handle the search query change
   const handleSearchQueryChange = (e) => {

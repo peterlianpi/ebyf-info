@@ -45,3 +45,6 @@ public/workbox-7144475a.js.map
 .env
 public/service-worker.js
 public/swe-worker-development.js
+src/utils/indexedDBCrypto.js
+src/hooks/useUsers copy 2.js
+src/hooks/useUsers copy.js

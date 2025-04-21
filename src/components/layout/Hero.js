@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Socials from "../Socials";
-import Close from "../icons/Close";
 import SearchBox from "@/features/all-members/member-search";
 import FeedbackForm from "@/features/feedback/components/feedback";
 

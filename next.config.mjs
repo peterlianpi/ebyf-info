@@ -14,10 +14,8 @@ const withPWA = withPWAInit({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-
   workboxOptions: {
     disableDevLogs: true,
-
     // Precache on install
     additionalManifestEntries: [
       { url: "/", revision: null },

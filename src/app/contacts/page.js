@@ -1,28 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useUsers } from "@/hooks/useUsers";
 import UserItem from "@/components/user-item";
 import { Skeleton } from "@/components/ui/skeleton";
 import PeriodDisplay from "@/components/periodShow";
+import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
+import { getFilterByTab } from "@/utils/roleFilters";
+import { useUsers } from "@/hooks/useUsers";
 
-const TABS = [
-  { label: "Sisan", route: "/blood?orgId=1" },
-  { label: "Library", route: "/library?orgId=1" },
-  { label: "Mopuan", route: "/mopuan?orgId=1" },
-];
+const TABS = [{ label: "Sisan" }, { label: "Library" }, { label: "Mopuan" }];
 
-function CombinedContactsPage() {
-  const [activeTab, setActiveTab] = useState(TABS[0]); // Default to Blood tab
-  const { users, usersLoading, fetchUsers } = useUsers(activeTab.route);
+export default function CombinedContactsPage() {
+  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [users, setUsers] = useState([]);
+  const { usersLoading, setUsersLoading } = useUsers();
 
   useEffect(() => {
-    fetchUsers();
-  }, [activeTab]); // Fetch users when tab changes
+    const fetchFilteredUsers = async () => {
+      setUsersLoading(true);
+      const filters = getFilterByTab(activeTab.label);
+      const result = await filterLocalMembersByRole(filters);
+      setUsers(result);
+      setUsersLoading(false);
+    };
+
+    fetchFilteredUsers();
+  }, [activeTab]);
 
   return (
     <div className="max-w-md mx-auto">
-      {/* Tab Navigation */}
+      {/* Tabs */}
       <div className="flex justify-center items-center gap-4 mb-4 border-b">
         {TABS.map((tab) => (
           <button
@@ -48,26 +55,21 @@ function CombinedContactsPage() {
         </div>
       ) : (
         <div>
-          {/* Conditionally render PeriodDisplay only for Library */}
           {activeTab.label === "Library"
             ? users.map((user) => {
-                // Filter roles: only keep those that include 'Library'
                 const filteredRoles = user.roles.filter((role) =>
-                  role.role.name.includes("Library")
+                  role.role.name.toLowerCase().includes("library")
                 );
 
-                // Only render UserItem if there are valid filtered roles
                 return filteredRoles.length > 0 ? (
                   <div key={user.id} className="my-2">
-                    <div>
-                      <PeriodDisplay
-                        startedAt={filteredRoles[0].startedAt}
-                        endedAt={filteredRoles[0].endedAt}
-                      />
-                    </div>
+                    <PeriodDisplay
+                      startedAt={filteredRoles[0].startedAt}
+                      endedAt={filteredRoles[0].endedAt}
+                    />
                     <UserItem user={user} />
                   </div>
-                ) : null; // Don't render if no valid roles
+                ) : null;
               })
             : users.map((user) => (
                 <div key={user.id} className="my-2">
@@ -79,5 +81,3 @@ function CombinedContactsPage() {
     </div>
   );
 }
-
-export default CombinedContactsPage;
