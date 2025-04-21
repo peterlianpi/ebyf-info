@@ -72,7 +72,7 @@ export function useUsers() {
       setLastSync(newLastSync);
 
       toast.dismiss();
-      toast.success(`Synced successfully! ${totalMembers} members added or updated.);
+      toast.success(`Synced successfully! ${totalMembers} members added or updated.`);
     } catch (err) {
       console.error("Sync failed:", err);
       const fallbackEncrypted = await getFromDB(USERS_KEY);
