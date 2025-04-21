@@ -95,18 +95,25 @@ export function useUsers() {
   // 🧠 Load local users first, then sync if online
   useEffect(() => {
     (async () => {
-      const localEncrypted = await getFromDB(USERS_KEY);
-      const localDecrypted = localEncrypted ? decryptData(localEncrypted) : [];
+      try {
+        const localEncrypted = await getFromDB(USERS_KEY);
+        const localDecrypted = localEncrypted
+          ? decryptData(localEncrypted)
+          : [];
 
-      const syncTime = (await getFromDB(SYNC_KEY)) || null;
-      setLastSync(syncTime);
-
-      if (navigator.onLine) {
-        fetchUsers();
-      } else {
-        toast.success("Offline: Loaded local users");
+        const syncTime = (await getFromDB(SYNC_KEY)) || null;
+        setLastSync(syncTime);
         setUsers(localDecrypted);
-        setUsersLoading(false);
+
+        if (navigator.onLine) {
+          await fetchUsers();
+        } else {
+          toast.success("Offline: Loaded local users");
+          setUsersLoading(false);
+        }
+      } catch (err) {
+        toast.error("Failed to load local users.");
+        console.error("useEffect error:", err);
       }
     })();
   }, []);
