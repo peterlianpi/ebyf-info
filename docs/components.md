@@ -1,21 +1,23 @@
 # Components Documentation
 
-This document describes all the components in the `src/components/` directory.
+This document describes all the components in the `components/` directory. All components have been migrated to TypeScript (.tsx) for type safety, with explicit prop interfaces and strict type checking.
 
-## Logo (`src/components/Logo.js`)
+## Logo (`components/Logo.tsx`)
 
 **Description:** Simple logo component that links to the home page.
 
 **Props:** None.
 
+**TypeScript:** No props interface needed (simple component).
+
 **Dependencies:** Next.js `Link`.
 
 **Usage Example:**
-```jsx
+```tsx
 <Logo />
 ```
 
-## MobileNav (`src/components/MobileNav.js`)
+## MobileNav (`components/MobileNav.tsx`)
 
 **Description:** Mobile navigation menu using a sheet component.
 
@@ -27,25 +29,27 @@ This document describes all the components in the `src/components/` directory.
 **Functionality:** Opens a side sheet with logo, navigation links, and social icons.
 
 **Usage Example:**
-```jsx
+```tsx
 <MobileNav />
 ```
 
-## Nav (`src/components/Nav.js`)
+## Nav (`components/Nav.tsx`)
 
 **Description:** Navigation links component with active state highlighting using Framer Motion.
 
 **Props:**
-- `containerStyles`: CSS classes for container.
-- `linkStyles`: CSS classes for links.
-- `underlineStyles`: CSS classes for underline animation.
+- `containerStyles?`: CSS classes for container (optional string).
+- `linkStyles?`: CSS classes for links (optional string).
+- `underlineStyles?`: CSS classes for underline animation (optional string).
+
+**TypeScript:** Uses `NavProps` interface for type safety.
 
 **Links:** Home, Makai, Venguk, Talen, Contacts, Policy.
 
 **Dependencies:** `Link` from Next.js, `usePathname`, `motion` from Framer Motion.
 
 **Usage Example:**
-```jsx
+```tsx
 <Nav
   containerStyles="flex gap-x-4"
   linkStyles="relative hover:text-primary"
@@ -53,37 +57,41 @@ This document describes all the components in the `src/components/` directory.
 />
 ```
 
-## periodShow (`src/components/periodShow.js`)
+## periodShow (`components/periodShow.tsx`)
 
 **Description:** Displays service period dates for a role.
 
 **Props:**
-- `startedAt`: Start date string.
-- `endedAt`: End date string (optional, defaults to "Present").
+- `startedAt?`: Start date string (optional).
+- `endedAt?`: End date string (optional, defaults to "Present").
+
+**TypeScript:** Uses `PeriodDisplayProps` interface with optional date strings.
 
 **Functionality:** Formats dates to "DD Month YYYY" and displays "From: date To: date".
 
 **Usage Example:**
-```jsx
+```tsx
 <PeriodDisplay startedAt="2023-01-01" endedAt="2024-01-01" />
 ```
 
-## Socials (`src/components/Socials.js`)
+## Socials (`components/Socials.tsx`)
 
 **Description:** Social media links component with icons.
 
 **Props:**
-- `containerStyles`: CSS classes for container.
-- `iconsStyles`: CSS classes for icons.
+- `containerStyles?`: CSS classes for container (optional string).
+- `iconsStyles?`: CSS classes for icons (optional string).
+
+**TypeScript:** Uses `SocialsProps` interface.
 
 **Icons:** YouTube, LinkedIn, GitHub, Facebook, Instagram.
 
 **Usage Example:**
-```jsx
+```tsx
 <Socials containerStyles="flex gap-x-4" iconsStyles="text-2xl" />
 ```
 
-## ThemeToggler (`src/components/ThemeToggler.js`)
+## ThemeToggler (`components/ThemeToggler.tsx`)
 
 **Description:** Button to toggle between light and dark themes.
 
@@ -94,20 +102,22 @@ This document describes all the components in the `src/components/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <ThemeToggler />
 ```
 
-## user-item (`src/components/user-item.js`)
+## user-item (`components/user-item.tsx`)
 
 **Description:** User card component displaying user info, roles, and contact options.
 
 **Props:**
 - `user`: User object with id, name, number, roles, phone, image, veng, fbLink.
 
+**TypeScript:** Uses `UserItemProps` interface with `User` type. Typed state `selectedUser: User | null`, event handlers for phone calls and clicks.
+
 **Functionality:**
-- Displays avatar, name, filtered roles.
-- Phone call button.
+- Displays avatar, name, filtered roles with null-safe operations.
+- Phone call button with undefined checks.
 - Modal on click with detailed info, roles with periods, phone numbers, Facebook link.
 
 **Components Used:** `Phone` icon, `Button`, `Avatar`, `PeriodDisplay`, etc.
@@ -115,25 +125,29 @@ This document describes all the components in the `src/components/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <UserItem user={userObject} />
 ```
 
 ## Layout Components
 
-### Header (`src/components/layout/Header.js`)
+### Header (`components/layout/Header.tsx`)
 
 **Description:** App header with logo, navigation, theme toggler, and mobile nav.
 
 **Functionality:** Sticky header that changes style on scroll. Different background on home page.
 
+**TypeScript:** Typed state `header: boolean`, proper event listener cleanup with function references.
+
 **Components Used:** `ThemeToggler`, `Logo`, `Nav`, `MobileNav`, `usePathname`.
 
 **Client-Side:** Uses `"use client"`.
 
+**Performance:** Efficient scroll event handling with if-else logic instead of ternary expressions.
+
 **Usage Example:** Included in root layout.
 
-### Footer (`src/components/layout/Footer.js`)
+### Footer (`components/layout/Footer.tsx`)
 
 **Description:** Simple footer with copyright notice.
 
@@ -141,7 +155,7 @@ This document describes all the components in the `src/components/` directory.
 
 **Usage Example:** Included in root layout.
 
-### Hero (`src/components/layout/Hero.js`)
+### Hero (`components/layout/Hero.tsx`)
 
 **Description:** Hero section on home page with title, subtitle, search, socials, and feedback form.
 
@@ -151,7 +165,7 @@ This document describes all the components in the `src/components/` directory.
 
 **Usage Example:** Used in home page.
 
-### SearchBox (`src/components/layout/SearchBox.js`)
+### SearchBox (`components/layout/SearchBox.tsx`)
 
 **Description:** Search input for users by name or veng.
 
@@ -164,11 +178,11 @@ This document describes all the components in the `src/components/` directory.
 **Components Used:** `Remove`, `Search` icons, `UserItem`.
 
 **Usage Example:**
-```jsx
+```tsx
 <SearchBox users={users} isFetchingComplete={true} />
 ```
 
-### UserForm (`src/components/layout/UserForm.js`)
+### UserForm (`components/layout/UserForm.tsx`)
 
 **Description:** Form for editing user profiles.
 
@@ -185,49 +199,65 @@ This document describes all the components in the `src/components/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <UserForm user={user} onSave={handleSave} />
 ```
 
 ## Icon Components
 
-All icon components are simple React components exporting SVG icons.
+All icon components are simple React components exporting SVG icons, migrated to TypeScript with typed props.
 
-### Close (`src/components/icons/Close.js`)
+### Close (`components/icons/Close.tsx`)
 
 **Description:** Close/X icon.
 
-### Delete (`src/components/icons/Delete.js`)
+**Props:** `className?: string`
+
+### Delete (`components/icons/Delete.tsx`)
 
 **Description:** Delete icon.
 
-### Edit (`src/components/icons/Edit.js`)
+**Props:** `className?: string`
+
+### Edit (`components/icons/Edit.tsx`)
 
 **Description:** Edit icon.
 
-### Loading (`src/components/icons/Loading.js`)
+**Props:** `className?: string`
+
+### Loading (`components/icons/Loading.tsx`)
 
 **Description:** Loading spinner icon.
 
-### Phone (`src/components/icons/Phone.js`)
+**Props:** None (uses MUI CircularProgress).
+
+### Phone (`components/icons/Phone.tsx`)
 
 **Description:** Phone icon.
 
-### Refresh (`src/components/icons/Refresh.js`)
+**Props:** `className?: string`
+
+### Refresh (`components/icons/Refresh.tsx`)
 
 **Description:** Refresh icon.
 
-### Remove (`src/components/icons/Remove.js`)
+**Props:** `className?: string`
+
+### Remove (`components/icons/Remove.tsx`)
 
 **Description:** Remove icon.
 
-### Search (`src/components/icons/Search.js`)
+**Props:** `className?: string`
+
+### Search (`components/icons/Search.tsx`)
 
 **Description:** Search icon.
 
+**Props:** `className?: string`
+
 ## UI Components
 
-The `src/components/ui/` directory contains shadcn/ui components. These are standard UI library components with minimal customization.
+The `components/ui/` directory contains shadcn/ui components. These are standard UI library components with minimal customization.
 
 ### avatar.jsx
 
@@ -300,3 +330,27 @@ The `src/components/ui/` directory contains shadcn/ui components. These are stan
 **Description:** Textarea input component.
 
 All UI components follow shadcn/ui patterns and can be used as per their documentation.
+
+## Page Components
+
+All page components in `app/` have been migrated to `.tsx` with TypeScript support.
+
+### Makaite Page (`app/makaite/page.tsx`)
+
+**Description:** Displays filtered members with specific roles.
+
+**TypeScript:** Typed `User[]`, null-safe sorting with `(a.number || 0)`, unique keys using `user.id`.
+
+**Performance:** Optimized sorting with fallback for undefined `number` fields.
+
+### Contacts Page (`app/contacts/page.tsx`)
+
+**Description:** Tabbed interface for different member categories.
+
+**TypeScript:** Typed `Tab` interface, `User[]` state, null-safe role filtering `(user.roles || []).filter(...)`.
+
+**Performance:** Efficient filtering with fallbacks for undefined arrays.
+
+### Other Pages
+
+All other pages (policy, vengukte, etc.) are statically typed with no dynamic props.

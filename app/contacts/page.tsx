@@ -6,14 +6,23 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PeriodDisplay from "@/components/periodShow";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 import { getFilterByTab } from "@/utils/roleFilters";
-import { useUsers } from "@/hooks/useUsers";
 
-const TABS = [{ label: "Sisan" }, { label: "Library" }, { label: "Mopuan" }];
+import { User } from "@/types";
+
+interface Tab {
+  label: string;
+}
+
+const TABS: Tab[] = [
+  { label: "Sisan" },
+  { label: "Library" },
+  { label: "Mopuan" },
+];
 
 export default function CombinedContactsPage() {
-  const [activeTab, setActiveTab] = useState(TABS[0]);
-  const [users, setUsers] = useState([]);
-  const { usersLoading, setUsersLoading } = useUsers();
+  const [activeTab, setActiveTab] = useState<Tab>(TABS[0]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [usersLoading, setUsersLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchFilteredUsers = async () => {
@@ -57,8 +66,8 @@ export default function CombinedContactsPage() {
         <div>
           {activeTab.label === "Library"
             ? users.map((user) => {
-                const filteredRoles = user.roles.filter((role) =>
-                  role.role.name.toLowerCase().includes("library")
+                const filteredRoles = (user.roles || []).filter((role) =>
+                  role.role.name.toLowerCase().includes("library"),
                 );
 
                 return filteredRoles.length > 0 ? (

@@ -1,6 +1,10 @@
 import React from "react";
 
-function Refresh({ className = "w-6 h-6" }) {
+interface RefreshProps {
+  className?: string;
+}
+
+function Refresh({ className = "w-6 h-6" }: RefreshProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

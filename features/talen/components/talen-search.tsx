@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useUsers } from "@/hooks/useUsers";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Search from "@/components/icons/Search";
@@ -9,12 +8,13 @@ import Remove from "@/components/icons/Remove";
 import UserItem from "@/components/user-item";
 import { BounceLoader } from "react-spinners";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
+import { User } from "@/types";
 
 export default function SearchBox() {
-  const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery); // Debounced state for search query
-  const { usersLoading, setUsersLoading } = useUsers(); // Use the debounced query
-  const [users, setUsers] = useState([]); // State to hold filtered users
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>(searchQuery);
+  const [users, setUsers] = useState<User[]>([]);
+  const [usersLoading, setUsersLoading] = useState<boolean>(false);
 
   // Debounce input changes
   useEffect(() => {
@@ -35,9 +35,11 @@ export default function SearchBox() {
       setUsersLoading(true);
       try {
         const members = await filterLocalMembersByRole({
-          keywords: "EBYF",
+          includedRoles: ["EBYF - Talent Sum"],
           searchQuery: debouncedSearchQuery,
         });
+        console.log("Search query:", debouncedSearchQuery); // Log the search query to debug
+        console.log("Filtered users:", members); // Log the fetched members to debug
         setUsers(members);
       } catch (error) {
         console.error("Error fetching users:", error); // Log any errors
@@ -53,39 +55,36 @@ export default function SearchBox() {
     }
   }, [debouncedSearchQuery]); // Trigger this effect when debouncedSearchQuery changes
 
-  // Handle the search query change
-  const handleSearchQueryChange = (e) => {
-    setSearchQuery(e.target.value);
+  const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value); // Update search query state
   };
 
-  // Function to clear the search query
   const clearSearchQuery = () => {
-    setSearchQuery("");
+    setSearchQuery(""); // Clear search query when user presses remove button
   };
-
-  // Debounce the search query to reduce the number of API calls
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 1000); // 1000ms debounce time
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
 
   return (
     <div className="space-y-6">
-      {/* Title Section */}
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold font-sans text-primary">
+          YF Talen 2025
+        </h1>
+        <h3 className="mt-2 text-sm text-gray-500">
+          Each home selects <strong>two members</strong> for{" "}
+          <strong>YF Talen 2025</strong>, with contributions collected{" "}
+          <strong>quarterly</strong>. Search below to see if you&apos;re on the
+          list.
+        </h3>
+      </div>
 
-      {/* Search Input Field */}
       <div className="relative flex justify-center items-center gap-2 border px-4 rounded-lg">
-        <div className="">{searchQuery === "" && <Search />}</div>
+        <div>{searchQuery === "" && <Search />}</div>
         <Input
           type="text"
           value={searchQuery}
           onChange={handleSearchQueryChange}
-          placeholder="Search for your name..."
+          placeholder="Search Your Name..."
           className="w-full rounded-md border-none hover:border-none mt-2"
-          disabled={usersLoading}
         />
         {searchQuery !== "" && !usersLoading && (
           <Button
@@ -98,14 +97,12 @@ export default function SearchBox() {
         )}
       </div>
 
-      {/* Loading Spinner */}
       {usersLoading && (
         <div className="flex justify-center py-4">
           <BounceLoader color="green" />
         </div>
       )}
 
-      {/* User Results or No Results */}
       <div
         style={{ maxHeight: "250px", overflowY: "scroll" }}
         className="space-y-2"

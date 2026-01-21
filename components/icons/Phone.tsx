@@ -1,6 +1,10 @@
 import React from "react";
 
-function Phone({ className = "w-6 h-6" }) {
+interface PhoneProps {
+  className?: string;
+}
+
+function Phone({ className = "w-6 h-6" }: PhoneProps) {
   return (
     <>
       <svg

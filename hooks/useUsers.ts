@@ -12,7 +12,7 @@ const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
 const USERS_KEY = "users_all";
 const SYNC_KEY = "users_lastSync";
 
-export function useUsers() {
+export function useUsers(p0: string) {
   const [users, setUsers] = useState<User[]>([]);
   const [usersLoading, setUsersLoading] = useState<boolean>(true);
   const [userAdded, setUserAdded] = useState<boolean>(false);

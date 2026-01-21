@@ -5,6 +5,12 @@ import { usePathname } from "next/navigation";
 // framer motion
 import { motion } from "framer-motion";
 
+interface NavProps {
+  containerStyles?: string;
+  linkStyles?: string;
+  underlineStyles?: string;
+}
+
 const links = [
   { path: "/", name: "Home" },
   { path: "/makaite", name: "Makai" },
@@ -14,7 +20,7 @@ const links = [
   // { path: "/hun-gelna", name: "Service" },
   { path: "/policy", name: "Policy" },
 ];
-const Nav = ({ containerStyles, linkStyles, underlineStyles }) => {
+const Nav = ({ containerStyles, linkStyles, underlineStyles }: NavProps) => {
   const path = usePathname();
 
   return (

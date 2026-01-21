@@ -5,17 +5,23 @@ import Image from "next/image";
 import Phone from "./icons/Phone";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { User } from "lucide-react";
+import { User as UserIcon } from "lucide-react";
 import PeriodDisplay from "./periodShow";
+import { User } from "@/types";
 
-export default function UserItem({ user }) {
+interface UserItemProps {
+  user: User;
+}
+
+export default function UserItem({ user }: UserItemProps) {
   const { id, name, number, roles, phone, image, veng, fbLink } = user;
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  function handleCall(phone) {
+  function handleCall(phone: string | undefined) {
+    if (!phone) return;
     window.open(`tel:${phone}`);
   }
-  function handleUserClick(user) {
+  function handleUserClick(user: User) {
     setSelectedUser(user);
   }
 
@@ -25,12 +31,12 @@ export default function UserItem({ user }) {
   return (
     <section
       key={id}
-      className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-[90px]  "
+      className="flex items-center gap-4   border-2  hover:bg-primary-foreground  rounded-lg  justify-start px-4  h-22.5  "
     >
       <Avatar className="border -z-1 border-emerald-600">
         <AvatarImage src={image} />
         <AvatarFallback className="bg-sky-500">
-          <User className="text-white" />
+          <UserIcon className="text-white" />
         </AvatarFallback>
       </Avatar>
 
@@ -47,8 +53,8 @@ export default function UserItem({ user }) {
                 // Filter EBYF roles and exclude unwanted ones
                 role.role.name.includes("EBYF") &&
                 !["Blood", "Library", "Mopuan", "Sunday", "Talent", "Sum"].some(
-                  (excludedRole) => role.role.name.includes(excludedRole)
-                )
+                  (excludedRole) => role.role.name.includes(excludedRole),
+                ),
             )
             .map((role, index) => {
               // For other valid EBYF roles
@@ -69,8 +75,8 @@ export default function UserItem({ user }) {
       </div>
       {/* {Modal to display user details} */}
       {selectedUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 w-md mx-auto">
-          <div className="bg-secondary text-primary p-4 rounded-lg w-[350px]">
+        <div className="fixed px-4 inset-0 bg-muted-foreground z-50 flex items-center justify-center w-full mx-auto">
+          <div className="bg-background text-primary px-4 py-10 rounded-lg w-87.5 shadow-lg">
             <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
             {selectedUser?.email && (
               <p className="mb-2">Email: {selectedUser?.email}</p>
@@ -110,7 +116,12 @@ export default function UserItem({ user }) {
               </div>
             )}
             {selectedUser?.veng && (
-              <p className="mb-2">Veng: {selectedUser.veng}</p>
+              <p className="mb-2">
+                Veng:{" "}
+                {typeof selectedUser.veng === "string"
+                  ? selectedUser.veng
+                  : selectedUser.veng.name || ""}
+              </p>
             )}
             {selectedUser?.fbLink && (
               <div className="flex p-4 justify-center">

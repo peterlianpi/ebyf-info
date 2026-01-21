@@ -3,14 +3,37 @@ import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { useState, useRef } from "react";
-import { usePathname } from "next/navigation";
-import { useProfile } from "../UseProfile";
+import { usePathname } from "next/navigation"; 
 import { Button } from "../ui/button";
+import { useProfile } from "../UseProfile";
 
-export default function UserForm({ user, onSave }) {
-  const inputFileRef = useRef(null);
+interface UserFormProps {
+  user?: {
+    name?: string;
+    image?: string;
+    email?: string;
+    phone?: string;
+    role?: string;
+    position?: string;
+    veng?: string;
+    fb?: string;
+  };
+  onSave: (ev: React.FormEvent<HTMLFormElement>, data: {
+    name: string;
+    image: string;
+    phone: string;
+    email: string;
+    role: string;
+    position: string;
+    veng: string;
+    fb: string;
+  }) => void;
+}
+
+export default function UserForm({ user, onSave }: UserFormProps) {
+  const inputFileRef = useRef<HTMLInputElement>(null);
   const [userName, setUserName] = useState(user?.name || "");
-  const [image, setImage] = useState(user?.image || "");
+  const [image, setImage] = useState(user?.image || "/profile.png");
   const [email, setEmail] = useState(user?.email || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [role, setRole] = useState(user?.role || "");
@@ -40,12 +63,6 @@ export default function UserForm({ user, onSave }) {
     "Carmel",
   ];
 
-  useEffect(() => {
-    if (image.length === 0) {
-      setImage("/profile.png");
-    }
-  }, [image]);
-
   if (saved && path === "/addusers") {
     // Reset form fields
     setUserName("");
@@ -59,7 +76,7 @@ export default function UserForm({ user, onSave }) {
     setSaved(false);
   }
 
-  async function handleFileChange(ev) {
+  async function handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
     ev.preventDefault();
     if (!inputFileRef.current?.files) {
       throw new Error("No file selected for profile");
@@ -90,7 +107,7 @@ export default function UserForm({ user, onSave }) {
   return (
     <div>
       <div className="flex flex-col max-w-md gap-2">
-        <div className=" w-[250px]  mx-auto">
+        <div className=" w-62.5  mx-auto">
           <div className="relative p-2 rounded-lg ">
             {image && (
               <Image
@@ -142,7 +159,7 @@ export default function UserForm({ user, onSave }) {
           <label>Email</label>
           <input
             type="email"
-            disabled={path === "/profile" ? true : ""}
+            disabled={path === "/profile"}
             placeholder="Email address"
             value={email}
             className=""
@@ -169,8 +186,6 @@ export default function UserForm({ user, onSave }) {
             placeholder="Position"
             disabled={
               (path === "/profile" || path === "/addusers") && !isAdmin
-                ? true
-                : ""
             }
             value={position}
             onChange={(ev) => setPosition(ev.target.value)}

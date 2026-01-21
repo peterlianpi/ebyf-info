@@ -72,7 +72,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <main className="max-w-4xl p-4 mx-auto">
+          <main className="container max-w-4xl p-4 mx-auto">
             <Toaster />
             <Header />
             {children}

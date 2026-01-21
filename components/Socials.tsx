@@ -8,6 +8,11 @@ import {
 } from "react-icons/ri";
 import Link from "next/link";
 
+interface SocialsProps {
+  containerStyles?: string;
+  iconsStyles?: string;
+}
+
 const icons = [
   {
     path: "https://www.youtube.com/@peterpausianlian",
@@ -36,7 +41,7 @@ const icons = [
   },
 ];
 
-const Socials = ({ containerStyles, iconsStyles }) => {
+const Socials = ({ containerStyles, iconsStyles }: SocialsProps) => {
   return (
     <>
       <span className="mb-4">Made with ❤ by Peter</span>

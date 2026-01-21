@@ -1,16 +1,18 @@
 # Features Documentation
 
-This document describes the feature components in the `src/features/` directory.
+This document describes the feature components in the `features/` directory. All components have been migrated to TypeScript (.tsx) for type safety.
 
-## All Members Search (`src/features/all-members/member-search.js`)
+## All Members Search (`features/all-members/member-search.tsx`)
 
 **Description:** A search component that allows users to search for EBYF members by name or veng.
 
 **State Management:**
-- `searchQuery`: Current search input.
-- `debouncedSearchQuery`: Debounced version for API calls.
-- `users`: Filtered user results.
-- `usersLoading`: Loading state.
+- `searchQuery: string`: Current search input.
+- `debouncedSearchQuery: string`: Debounced version for API calls.
+- `users: User[]`: Filtered user results.
+- `usersLoading: boolean`: Loading state.
+
+**TypeScript:** Uses `User` type from types, typed event handlers `React.ChangeEvent<HTMLInputElement>`.
 
 **Functionality:**
 - Debounces search input (1 second).
@@ -23,20 +25,22 @@ This document describes the feature components in the `src/features/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <SearchBox />
 ```
 
-## Feedback Form (`src/features/feedback/components/feedback.js`)
+## Feedback Form (`features/feedback/components/feedback.tsx`)
 
 **Description:** A modal dialog for submitting user feedback, with options for anonymous submission.
 
 **State Management:**
-- `feedback`: Feedback text.
-- `name`, `email`, `phone`: User details.
-- `anonymous`: Boolean for anonymous submission.
-- `loading`: Submission state.
-- `emailError`: Email validation error.
+- `feedback: string`: Feedback text.
+- `name: string`, `email: string`, `phone: string`: User details.
+- `anonymous: boolean`: Boolean for anonymous submission.
+- `loading: boolean`: Submission state.
+- `emailError: string`: Email validation error.
+
+**TypeScript:** Typed fetch headers as `Record<string, string>`, event handlers for form inputs.
 
 **Functionality:**
 - Validates form (feedback required, email if provided).
@@ -48,19 +52,21 @@ This document describes the feature components in the `src/features/` directory.
 **Dependencies:** `react-hot-toast`, API endpoint.
 
 **Usage Example:**
-```jsx
+```tsx
 <FeedbackForm />
 ```
 
-## Talent Search (`src/features/talen/components/talen-search.js`)
+## Talent Search (`features/talen/components/talen-search.tsx`)
 
 **Description:** Search component for YF Talen 2025 participants.
 
 **State Management:**
-- `searchQuery`: Search input.
-- `debouncedSearchQuery`: Debounced query.
-- `users`: Filtered talent users.
-- `usersLoading`: Loading state.
+- `searchQuery: string`: Search input.
+- `debouncedSearchQuery: string`: Debounced query.
+- `users: User[]`: Filtered talent users.
+- `usersLoading: boolean`: Loading state.
+
+**TypeScript:** Uses `User` type, typed event handlers.
 
 **Functionality:**
 - Debounced search (1 second).
@@ -72,17 +78,19 @@ This document describes the feature components in the `src/features/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <SearchBox />
 ```
 
-## User List (`src/features/user-list/user-list.js`)
+## User List (`features/user-list/user-list.tsx`)
 
 **Description:** Component to display all members with refresh functionality.
 
+**TypeScript:** Typed `User[]`, null-safe sorting with `(a.number || 0)`, unique keys using `user.id`.
+
 **Functionality:**
 - Fetches all users using `useUsers`.
-- Sorts users by ID.
+- Sorts users by number with fallback.
 - Refresh button to reload data.
 - Loading skeletons.
 
@@ -91,19 +99,21 @@ This document describes the feature components in the `src/features/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <UserListPage />
 ```
 
-## YF Service Input Form (`src/features/yf-service/input-form.js`)
+## YF Service Input Form (`features/yf-service/input-form.tsx`)
 
 **Description:** Modal form for inputting service program data.
 
 **Props:**
-- `isOpen`: Modal open state.
-- `onClose`: Close callback.
-- `formData`: Current form data.
-- `setFormData`: Data setter.
+- `isOpen: boolean`: Modal open state.
+- `onClose: () => void`: Close callback.
+- `formData: FormData`: Current form data (typed interface).
+- `setFormData: (data: Partial<FormData>) => void`: Data setter callback.
+
+**TypeScript:** Uses `FormData` interface for type safety.
 
 **Functionality:**
 - Loads/saves data to localStorage.
@@ -117,7 +127,7 @@ This document describes the feature components in the `src/features/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Usage Example:**
-```jsx
+```tsx
 <InputForm
   isOpen={true}
   onClose={handleClose}
@@ -126,7 +136,7 @@ This document describes the feature components in the `src/features/` directory.
 />
 ```
 
-## Zo Hun Form (Copy) (`src/features/yf-service/zo-hun-form copy.js`)
+## Zo Hun Form (Copy) (`features/yf-service/zo-hun-form copy.js`)
 
 **Description:** Component that overlays service data on a background image for Zo Hun form.
 
@@ -142,7 +152,7 @@ This document describes the feature components in the `src/features/` directory.
 <ZoHunFormPage formData={formData} />
 ```
 
-## Zo Hun Form (`src/features/yf-service/zo-hun-form.js`)
+## Zo Hun Form (`features/yf-service/zo-hun-form.js`)
 
 **Description:** Main component for displaying Zo Hun service form with overlaid data.
 
@@ -158,7 +168,7 @@ This document describes the feature components in the `src/features/` directory.
 <ZoHunFormPage formData={formData} />
 ```
 
-## Zo Hun SVG (`src/features/yf-service/zo-hun.js`)
+## Zo Hun SVG (`features/yf-service/zo-hun.js`)
 
 **Description:** SVG version of the Zo Hun form with dynamic text.
 
@@ -173,11 +183,11 @@ This document describes the feature components in the `src/features/` directory.
 <ZoHunSVG
   date="10.04.2025"
   hunuk="John Doe"
-  // ... other props
+// ... other props
 />
 ```
 
-## Kawl Hun Form (`src/features/yf-service/kawl-hun-form.js`)
+## Kawl Hun Form (`features/yf-service/kawl-hun-form.js`)
 
 **Description:** Empty file for Kawl Hun form component.
 

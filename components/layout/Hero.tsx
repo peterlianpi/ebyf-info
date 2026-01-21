@@ -15,7 +15,7 @@ const Hero = () => {
             <div className="text-sm uppercase font-semibold mb-4 text-primary tracking-[4px]">
               EBYF Contacts Info
             </div>
-            <p className="subtitle max-w-[490px] mx-auto mb-4 ">
+            <p className="subtitle max-w-122.5 mx-auto mb-4 ">
               EBYF Contacts Info: Easily connect with church youth. No more
               typing numbers—just tap and call.
             </p>

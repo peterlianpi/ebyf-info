@@ -1,9 +1,13 @@
-import React from "react";
 
-const PeriodDisplay = ({ startedAt, endedAt }) => {
+interface PeriodDisplayProps {
+  startedAt?: string;
+  endedAt?: string;
+}
+
+const PeriodDisplay = ({ startedAt, endedAt }: PeriodDisplayProps) => {
   if (!startedAt) return <div>No Period Available</div>;
 
-  const formatDate = (dateString) =>
+  const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("en-US", {
       day: "2-digit",
       month: "long",

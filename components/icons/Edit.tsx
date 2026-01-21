@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function Edit({ className = "w-6 h-6" }) {
+interface EditProps {
+  className?: string;
+}
+
+export default function Edit({ className = "w-6 h-6" }: EditProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

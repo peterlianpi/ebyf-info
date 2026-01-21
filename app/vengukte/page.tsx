@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import UserItem from "@/components/user-item";
 import { useUsers } from "@/hooks/useUsers";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function VenguktePage() {
   const [filteredUsers, setFilteredUsers] = useState([]);

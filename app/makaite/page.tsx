@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import UserItem from "@/components/user-item";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
-import { useUsers } from "@/hooks/useUsers";
+import { User } from "@/types";
 
 function MakaitePage() {
-  const { usersLoading, setUsersLoading } = useUsers();
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState<boolean>(true);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchAndFilterUsers = async () => {
@@ -25,7 +25,7 @@ function MakaitePage() {
         ],
       });
 
-      const sorted = users.sort((a, b) => a.number - b.number);
+      const sorted = users.sort((a, b) => (a.number || 0) - (b.number || 0));
       setFilteredUsers(sorted);
       setUsersLoading(false);
     };
@@ -55,7 +55,7 @@ function MakaitePage() {
         <p className="text-2xl mb-4 font-extrabold w-[80%]">Makai te</p>
       </div>
       {filteredUsers.map((user) => (
-        <div key={user.number} className="mb-2">
+        <div key={user.id} className="mb-2">
           <UserItem user={user} />
         </div>
       ))}

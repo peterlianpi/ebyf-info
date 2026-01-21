@@ -39,13 +39,17 @@ export default function FeedbackForm() {
 
     const domain = process.env.NEXT_PUBLIC_API_URL;
 
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (process.env.NEXT_PUBLIC_API_KEY) {
+      headers["x-api-key"] = process.env.NEXT_PUBLIC_API_KEY;
+    }
+
     try {
       const response = await fetch(`${domain}/api/feedback`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
-        },
+        headers,
         body: JSON.stringify({
           name,
           email,
@@ -79,7 +83,7 @@ export default function FeedbackForm() {
       <DialogTrigger asChild>
         <Button variant="outline">Give Feedback</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md max-md:w-[330px] rounded-lg">
+      <DialogContent className="max-w-md max-md:w-82.5 rounded-lg">
         <div className="w-full space-y-4">
           <h2 className="text-lg font-semibold">Submit Your Feedback</h2>
 
