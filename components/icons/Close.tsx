@@ -1,6 +1,10 @@
 import React from "react";
 
-function Close(className = "w-6 h-6") {
+interface CloseProps {
+  className?: string;
+}
+
+function Close({ className = "w-6 h-6" }: CloseProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
