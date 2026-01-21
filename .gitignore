@@ -3,8 +3,12 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.js
-.yarn/install-state.gz
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # testing
 /coverage
@@ -24,9 +28,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# local env files
-.env*.local
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
@@ -34,19 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-public/workbox-7144475a.js
-public/sw.js  
-public/sw.js.map 
-public/workbox-7144475a.js.map
-/public/workbox-*.js
-/public/sw.js
-/public/fallback-*.js
-.env
-.env
-public/service-worker.js
-public/swe-worker-development.js
-src/utils/indexedDBCrypto.js
-src/hooks/useUsers copy 2.js
-src/hooks/useUsers copy.js
-src/hooks/useUsers copy 3.js
-src/hooks/useUsers copy 4.js
