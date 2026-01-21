@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from "next";
 
 import withPWAInit from "@ducanh2912/next-pwa";
 
@@ -7,13 +7,12 @@ const withPWA = withPWAInit({
   sw: "service-worker.js",
   cacheStartUrl: true,
   dynamicStartUrl: true,
-  dynamicStartUrlRedirect: true,
+  dynamicStartUrlRedirect: "/",
   extendDefaultRuntimeCaching: true,
   register: true,
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
-  swcMinify: true,
   workboxOptions: {
     disableDevLogs: true,
     // Precache on install
@@ -43,7 +42,7 @@ const withPWA = withPWAInit({
         },
       },
       {
-        urlPattern: ({ request }) => request.destination === "document",
+        urlPattern: ({ request }: { request: Request }) => request.destination === "document",
         handler: "StaleWhileRevalidate",
         options: {
           cacheName: "html-pages",
@@ -101,7 +100,7 @@ const withPWA = withPWAInit({
 });
 
 // Next.js configuration
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {

@@ -1,4 +1,4 @@
-// utils/crypto.js
+// utils/crypto.ts
 import CryptoJS from "crypto-js";
 
 // Use environment variables for your encryption keys
@@ -7,10 +7,10 @@ const FALLBACK_KEY = process.env.NEXT_PUBLIC_OLD_ENCRYPTION_KEY || null;
 
 /**
  * Encrypts any JavaScript data (object/array/string) into AES-encrypted text.
- * @param {any} data - Data to encrypt.
- * @returns {string|null} - AES-encrypted string or null if failed.
+ * @param data - Data to encrypt.
+ * @returns AES-encrypted string or null if failed.
  */
-export function encryptData(data) {
+export function encryptData(data: unknown): string | null {
   try {
     const jsonString = JSON.stringify(data);
     const encrypted = CryptoJS.AES.encrypt(jsonString, PRIMARY_KEY).toString();
@@ -24,10 +24,10 @@ export function encryptData(data) {
 /**
  * Decrypts AES-encrypted string back to original data.
  * Falls back to old key if primary key fails.
- * @param {string} encryptedData - AES string to decrypt.
- * @returns {any|null} - Original decrypted data or null.
+ * @param encryptedData - AES string to decrypt.
+ * @returns Original decrypted data or null.
  */
-export function decryptData(encryptedData) {
+export function decryptData(encryptedData: string): unknown | null {
   try {
     const bytes = CryptoJS.AES.decrypt(encryptedData, PRIMARY_KEY);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);

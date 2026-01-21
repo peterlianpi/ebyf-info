@@ -1,4 +1,4 @@
-export function getFilterByTab(tabLabel) {
+export function getFilterByTab(tabLabel: string): { keywords?: string } {
   switch (tabLabel) {
     case "Sisan":
       return { keywords: "blood" };

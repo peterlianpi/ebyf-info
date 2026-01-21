@@ -1,25 +1,22 @@
 import { getFromDB } from "@/utils/indexedDB";
 import { decryptData } from "@/utils/crypto";
+import { User, FilterOptions } from "@/types";
 
 /**
  * Filters locally stored users by role array and search parameters.
- * @param {string[]} [includedRoles] - roles to include
- * @param {string[]} [excludedRoles] - roles to exclude
- * @param {string} [keywords] - keyword to match in role
- * @param {string} [searchQuery] - general search for name/phone/email/roles
- * @returns {Promise<Object[]>}
+ * @param options - Filter options
+ * @returns Promise of filtered user array
  */
-export async function filterLocalMembersByRole({
-  includedRoles = [],
-  excludedRoles = [],
-  keywords = "",
-  searchQuery = "",
-} = {}) {
-  const encrypted = await getFromDB("users_all");
-  const allUsers = encrypted ? decryptData(encrypted) : [];
+export async function filterLocalMembersByRole(
+  options: FilterOptions = {}
+): Promise<User[]> {
+  const { includedRoles = [], excludedRoles = [], keywords = "", searchQuery = "" } = options;
 
-  const normalizedIncluded = includedRoles.map((r) => r.toLowerCase());
-  const normalizedExcluded = excludedRoles.map((r) => r.toLowerCase());
+  const encrypted = await getFromDB("users_all") as string | null;
+  const allUsers: User[] = encrypted ? (decryptData(encrypted) as User[]) : [];
+
+  const normalizedIncluded = includedRoles.map((r: string) => r.toLowerCase());
+  const normalizedExcluded = excludedRoles.map((r: string) => r.toLowerCase());
   const normalizedKeyword = keywords.toLowerCase();
   const normalizedSearch = searchQuery.toLowerCase();
 
@@ -29,7 +26,6 @@ export async function filterLocalMembersByRole({
     const email = (user.email || "").toLowerCase();
 
     const roleNames = (user.roles || [])
-      // .filter((r) => !r.endedAt) // 🟢 Only active roles
       .map((r) => r.role?.name?.toLowerCase() || "");
 
     // ✅ Included roles

@@ -3,23 +3,24 @@
 import { useState, useEffect } from "react";
 import { encryptData, decryptData } from "@/utils/crypto";
 import { saveToDB, getFromDB } from "@/utils/indexedDB";
+import { User } from "@/types";
 import toast from "react-hot-toast";
 
-const domain = process.env.NEXT_PUBLIC_API_URL;
-const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+const domain = process.env.NEXT_PUBLIC_API_URL || "";
+const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
 
 const USERS_KEY = "users_all";
 const SYNC_KEY = "users_lastSync";
 
 export function useUsers() {
-  const [users, setUsers] = useState([]);
-  const [usersLoading, setUsersLoading] = useState(true);
-  const [userAdded, setUserAdded] = useState(false);
-  const [lastSync, setLastSync] = useState(null);
-  const [newMembersCount, setNewMembersCount] = useState(0);
+  const [users, setUsers] = useState<User[]>([]);
+  const [usersLoading, setUsersLoading] = useState<boolean>(true);
+  const [userAdded, setUserAdded] = useState<boolean>(false);
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [newMembersCount, setNewMembersCount] = useState<number>(0);
 
   // 🔁 Merge users based on unique ID (no longer sets count)
-  const mergeUsers = (oldUsers = [], updates = []) => {
+  const mergeUsers = (oldUsers: User[] = [], updates: User[] = []): User[] => {
     const idMap = new Map(oldUsers.map((u) => [u.id, u]));
     updates.forEach((user) => {
       idMap.set(user.id, user);
@@ -30,7 +31,7 @@ export function useUsers() {
   // 🌐 Fetch users updated since the last sync
   const fetchUsers = async () => {
     setUsersLoading(true);
-    const lastSyncFromDB = (await getFromDB(SYNC_KEY)) || null;
+    const lastSyncFromDB = (await getFromDB(SYNC_KEY) as string | null) || null;
     setLastSync(lastSyncFromDB);
 
     try {
@@ -53,9 +54,9 @@ export function useUsers() {
       const newLastSync = data?.lastSync || new Date().toISOString();
       const totalMembers = data?.totalMembers || 0;
 
-      const existingEncrypted = await getFromDB(USERS_KEY);
+      const existingEncrypted = await getFromDB(USERS_KEY) as string | null;
       const existingDecrypted = existingEncrypted
-        ? decryptData(existingEncrypted)
+        ? (decryptData(existingEncrypted) as User[])
         : [];
 
       const mergedUsers = mergeUsers(existingDecrypted, updates);
@@ -75,9 +76,9 @@ export function useUsers() {
       toast.success(`Synced successfully! ${totalMembers} members added or updated.`);
     } catch (err) {
       console.error("Sync failed:", err);
-      const fallbackEncrypted = await getFromDB(USERS_KEY);
+      const fallbackEncrypted = await getFromDB(USERS_KEY) as string | null;
       const fallbackDecrypted = fallbackEncrypted
-        ? decryptData(fallbackEncrypted)
+        ? (decryptData(fallbackEncrypted) as User[])
         : [];
       setUsers(fallbackDecrypted);
       toast.dismiss();
@@ -91,12 +92,12 @@ export function useUsers() {
   useEffect(() => {
     (async () => {
       try {
-        const localEncrypted = await getFromDB(USERS_KEY);
+        const localEncrypted = await getFromDB(USERS_KEY) as string | null;
         const localDecrypted = localEncrypted
-          ? decryptData(localEncrypted)
+          ? (decryptData(localEncrypted) as User[])
           : [];
 
-        const syncTime = (await getFromDB(SYNC_KEY)) || null;
+        const syncTime = (await getFromDB(SYNC_KEY) as string | null) || null;
         setLastSync(syncTime);
         setUsers(localDecrypted);
 

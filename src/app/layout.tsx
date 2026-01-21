@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -6,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { ReactNode } from "react";
 
 // Font
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +20,7 @@ const APP_DESCRIPTION =
   "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.";
 
 // Metadata Object (for use with the new Metadata API)
-export const metadata = {
+export const metadata: Metadata = {
   applicationName: APP_NAME,
   title: {
     default: APP_DEFAULT_TITLE,
@@ -53,12 +55,16 @@ export const metadata = {
   },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
 // RootLayout Component
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>

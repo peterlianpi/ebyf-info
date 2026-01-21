@@ -1,20 +1,23 @@
 import { filterLocalMembersByRole } from "./filterLocalMembersByRole";
 
+import { User, ApiResponse, FilterOptions } from "@/types";
+
 /**
  * Simulates API route logic using local IndexedDB
- * @param {string} route - One of: "library", "mopuan", "makaite", "vengukte", "blood", "talen", "search"
- * @param {Object} query
- * @param {string} [query.searchQuery]
- * @param {string} [query.orgId]
- * @returns {Promise<{ members: any[], totalItems?: number, error?: string }>}
+ * @param route - One of: "library", "mopuan", "makaite", "vengukte", "blood", "talen", "search"
+ * @param query - Query parameters
+ * @returns Promise of API response
  */
-export async function getLocalMembersByRoute(route, query = {}) {
+export async function getLocalMembersByRoute(
+  route: string,
+  query: { searchQuery?: string; orgId?: string } = {}
+): Promise<ApiResponse<User[]>> {
   const { searchQuery } = query;
   console.log("Route :", route); // Log the route to debug
   console.log("Search query:", searchQuery); // Log the search query to debug
 
   try {
-    let options = {};
+    let options: FilterOptions = {};
 
     switch (route) {
       case "library":

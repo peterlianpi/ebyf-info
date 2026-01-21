@@ -25,6 +25,24 @@ function VenguktePage() {
     fetchAndFilterUsers();
   }, []);
 
+  const LoadingComponent = () => {
+    return (
+      <div className="flex flex-col max-w-md gap-2 mx-auto">
+        <div>
+          <div className="flex items-center justify-start">
+            <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <Skeleton className="w-full h-24" />
+            <Skeleton className="w-full h-24" />
+            <Skeleton className="w-full h-24" />
+            <Skeleton className="w-full h-24" />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (usersLoading) {
     return <LoadingComponent />;
   }
@@ -46,21 +64,3 @@ function VenguktePage() {
 }
 
 export default VenguktePage;
-
-export const LoadingComponent = () => {
-  return (
-    <div className="flex flex-col max-w-md gap-2 mx-auto">
-      <div>
-        <div className="flex items-center justify-start">
-          <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
-        </div>
-        <div className="flex flex-col gap-4">
-          <Skeleton className="w-full h-24" />
-          <Skeleton className="w-full h-24" />
-          <Skeleton className="w-full h-24" />
-          <Skeleton className="w-full h-24" />
-        </div>
-      </div>
-    </div>
-  );
-};
