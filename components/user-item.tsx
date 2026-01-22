@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import Phone from "./icons/Phone";
-import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User as UserIcon } from "lucide-react";
-import PeriodDisplay from "./periodShow";
+import UserModal from "./ui/user-modal";
+import Phone from "./icons/Phone";
 import { User } from "@/types";
 
 interface UserItemProps {
@@ -73,80 +71,14 @@ export default function UserItem({ user }: UserItemProps) {
           <Phone />
         </div>
       </div>
-      {/* {Modal to display user details} */}
-      {selectedUser && (
-        <div className="fixed px-4 inset-0 bg-muted-foreground z-50 flex items-center justify-center w-full mx-auto">
-          <div className="bg-background text-primary px-4 py-10 rounded-lg w-87.5 shadow-lg">
-            <p className="text-xl font-semibold mb-2">{selectedUser.name}</p>
-            {selectedUser?.email && (
-              <p className="mb-2">Email: {selectedUser?.email}</p>
-            )}
-            {selectedUser?.phone && (
-              <div className="mb-2">
-                <p>Phone:</p>
-                {selectedUser?.phone.split(",").map((num, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between mr-4 mb-2"
-                  >
-                    <span className="mr-2">{num.trim()}</span>
-                    <div onClick={() => handleCall(num.trim())}>
-                      <Phone />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {selectedUser?.roles && selectedUser?.roles.length > 0 && (
-              <div className="mb-2">
-                <p>Roles:</p>
-                <div className="h-40 overflow-auto">
-                  {selectedUser?.roles.map((role, index) => (
-                    <div className="max-md:text-sm" key={index}>
-                      {role.role.name}
-                      <br />
-                      <PeriodDisplay
-                        startedAt={role.startedAt}
-                        endedAt={role.endedAt}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            {selectedUser?.veng && (
-              <p className="mb-2">
-                Veng:{" "}
-                {typeof selectedUser.veng === "string"
-                  ? selectedUser.veng
-                  : selectedUser.veng.name || ""}
-              </p>
-            )}
-            {selectedUser?.fbLink && (
-              <div className="flex p-4 justify-center">
-                <a
-                  href={selectedUser?.fbLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src="/facebook.png"
-                    alt="Facebook Icon"
-                    width={25}
-                    height={25}
-                  />
-                </a>
-              </div>
-            )}
-
-            {/* Add more details as needed */}
-            <Button onClick={handleCloseModal} className="w-full">
-              Close
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* User modal */}
+      <div className="">
+        <UserModal
+        user={selectedUser}
+        isOpen={!!selectedUser}
+        onClose={handleCloseModal}
+      />
+      </div>
     </section>
   );
 }

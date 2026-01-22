@@ -81,75 +81,111 @@ export default function FeedbackForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Give Feedback</Button>
+        <Button variant="outline" aria-label="Open feedback form">
+          Give Feedback
+        </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md max-md:w-82.5 rounded-lg">
-        <div className="w-full space-y-4">
-          <h2 className="text-lg font-semibold">Submit Your Feedback</h2>
+      <DialogContent className="max-w-md max-md:w-82.5 rounded-lg" role="dialog" aria-labelledby="feedback-title">
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="w-full space-y-4">
+          <h2 id="feedback-title" className="text-lg font-semibold">
+            Submit Your Feedback
+          </h2>
 
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="anonymous"
-              checked={anonymous}
-              onCheckedChange={(checked) => setAnonymous(!!checked)}
-            />
-            <Label htmlFor="anonymous">Submit Anonymously</Label>
-          </div>
+          <fieldset className="space-y-4">
+            <legend className="sr-only">Privacy Options</legend>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="anonymous"
+                checked={anonymous}
+                onCheckedChange={(checked) => setAnonymous(!!checked)}
+                aria-describedby="anonymous-description"
+              />
+              <Label htmlFor="anonymous">Submit Anonymously</Label>
+            </div>
+            <p id="anonymous-description" className="text-sm text-muted-foreground">
+              Your personal information will not be collected if anonymous.
+            </p>
+          </fieldset>
 
           {!anonymous && (
-            <>
+            <fieldset className="space-y-4">
+              <legend className="sr-only">Optional Contact Information</legend>
+
               <div className="space-y-2">
-                <Label>Name</Label>
+                <Label htmlFor="feedback-name">Name</Label>
                 <Input
+                  id="feedback-name"
                   type="text"
                   placeholder="Enter your name..."
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  autoComplete="name"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>Email (Optional)</Label>
+                <Label htmlFor="feedback-email">Email (Optional)</Label>
                 <Input
+                  id="feedback-email"
                   type="email"
                   placeholder="Enter your email..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? "email-error" : undefined}
                 />
                 {emailError && (
-                  <p className="text-red-500 text-sm">{emailError}</p>
+                  <p id="email-error" className="text-destructive text-sm" role="alert">
+                    {emailError}
+                  </p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label>Phone (Optional)</Label>
+                <Label htmlFor="feedback-phone">Phone (Optional)</Label>
                 <Input
+                  id="feedback-phone"
                   type="tel"
                   placeholder="Enter your phone number..."
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  autoComplete="tel"
                 />
               </div>
-            </>
+            </fieldset>
           )}
 
           <div className="space-y-2">
-            <Label>Feedback</Label>
+            <Label htmlFor="feedback-message">Feedback <span className="text-destructive">*</span></Label>
             <Textarea
+              id="feedback-message"
               placeholder="Write your feedback here..."
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
+              required
+              aria-describedby="feedback-help"
+              rows={4}
             />
+            <p id="feedback-help" className="text-sm text-muted-foreground">
+              Please provide detailed feedback to help us improve.
+            </p>
           </div>
 
           <Button
-            onClick={handleSubmit}
+            type="submit"
             disabled={loading || !feedback.trim()}
             className="w-full"
+            aria-describedby={!feedback.trim() ? "submit-error" : undefined}
           >
             {loading ? "Submitting..." : "Submit"}
           </Button>
-        </div>
+          {!feedback.trim() && (
+            <p id="submit-error" className="sr-only" role="alert">
+              Feedback message is required
+            </p>
+          )}
+        </form>
       </DialogContent>
     </Dialog>
   );

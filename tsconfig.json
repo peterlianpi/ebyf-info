@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2018",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,6 +18,10 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    // Optimize for bundle size
+    "removeComments": true,
+    "importHelpers": true,
+    "downlevelIteration": true,
     "plugins": [
       {
         "name": "next"
@@ -39,7 +43,9 @@
   ],
   "exclude": [
     "node_modules",
-    "public/sw.js"
+    "public/sw.js",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ],
   "types": [
     "@serwist/next/typings"

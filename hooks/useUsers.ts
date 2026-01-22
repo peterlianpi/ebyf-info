@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { encryptData, decryptData } from "@/utils/crypto";
 import { saveToDB, getFromDB } from "@/utils/indexedDB";
 import { User } from "@/types";
@@ -20,16 +20,16 @@ export function useUsers(p0: string) {
   const [newMembersCount, setNewMembersCount] = useState<number>(0);
 
   // 🔁 Merge users based on unique ID (no longer sets count)
-  const mergeUsers = (oldUsers: User[] = [], updates: User[] = []): User[] => {
+  const mergeUsers = useCallback((oldUsers: User[] = [], updates: User[] = []): User[] => {
     const idMap = new Map(oldUsers.map((u) => [u.id, u]));
     updates.forEach((user) => {
       idMap.set(user.id, user);
     });
     return Array.from(idMap.values());
-  };
+  }, []);
 
   // 🌐 Fetch users updated since the last sync
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setUsersLoading(true);
     const lastSyncFromDB = (await getFromDB(SYNC_KEY) as string | null) || null;
     setLastSync(lastSyncFromDB);
@@ -86,7 +86,7 @@ export function useUsers(p0: string) {
     } finally {
       setUsersLoading(false);
     }
-  };
+  }, [mergeUsers, domain, apiKey]);
 
   // 🧠 Load local users first, then sync online
   useEffect(() => {
@@ -118,7 +118,7 @@ export function useUsers(p0: string) {
     })();
   }, []);
 
-  return {
+  return useMemo(() => ({
     users,
     usersLoading,
     fetchUsers,
@@ -127,5 +127,5 @@ export function useUsers(p0: string) {
     setUsersLoading,
     lastSync,
     newMembersCount,
-  };
+  }), [users, usersLoading, fetchUsers, userAdded, lastSync, newMembersCount]);
 }

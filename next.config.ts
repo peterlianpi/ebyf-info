@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
-
 const nextConfig: NextConfig = {
   serverExternalPackages: ["esbuild-wasm"],
+  // Compress responses
+  compress: true,
+  // Optimize images
   images: {
     remotePatterns: [
       {
@@ -14,7 +16,14 @@ const nextConfig: NextConfig = {
         hostname: "ipfs.filebase.io",
       },
     ],
+    // Optimize image formats
+    formats: ["image/webp", "image/avif"],
+  },
+  // Enable experimental features for bundle optimization
+  experimental: {
+    // Optimize CSS
+    optimizeCss: true,
   },
 };
 
-export default nextConfig
+export default nextConfig;
