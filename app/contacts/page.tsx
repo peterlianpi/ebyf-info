@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PeriodDisplay from "@/components/periodShow";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 import { getFilterByTab } from "@/utils/roleFilters";
+import { useProtocolHandler } from "@/hooks/useProtocolHandler";
 
 import { User } from "@/types";
 
@@ -23,6 +24,8 @@ export default function CombinedContactsPage() {
   const [activeTab, setActiveTab] = useState<Tab>(TABS[0]);
   const [users, setUsers] = useState<User[]>([]);
   const [usersLoading, setUsersLoading] = useState<boolean>(false);
+
+  useProtocolHandler();
 
   useEffect(() => {
     const fetchFilteredUsers = async () => {

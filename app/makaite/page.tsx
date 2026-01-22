@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import UserItem from "@/components/user-item";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
+import { useProtocolHandler } from "@/hooks/useProtocolHandler";
 import { User } from "@/types";
 
 function MakaitePage() {
   const [usersLoading, setUsersLoading] = useState<boolean>(true);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+
+  useProtocolHandler();
 
   useEffect(() => {
     const fetchAndFilterUsers = async () => {
