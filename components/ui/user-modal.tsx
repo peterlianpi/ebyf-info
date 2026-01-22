@@ -7,6 +7,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./sheet";
 import { Button } from "./button";
 import PeriodDisplay from "@/components/periodShow";
 import Phone from "@/components/icons/Phone";
+import { Copy } from "lucide-react";
+import { copyToClipboard } from "@/lib/utils";
+import { toast } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalWindow = (globalThis as any).window || {};
@@ -23,6 +26,15 @@ export default function UserModal({ user, isOpen, onClose }: UserModalProps) {
   const handleCall = (phone: string | undefined) => {
     if (!phone) return;
     globalWindow.open(`tel:${phone}`);
+  };
+
+  const handleCopyPhone = async (phone: string) => {
+    try {
+      await copyToClipboard(phone);
+      toast.success(`Phone number copied: ${phone}`);
+    } catch (error) {
+      toast.error("Failed to copy phone number");
+    }
   };
 
   return (
@@ -46,15 +58,25 @@ export default function UserModal({ user, isOpen, onClose }: UserModalProps) {
                     key={index}
                     className="flex items-center justify-between p-2 border rounded"
                   >
-                    <span className="text-sm">{num.trim()}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleCall(num.trim())}
-                      aria-label={`Call ${num.trim()}`}
-                    >
-                      <Phone className="w-4 h-4" />
-                    </Button>
+                    <span className="text-sm font-mono">{num.trim()}</span>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleCopyPhone(num.trim())}
+                        aria-label={`Copy phone number ${num.trim()}`}
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleCall(num.trim())}
+                        aria-label={`Call ${num.trim()}`}
+                      >
+                        <Phone className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>

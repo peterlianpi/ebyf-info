@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
-import { User as UserIcon, Phone } from "lucide-react";
+import { User as UserIcon, Phone, Copy } from "lucide-react";
 import UserModal from "./ui/user-modal";
 import { User } from "@/types";
+import { copyToClipboard } from "@/lib/utils";
+import { toast } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalWindow = (globalThis as any).window || {};
@@ -29,6 +31,15 @@ export default function UserItem({ user }: UserItemProps) {
 
   function handleCloseModal() {
     setSelectedUser(null);
+  }
+
+  async function handleCopyPhone(phone: string) {
+    try {
+      await copyToClipboard(phone);
+      toast.success(`Phone number copied: ${phone}`);
+    } catch (error) {
+      toast.error("Failed to copy phone number");
+    }
   }
   return (
     <Card className="hover:shadow-md transition-shadow ">
@@ -66,14 +77,24 @@ export default function UserItem({ user }: UserItemProps) {
             )}
           </button>
 
-          <Button
-            onClick={() => handleCall(phone)}
-            variant="ghost"
-            size="sm"
-            aria-label={`Call ${name}`}
-          >
-            <Phone className="w-5 h-5" />
-          </Button>
+          <div className="flex gap-1">
+            <Button
+              onClick={() => handleCopyPhone(phone || "")}
+              variant="ghost"
+              size="sm"
+              aria-label={`Copy phone number for ${name}`}
+            >
+              <Copy className="w-4 h-4" />
+            </Button>
+            <Button
+              onClick={() => handleCall(phone)}
+              variant="ghost"
+              size="sm"
+              aria-label={`Call ${name}`}
+            >
+              <Phone className="w-4 h-4" />
+            </Button>
+          </div>
 
           <UserModal
             user={selectedUser}
