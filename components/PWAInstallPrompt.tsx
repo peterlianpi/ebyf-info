@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalWindow = (globalThis as any).window || {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalNavigator = (globalThis as any).navigator || {};
+
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
@@ -10,8 +15,8 @@ interface BeforeInstallPromptEvent extends Event {
 export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstall, setShowInstall] = useState(false);
-  const [isStandalone] = useState(() => typeof window !== 'undefined' ? window.matchMedia("(display-mode: standalone)").matches : false);
-  const [isIOS] = useState(() => typeof window !== 'undefined' ? /iPad|iPhone|iPod/.test(navigator.userAgent) : false);
+  const [isStandalone] = useState(() => globalWindow.matchMedia ? globalWindow.matchMedia("(display-mode: standalone)").matches : false);
+  const [isIOS] = useState(() => globalNavigator.userAgent ? /iPad|iPhone|iPod/.test(globalNavigator.userAgent) : false);
 
   useEffect(() => {
     const handleBeforeInstall = (e: Event) => {
@@ -20,8 +25,8 @@ export default function PWAInstallPrompt() {
       setShowInstall(true);
     };
 
-    window.addEventListener("beforeinstallprompt", handleBeforeInstall);
-    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+    globalWindow.addEventListener("beforeinstallprompt", handleBeforeInstall);
+    return () => globalWindow.removeEventListener("beforeinstallprompt", handleBeforeInstall);
   }, []);
 
   if (isStandalone) return null;

@@ -45,6 +45,7 @@ const Socials = ({ containerStyles, iconsStyles }: SocialsProps) => {
   return (
     <>
       <span className="mb-4">Made with ❤ by Peter</span>
+      <br />
       <div className={`${containerStyles}`}>
         {icons.map((social, index) => (
           <Link

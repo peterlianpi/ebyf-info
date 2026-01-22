@@ -8,6 +8,9 @@ import { Button } from "./button";
 import PeriodDisplay from "@/components/periodShow";
 import Phone from "@/components/icons/Phone";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalWindow = (globalThis as any).window || {};
+
 interface UserModalProps {
   user: User | null;
   isOpen: boolean;
@@ -19,7 +22,7 @@ export default function UserModal({ user, isOpen, onClose }: UserModalProps) {
 
   const handleCall = (phone: string | undefined) => {
     if (!phone) return;
-    window.open(`tel:${phone}`);
+    globalWindow.open(`tel:${phone}`);
   };
 
   return (

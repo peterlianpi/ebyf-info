@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalWindow = (globalThis as any).window || {};
+
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
@@ -19,12 +22,12 @@ export default function PWADebug() {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    globalWindow.addEventListener('online', handleOnline);
+    globalWindow.addEventListener('offline', handleOffline);
 
     // Check service worker
     const checkSW = async () => {
-      if ('serviceWorker' in navigator) {
+      if (typeof navigator !== "undefined" && 'serviceWorker' in navigator) {
         try {
           const registrations = await navigator.serviceWorker.getRegistrations();
           if (registrations.length > 0) {
@@ -56,17 +59,17 @@ export default function PWADebug() {
       console.log('PWA install prompt available');
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+    globalWindow.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
 
     // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (globalWindow.matchMedia('(display-mode: standalone)').matches) {
       console.log('App is running in standalone mode');
     }
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+      globalWindow.removeEventListener('online', handleOnline);
+      globalWindow.removeEventListener('offline', handleOffline);
+      globalWindow.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
     };
   }, []);
 
@@ -100,7 +103,7 @@ export default function PWADebug() {
             </button>
           )}
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => globalWindow.location.reload()}
             className="mt-2 ml-2 px-4 py-2 bg-green-500 text-white rounded"
           >
             Refresh

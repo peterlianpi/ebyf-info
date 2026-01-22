@@ -1,19 +1,22 @@
 import { Inter } from "next/font/google";
 import { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ReactNode } from "react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { QueryProvider } from "@/providers/query-provider";
 import { APP_NAME, APP_DEFAULT_TITLE, APP_TITLE_TEMPLATE, APP_DESCRIPTION } from "@/site/site-config";
-import PWADebug from "@/components/PWADebug";
-import PWAServiceWorkerRegister from "@/components/PWAServiceWorkerRegister";
-import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import OnlineStatus from "@/components/OnlineStatus";
-import ProtocolHandler from "@/components/ProtocolHandler";
+
+const PWADebug = dynamic(() => import("@/components/PWADebug"));
+const PWAServiceWorkerRegister = dynamic(() => import("@/components/PWAServiceWorkerRegister"));
+const PWAInstallPrompt = dynamic(() => import("@/components/PWAInstallPrompt"));
+const OnlineStatus = dynamic(() => import("@/components/OnlineStatus"));
+// const ProtocolHandler = dynamic(() => import("@/components/ProtocolHandler"));
 
 // Font
 const inter = Inter({ subsets: ["latin"] });
@@ -70,19 +73,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* You can include other elements in <head> here if needed */}
       </head>
       <body className={inter.className}>
-        <ProtocolHandler />
         <OnlineStatus />
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <main className="container max-w-4xl p-4 mx-auto">
-            <Toaster />
-            <PWADebug />
-            <Header />
-            {children}
-            <Footer />
-            <PWAServiceWorkerRegister />
-            <PWAInstallPrompt />
-          </main>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <main className="container max-w-4xl p-4 mx-auto">
+              <Toaster />
+              <PWADebug />
+              <Header />
+              {children}
+              <Footer />
+              <PWAServiceWorkerRegister />
+              <PWAInstallPrompt />
+            </main>
+          </ThemeProvider>
+        </QueryProvider>
         <Analytics />
         <SpeedInsights />
       </body>

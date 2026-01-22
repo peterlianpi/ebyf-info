@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+"use client";
 
-import Remove from "../icons/Remove";
-import Search from "../icons/Search";
+import React, { useState } from "react";
+import { Search, X } from "lucide-react";
 import UserItem from "../user-item";
 import { User } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface SearchBoxProps {
   users: User[];
@@ -24,48 +26,50 @@ export default function SearchBox({ users, isFetchingComplete }: SearchBoxProps)
         })
       : [];
 
+  // Function to handle input change
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleInputChange = (e: any) => {
+    setSearchQuery(e.target.value);
+  };
+
   // Function to clear the search query
   const clearSearchQuery = () => {
     setSearchQuery("");
   };
 
   return (
-    <>
-      {/* Search input field */}
-      <div className="flex items-center  relative h-14">
-        <div className="absolute left-2">
-          {searchQuery === "" && <Search />}
-        </div>
-        <input
+    <div className="space-y-4">
+      <div className="relative">
+        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+        <Input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleInputChange}
           placeholder={
             isFetchingComplete
-              ? "        Search by name or veng..."
+              ? "Search by name or veng..."
               : "Loading users..."
           }
-          disabled={!isFetchingComplete} // Disable input while fetching users
-          className={`w-full border border-gray-300 rounded mt-2 ${
-            isFetchingComplete ? "" : "bg-gray-100 cursor-not-allowed"
-          }`}
+          disabled={!isFetchingComplete}
+          className="pl-9 pr-9"
         />
         {searchQuery !== "" && isFetchingComplete && (
-          <div className="absolute w-6 h-6 right-4" onClick={clearSearchQuery}>
-            <Remove />
-          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="absolute right-1 top-1 h-7 w-7 p-0"
+            onClick={clearSearchQuery}
+          >
+            <X className="h-4 w-4" />
+          </Button>
         )}
       </div>
 
-      <div style={{ maxHeight: "250px", overflowY: "scroll" }}>
+      <div className="max-h-64 overflow-y-auto space-y-2">
         {filteredUsers.map((user) => (
-          <div key={user.id} className="">
-            {<UserItem user={user} />}
-          </div>
+          <UserItem key={user.id} user={user} />
         ))}
       </div>
-      <hr />
-      {/* Rest of your rendering logic */}
-    </>
+    </div>
   );
 }

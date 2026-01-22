@@ -1,11 +1,22 @@
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalWindow = (globalThis as any).window || {};
 
 export function useProtocolHandler() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const mountedRef = useRef(false);
 
   useEffect(() => {
+    mountedRef.current = true;
+  }, []);
+
+  useEffect(() => {
+    // Only run on client side and when mounted
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (typeof (globalThis as any).window === 'undefined' || !mountedRef.current) return;
     const url = searchParams.get("url");
     if (url && url.startsWith("web+ebyf:")) {
       const protocolUrl = url;
@@ -13,18 +24,18 @@ export function useProtocolHandler() {
 
       if (action === "contacts") {
         // Navigate to contacts page
-        if (window.location.pathname !== "/contacts") {
+        if (globalWindow.location.pathname !== "/contacts") {
           router.push("/contacts");
         }
       } else if (action === "makaite") {
         // Navigate to makaite page
-        if (window.location.pathname !== "/makaite") {
+        if (globalWindow.location.pathname !== "/makaite") {
           router.push("/makaite");
         }
       } else if (action === "" || action === undefined) {
         // No action, stay on root or current page
         // Optionally navigate to home
-        if (window.location.pathname !== "/") {
+        if (globalWindow.location.pathname !== "/") {
           router.push("/");
         }
       } else {
@@ -33,7 +44,7 @@ export function useProtocolHandler() {
       }
 
       // Remove the url param to prevent re-triggering
-      const newUrl = new URL(window.location.href);
+      const newUrl = new URL(globalWindow.location.href);
       newUrl.searchParams.delete("url");
       router.replace(newUrl.pathname + newUrl.search);
     }

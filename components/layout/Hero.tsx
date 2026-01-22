@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { RiArrowDownSLine } from "react-icons/ri";
+import { ChevronDown } from "lucide-react";
 import Socials from "../Socials";
 import SearchBox from "@/features/all-members/member-search";
 import FeedbackForm from "@/features/feedback/components/feedback";
+import { APP_DEFAULT_TITLE, APP_DESCRIPTION } from "@/site/site-config";
 
 const Hero = () => {
   return (
@@ -19,18 +20,17 @@ const Hero = () => {
               id="hero-title"
               className="text-sm uppercase font-semibold mb-4 text-primary tracking-[4px]"
             >
-              EBYF Contacts Info
+              {APP_DEFAULT_TITLE}
             </h1>
             <p className="subtitle max-w-3xl mx-auto mb-6 text-base md:text-lg">
-              EBYF Contacts Info: Easily connect with church youth. No more
-              typing numbers—just tap and call.
+              {APP_DESCRIPTION}
             </p>
             <div className="mb-8" role="search" aria-label="Search for members">
               <SearchBox />
             </div>
             <div className="mb-8">
               <Socials
-                containerStyles="flex gap-x-6 mx-auto justify-center"
+                containerStyles="flex gap-x-6 mx-auto justify-center py-4"
                 iconsStyles="text-foreground text-[22px] hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
@@ -41,7 +41,7 @@ const Hero = () => {
         </div>
 
         <div className="hidden md:flex max-w-xl mt-12 justify-center items-center mx-auto">
-          <RiArrowDownSLine
+          <ChevronDown
             className="text-3xl text-primary animate-bounce"
             aria-hidden="true"
           />

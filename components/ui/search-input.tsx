@@ -39,7 +39,8 @@ export default function SearchInput({
   }, [value, debounceMs, onDebouncedChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange((e.target as any).value);
   };
 
   const clearSearch = () => {

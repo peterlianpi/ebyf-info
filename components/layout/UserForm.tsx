@@ -1,33 +1,40 @@
 "use client";
-import React, { useEffect } from "react";
-import { toast } from "react-hot-toast";
+import React from "react";
+import { toast } from "sonner";
 import Image from "next/image";
 import { useState, useRef } from "react";
-import { usePathname } from "next/navigation"; 
-import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProfile } from "../UseProfile";
 
+interface UserData {
+  name?: string;
+  image?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+  position?: string;
+  veng?: string;
+  fb?: string;
+}
+
+interface FormData {
+  name: string;
+  image: string;
+  phone: string;
+  email: string;
+  role: string;
+  position: string;
+  veng: string;
+  fb: string;
+}
+
 interface UserFormProps {
-  user?: {
-    name?: string;
-    image?: string;
-    email?: string;
-    phone?: string;
-    role?: string;
-    position?: string;
-    veng?: string;
-    fb?: string;
-  };
-  onSave: (ev: React.FormEvent<HTMLFormElement>, data: {
-    name: string;
-    image: string;
-    phone: string;
-    email: string;
-    role: string;
-    position: string;
-    veng: string;
-    fb: string;
-  }) => void;
+  user?: UserData;
+  onSave: (ev: React.FormEvent<HTMLFormElement>, data: FormData) => void;
 }
 
 export default function UserForm({ user, onSave }: UserFormProps) {
@@ -78,30 +85,32 @@ export default function UserForm({ user, onSave }: UserFormProps) {
 
   async function handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
     ev.preventDefault();
-    if (!inputFileRef.current?.files) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!(inputFileRef.current as any)?.files) {
       throw new Error("No file selected for profile");
     }
-    const file = inputFileRef.current.files[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const file = (inputFileRef.current as any).files[0];
     const data = new FormData();
     data.set("file", file);
 
-    const uploadPromise = fetch("/api/upload", {
-      method: "POST",
-      body: data,
-    }).then((response) => {
-      if (response.ok) {
-        return response.json().then((link) => {
-          setImage(link);
-        });
-      }
-      throw new Error("Failed to upload");
-    });
+    const toastId = toast.loading("Uploading...");
 
-    await toast.promise(uploadPromise, {
-      loading: "Uploading...",
-      success: "Upload complete",
-      error: "Upload error",
-    });
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: data,
+      });
+      if (response.ok) {
+        const link = await response.json();
+        setImage(link);
+        toast.success("Upload complete", { id: toastId });
+      } else {
+        throw new Error("Failed to upload");
+      }
+    } catch (error) {
+      toast.error("Upload error", { id: toastId });
+    }
   }
 
   return (
@@ -148,68 +157,93 @@ export default function UserForm({ user, onSave }: UserFormProps) {
             setSaved(true);
           }}
         >
-          <label>Full name</label>
-          <input
-            type="text"
-            value={userName}
-            onChange={(ev) => setUserName(ev.target.value)}
-            placeholder="Full name"
-            required
-          />
-          <label>Email</label>
-          <input
-            type="email"
-            disabled={path === "/profile"}
-            placeholder="Email address"
-            value={email}
-            className=""
-            onChange={(ev) => setEmail(ev.target.value)}
-          />
-          <label>Phone</label>
-          <input
-            type="tel"
-            placeholder="Phone number"
-            value={phone}
-            onChange={(ev) => setPhone(ev.target.value)}
-            required
-          />
-          <label>Role</label>
-          <input
-            type="text"
-            placeholder="Role"
-            value={role}
-            onChange={(ev) => setRole(ev.target.value)}
-          />
-          <label>Position</label>
-          <input
-            type="text"
-            placeholder="Position"
-            disabled={
-              (path === "/profile" || path === "/addusers") && !isAdmin
-            }
-            value={position}
-            onChange={(ev) => setPosition(ev.target.value)}
-          />
-          <label>Veng</label>
-          <select
-            className=""
-            value={veng}
-            onChange={(ev) => setVeng(ev.target.value)}
-          >
-            <option value="">Select Veng</option>
-            {vengList.map((vengItem) => (
-              <option key={vengItem} value={vengItem}>
-                {vengItem}
-              </option>
-            ))}
-          </select>
-          <label>Facebook Profile</label>
-          <input
-            type="text"
-            placeholder="Facebook Profile"
-            value={fb}
-            onChange={(ev) => setFb(ev.target.value)}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="fullname">Full name</Label>
+            <Input
+              id="fullname"
+              type="text"
+              value={userName}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setUserName(ev.target.value)}
+              placeholder="Full name"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              disabled={path === "/profile"}
+              placeholder="Email address"
+              value={email}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setEmail(ev.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              type="tel"
+              placeholder="Phone number"
+              value={phone}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setPhone(ev.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="role">Role</Label>
+            <Input
+              id="role"
+              type="text"
+              placeholder="Role"
+              value={role}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setRole(ev.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="position">Position</Label>
+            <Input
+              id="position"
+              type="text"
+              placeholder="Position"
+              disabled={
+                (path === "/profile" || path === "/addusers") && !isAdmin
+              }
+              value={position}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setPosition(ev.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="veng">Veng</Label>
+            <Select value={veng} onValueChange={setVeng}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Veng" />
+              </SelectTrigger>
+              <SelectContent>
+                {vengList.map((vengItem) => (
+                  <SelectItem key={vengItem} value={vengItem}>
+                    {vengItem}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="fb">Facebook Profile</Label>
+            <Input
+              id="fb"
+              type="text"
+              placeholder="Facebook Profile"
+              value={fb}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onChange={(ev: any) => setFb(ev.target.value)}
+            />
+          </div>
 
           <Button type="submit" className="w-full">
             Save

@@ -1,40 +1,43 @@
+"use client";
+
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import toast from "react-hot-toast";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { toast } from "sonner";
+
+const feedbackSchema = z.object({
+  message: z.string().min(1, "Feedback message is required"),
+  name: z.string().optional(),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
+  phone: z.string().optional(),
+  anonymous: z.boolean(),
+});
+
+type FeedbackFormData = z.infer<typeof feedbackSchema>;
 
 export default function FeedbackForm() {
-  const [feedback, setFeedback] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [anonymous, setAnonymous] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [emailError, setEmailError] = useState("");
 
-  // Form validation function
-  const validateForm = () => {
-    if (!feedback.trim()) {
-      toast.error("Feedback cannot be empty.");
-      return false;
-    }
+  const form = useForm<FeedbackFormData>({
+    resolver: zodResolver(feedbackSchema),
+    defaultValues: {
+      message: "",
+      name: "",
+      email: "",
+      phone: "",
+      anonymous: false,
+    },
+  });
 
-    if (!anonymous && email && !/\S+@\S+\.\S+/.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      return false;
-    }
-
-    setEmailError(""); // Reset email error if valid
-    return true;
-  };
-
-  const handleSubmit = async () => {
-    if (!validateForm()) return;
-
+  const onSubmit = async (data: FeedbackFormData) => {
     setLoading(true);
 
     const domain = process.env.NEXT_PUBLIC_API_URL;
@@ -51,11 +54,11 @@ export default function FeedbackForm() {
         method: "POST",
         headers,
         body: JSON.stringify({
-          name,
-          email,
-          phone,
-          message: feedback,
-          anonymous,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: data.message,
+          anonymous: data.anonymous,
         }),
       });
 
@@ -64,11 +67,7 @@ export default function FeedbackForm() {
       }
 
       toast.success("Feedback submitted successfully!");
-      setFeedback("");
-      setName("");
-      setEmail("");
-      setPhone("");
-      setAnonymous(false);
+      form.reset();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to submit feedback.";
@@ -86,106 +85,114 @@ export default function FeedbackForm() {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md max-md:w-82.5 rounded-lg" role="dialog" aria-labelledby="feedback-title">
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="w-full space-y-4">
-          <h2 id="feedback-title" className="text-lg font-semibold">
-            Submit Your Feedback
-          </h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
+            <h2 id="feedback-title" className="text-lg font-semibold">
+              Submit Your Feedback
+            </h2>
 
-          <fieldset className="space-y-4">
-            <legend className="sr-only">Privacy Options</legend>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="anonymous"
-                checked={anonymous}
-                onCheckedChange={(checked) => setAnonymous(!!checked)}
-                aria-describedby="anonymous-description"
-              />
-              <Label htmlFor="anonymous">Submit Anonymously</Label>
-            </div>
-            <p id="anonymous-description" className="text-sm text-muted-foreground">
-              Your personal information will not be collected if anonymous.
-            </p>
-          </fieldset>
-
-          {!anonymous && (
-            <fieldset className="space-y-4">
-              <legend className="sr-only">Optional Contact Information</legend>
-
-              <div className="space-y-2">
-                <Label htmlFor="feedback-name">Name</Label>
-                <Input
-                  id="feedback-name"
-                  type="text"
-                  placeholder="Enter your name..."
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  autoComplete="name"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="feedback-email">Email (Optional)</Label>
-                <Input
-                  id="feedback-email"
-                  type="email"
-                  placeholder="Enter your email..."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  aria-invalid={!!emailError}
-                  aria-describedby={emailError ? "email-error" : undefined}
-                />
-                {emailError && (
-                  <p id="email-error" className="text-destructive text-sm" role="alert">
-                    {emailError}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="feedback-phone">Phone (Optional)</Label>
-                <Input
-                  id="feedback-phone"
-                  type="tel"
-                  placeholder="Enter your phone number..."
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  autoComplete="tel"
-                />
-              </div>
-            </fieldset>
-          )}
-
-          <div className="space-y-2">
-            <Label htmlFor="feedback-message">Feedback <span className="text-destructive">*</span></Label>
-            <Textarea
-              id="feedback-message"
-              placeholder="Write your feedback here..."
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              required
-              aria-describedby="feedback-help"
-              rows={4}
+            <FormField
+              control={form.control}
+              name="anonymous"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      aria-describedby="anonymous-description"
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel htmlFor="anonymous">Submit Anonymously</FormLabel>
+                    <p id="anonymous-description" className="text-sm text-muted-foreground">
+                      Your personal information will not be collected if anonymous.
+                    </p>
+                  </div>
+                </FormItem>
+              )}
             />
-            <p id="feedback-help" className="text-sm text-muted-foreground">
-              Please provide detailed feedback to help us improve.
-            </p>
-          </div>
 
-          <Button
-            type="submit"
-            disabled={loading || !feedback.trim()}
-            className="w-full"
-            aria-describedby={!feedback.trim() ? "submit-error" : undefined}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </Button>
-          {!feedback.trim() && (
-            <p id="submit-error" className="sr-only" role="alert">
-              Feedback message is required
-            </p>
-          )}
-        </form>
+            {!form.watch("anonymous") && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your name..." autoComplete="name" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter your email..."
+                          autoComplete="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          placeholder="Enter your phone number..."
+                          autoComplete="tel"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
+
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Feedback <span className="text-destructive">*</span></FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Write your feedback here..."
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
+                  <p className="text-sm text-muted-foreground">
+                    Please provide detailed feedback to help us improve.
+                  </p>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? "Submitting..." : "Submit"}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

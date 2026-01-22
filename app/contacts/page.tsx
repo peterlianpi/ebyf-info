@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import UserItem from "@/components/user-item";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PeriodDisplay from "@/components/periodShow";
+import { PageHeader } from "@/components/PageHeader";
+import { EmptyState } from "@/components/EmptyState";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 import { getFilterByTab } from "@/utils/roleFilters";
-import { useProtocolHandler } from "@/hooks/useProtocolHandler";
+import { Users } from "lucide-react";
 
 import { User } from "@/types";
 
@@ -21,75 +24,79 @@ const TABS: Tab[] = [
 ];
 
 export default function CombinedContactsPage() {
-  const [activeTab, setActiveTab] = useState<Tab>(TABS[0]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [usersLoading, setUsersLoading] = useState<boolean>(false);
-
-  useProtocolHandler();
+  const [users, setUsers] = useState<Record<string, User[]>>({});
+  const [usersLoading, setUsersLoading] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    const fetchFilteredUsers = async () => {
-      setUsersLoading(true);
-      const filters = getFilterByTab(activeTab.label);
-      const result = await filterLocalMembersByRole(filters);
-      setUsers(result);
-      setUsersLoading(false);
+    const fetchAllUsers = async () => {
+      for (const tab of TABS) {
+        setUsersLoading(prev => ({ ...prev, [tab.label]: true }));
+        const filters = getFilterByTab(tab.label);
+        const result = await filterLocalMembersByRole(filters);
+        setUsers(prev => ({ ...prev, [tab.label]: result }));
+        setUsersLoading(prev => ({ ...prev, [tab.label]: false }));
+      }
     };
 
-    fetchFilteredUsers();
-  }, [activeTab]);
+    fetchAllUsers();
+  }, []);
 
   return (
-    <div className="max-w-md mx-auto">
-      {/* Tabs */}
-      <div className="flex justify-center items-center gap-4 mb-4 border-b">
+    <div className="max-w-2xl mx-auto space-y-6">
+      <PageHeader
+        title="Contacts"
+        description="Find and connect with church members"
+      />
+
+      <Tabs defaultValue={TABS[0].label} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          {TABS.map((tab) => (
+            <TabsTrigger key={tab.label} value={tab.label}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
         {TABS.map((tab) => (
-          <button
-            key={tab.label}
-            onClick={() => setActiveTab(tab)}
-            className={`py-2 px-4 ${
-              activeTab.label === tab.label
-                ? "border-b-2 border-blue-500 font-bold"
-                : ""
-            }`}
-          >
-            {tab.label}
-          </button>
+          <TabsContent key={tab.label} value={tab.label} className="space-y-4">
+            {usersLoading[tab.label] ? (
+              <div className="space-y-4">
+                <Skeleton className="w-full h-24" />
+                <Skeleton className="w-full h-24" />
+                <Skeleton className="w-full h-24" />
+              </div>
+            ) : users[tab.label]?.length > 0 ? (
+              <div className="space-y-4">
+                {tab.label === "Library"
+                  ? users[tab.label].map((user) => {
+                      const filteredRoles = (user.roles || []).filter((role) =>
+                        role.role.name.toLowerCase().includes("library"),
+                      );
+
+                      return filteredRoles.length > 0 ? (
+                        <div key={user.id}>
+                          <PeriodDisplay
+                            startedAt={filteredRoles[0].startedAt}
+                            endedAt={filteredRoles[0].endedAt}
+                          />
+                          <UserItem user={user} />
+                        </div>
+                      ) : null;
+                    })
+                  : users[tab.label].map((user) => (
+                      <UserItem key={user.id} user={user} />
+                    ))}
+              </div>
+            ) : (
+              <EmptyState
+                icon={Users}
+                title={`No ${tab.label.toLowerCase()} contacts found`}
+                description="There are no members in this category at the moment."
+              />
+            )}
+          </TabsContent>
         ))}
-      </div>
-
-      {/* Content */}
-      {usersLoading ? (
-        <div className="flex flex-col gap-4">
-          <Skeleton className="w-full h-24" />
-          <Skeleton className="w-full h-24" />
-          <Skeleton className="w-full h-24" />
-        </div>
-      ) : (
-        <div>
-          {activeTab.label === "Library"
-            ? users.map((user) => {
-                const filteredRoles = (user.roles || []).filter((role) =>
-                  role.role.name.toLowerCase().includes("library"),
-                );
-
-                return filteredRoles.length > 0 ? (
-                  <div key={user.id} className="my-2">
-                    <PeriodDisplay
-                      startedAt={filteredRoles[0].startedAt}
-                      endedAt={filteredRoles[0].endedAt}
-                    />
-                    <UserItem user={user} />
-                  </div>
-                ) : null;
-              })
-            : users.map((user) => (
-                <div key={user.id} className="my-2">
-                  <UserItem user={user} />
-                </div>
-              ))}
-        </div>
-      )}
+      </Tabs>
     </div>
   );
 }
