@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -37,7 +38,7 @@ export function formatDateRange(startDate: Date, endDate?: Date): string {
 
   if (startYear === endYear) {
     if (startYear === currentDate.getFullYear() &&
-        endDate.getTime() >= currentDate.getTime()) {
+      endDate.getTime() >= currentDate.getTime()) {
       // Current year with end date in future: "Mar 15, 2024 - Present"
       return `${formatDate(startDate)} - Present`;
     } else {
@@ -72,17 +73,17 @@ export function formatYearRange(startYear: number, endYear?: number): string {
  * @returns Promise that resolves when copy is complete
  */
 export async function copyToClipboard(text: string): Promise<void> {
-  if (typeof window === 'undefined') return;
+  if (typeof globalThis === 'undefined' || !(globalThis as any).document) return;
 
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (err) {
-    // Fallback for older browsers
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-  }
+  // Use fallback method for reliability across all environments
+
+  const textArea = (globalThis as any).document.createElement('textarea');
+  textArea.value = text;
+
+  (globalThis as any).document.body.appendChild(textArea);
+  textArea.select();
+
+  (globalThis as any).document.execCommand('copy');
+
+  (globalThis as any).document.body.removeChild(textArea);
 }
