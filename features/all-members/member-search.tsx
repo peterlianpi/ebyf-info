@@ -14,7 +14,7 @@ import { User } from "@/types";
 export default function SearchBox() {
   const [searchQuery, setSearchQuery] = useState<string>(""); // State to hold search query
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>(searchQuery); // Debounced state for search query
-  const { usersLoading, setUsersLoading } = useUsers(); // Use the debounced query
+  const { usersLoading, setUsersLoading } = useUsers(""); // Use the debounced query
   const [users, setUsers] = useState<User[]>([]); // State to hold filtered users
 
   // Debounce input changes

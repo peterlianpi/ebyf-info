@@ -1,21 +1,21 @@
 # Hooks Documentation
 
-This document describes the custom hooks in the `src/hooks/` directory.
+This document describes the custom hooks in the `hooks/` directory.
 
-## useUsers Hook (`src/hooks/useUsers.js`)
+## useUsers Hook (`hooks/useUsers.ts`)
 
 **Description:** Custom hook for managing user data, including fetching from API, local storage, encryption, and sync functionality.
 
 **State Management:**
-- `users`: Array of user objects.
-- `usersLoading`: Boolean for loading state.
-- `userAdded`: Boolean for user addition state.
-- `lastSync`: Timestamp of last sync.
-- `newMembersCount`: Count of new members.
+- `users: User[]`: Array of user objects.
+- `usersLoading: boolean`: Boolean for loading state.
+- `userAdded: boolean`: Boolean for user addition state.
+- `lastSync: string | null`: Timestamp of last sync.
+- `newMembersCount: number`: Count of new members.
 
 **Functions:**
-- `mergeUsers(oldUsers, updates)`: Merges user arrays by ID.
-- `fetchUsers()`: Fetches users from API, merges with local data, encrypts and saves to IndexedDB.
+- `mergeUsers(oldUsers: User[], updates: User[]): User[]`: Merges user arrays by ID.
+- `fetchUsers(): Promise<void>`: Fetches users from API, merges with local data, encrypts and saves to IndexedDB.
 
 **Functionality:**
 - Loads local users first.
@@ -29,19 +29,19 @@ This document describes the custom hooks in the `src/hooks/` directory.
 **Client-Side:** Uses `"use client"`.
 
 **Return Object:**
-```js
+```typescript
 {
-  users,
-  usersLoading,
-  fetchUsers,
-  userAdded,
-  setUserAdded,
-  setUsersLoading,
-  lastSync,
-  newMembersCount,
+  users: User[],
+  usersLoading: boolean,
+  fetchUsers: () => Promise<void>,
+  userAdded: boolean,
+  setUserAdded: (added: boolean) => void,
+  setUsersLoading: (loading: boolean) => void,
+  lastSync: string | null,
+  newMembersCount: number,
 }
 ```
 
 **Usage Example:**
-```js
+```typescript
 const { users, usersLoading, fetchUsers } = useUsers();

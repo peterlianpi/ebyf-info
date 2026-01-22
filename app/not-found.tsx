@@ -10,7 +10,7 @@ export default function NotFound() {
         Page Not Found
       </h2>
       <p className="max-w-md mb-8 text-gray-600 dark:text-gray-400">
-        Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.
+        Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved or doesn&apos;t exist.
       </p>
       <Link href="/">
         <button className="px-4 py-2 text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700">

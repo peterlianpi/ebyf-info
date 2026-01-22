@@ -1,11 +1,17 @@
 import React, { useState } from "react";
- 
+
 import Remove from "../icons/Remove";
 import Search from "../icons/Search";
 import UserItem from "../user-item";
+import { User } from "@/types";
 
-export default function SearchBox({ users, isFetchingComplete }) {
-  const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
+interface SearchBoxProps {
+  users: User[];
+  isFetchingComplete: boolean;
+}
+
+export default function SearchBox({ users, isFetchingComplete }: SearchBoxProps) {
+  const [searchQuery, setSearchQuery] = useState<string>(""); // State to hold search query
 
   // Function to filter users based on search query
   const filteredUsers =
@@ -13,7 +19,7 @@ export default function SearchBox({ users, isFetchingComplete }) {
       ? users.filter((user) => {
           return (
             user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user?.veng?.name.toLowerCase().includes(searchQuery.toLowerCase())
+            (user?.veng && (typeof user.veng === 'string' ? user.veng.toLowerCase().includes(searchQuery.toLowerCase()) : user.veng.name?.toLowerCase().includes(searchQuery.toLowerCase())))
           );
         })
       : [];

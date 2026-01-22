@@ -1,6 +1,6 @@
 # EBYF Info
 
-A modern, TypeScript-powered Progressive Web App (PWA) for church youth contact management and community engagement. Built with Next.js 15, featuring offline-first architecture, encrypted local storage, and comprehensive type safety.
+A modern, TypeScript-powered Progressive Web App (PWA) for church youth contact management and community engagement. Built with Next.js 16, featuring offline-first architecture, encrypted local storage, and comprehensive type safety.
 
 ## 🌟 Features
 
@@ -62,9 +62,9 @@ npm start
 ## 🛠️ Tech Stack
 
 ### Core Framework
-- **Next.js 15** - React framework with App Router
-- **React 19** - UI library
-- **TypeScript 5.9** - Type-safe JavaScript
+- **Next.js 16.1.4** - React framework with App Router
+- **React 19.2.3** - UI library
+- **TypeScript 5.9.3** - Type-safe JavaScript
 
 ### UI & Styling
 - **Tailwind CSS** - Utility-first CSS framework
@@ -86,27 +86,26 @@ npm start
 
 ```
 ebyf-info/
-├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── layout.tsx         # Root layout
-│   │   ├── page.tsx           # Home page
-│   │   ├── globals.css        # Global styles
-│   │   └── [routes]/          # Route-specific pages
-│   ├── components/            # Reusable UI components
-│   │   ├── ui/               # shadcn/ui components
-│   │   └── layout/           # Layout components
-│   ├── features/             # Feature-specific components
-│   ├── hooks/                # Custom React hooks
-│   ├── lib/                  # Utility libraries
-│   ├── providers/            # Context providers
-│   ├── types/                # TypeScript type definitions
-│   └── utils/                # Helper functions
-├── public/                   # Static assets
-├── docs/                     # Documentation
-├── tsconfig.json            # TypeScript configuration
-├── next.config.ts           # Next.js configuration
-├── tailwind.config.js       # Tailwind CSS config
-├── css.d.ts                 # CSS module type declarations
+├── app/                     # Next.js App Router pages
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Home page
+│   ├── globals.css         # Global styles
+│   └── [routes]/           # Route-specific pages
+├── components/             # Reusable UI components
+│   ├── ui/                # shadcn/ui components
+│   └── layout/            # Layout components
+├── features/              # Feature-specific components
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utility libraries
+├── providers/             # Context providers
+├── types/                 # TypeScript type definitions
+├── utils/                 # Helper functions
+├── public/                # Static assets
+├── docs/                  # Documentation
+├── tsconfig.json          # TypeScript configuration
+├── next.config.ts         # Next.js configuration
+├── tailwind.config.js     # Tailwind CSS config
+├── css.d.ts               # CSS module type declarations
 └── package.json
 ```
 
@@ -118,7 +117,7 @@ This project has been fully migrated to TypeScript for improved type safety and 
 
 1. **File Extensions**: All JavaScript files converted to TypeScript (`.js` → `.ts`, `.jsx` → `.tsx`)
 
-2. **Type Definitions**: Comprehensive type system in `src/types/index.ts`
+2. **Type Definitions**: Comprehensive type system in `types/index.ts`
    ```typescript
    export interface User {
      id: string;
@@ -142,7 +141,7 @@ This project has been fully migrated to TypeScript for improved type safety and 
 
 4. **Utility Functions**: Type-safe utility functions
    ```typescript
-   // src/lib/utils.ts
+   // lib/utils.ts
    export function cn(...inputs: ClassValue[]): string {
      return twMerge(clsxOriginal(inputs));
    }

@@ -100,10 +100,13 @@ export function useUsers(p0: string) {
         const syncTime = (await getFromDB(SYNC_KEY) as string | null) || null;
         setLastSync(syncTime);
         setUsers(localDecrypted);
+        console.log("useUsers: Loaded local users, count:", localDecrypted.length);
 
         if (navigator.onLine) {
+          console.log("useUsers: Online, fetching users");
           await fetchUsers();
         } else {
+          console.log("useUsers: Offline, using local data");
           toast.success("Offline: Loaded local users");
           setUsersLoading(false);
         }

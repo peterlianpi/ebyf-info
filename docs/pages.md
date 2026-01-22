@@ -1,8 +1,8 @@
 # Pages Documentation
 
-This document describes all the pages in the Next.js application, located in the `src/app/` directory. Each page corresponds to a route in the app router.
+This document describes all the pages in the Next.js application, located in the `app/` directory. Each page corresponds to a route in the app router.
 
-## Root Layout (`src/app/layout.js`)
+## Root Layout (`app/layout.tsx`)
 
 **Route:** `/` (root layout, applies to all pages)
 
@@ -27,7 +27,7 @@ This document describes all the pages in the Next.js application, located in the
 
 **Usage Example:** This layout is automatically applied to all pages. No direct usage.
 
-## Home Page (`src/app/page.js`)
+## Home Page (`app/page.tsx`)
 
 **Route:** `/`
 
@@ -37,6 +37,8 @@ This document describes all the pages in the Next.js application, located in the
 - `Hero` from `@/components/layout/Hero`
 
 **Client-Side:** Uses `"use client"` directive.
+
+**TypeScript:** No props or state, simple component.
 
 **Usage Example:** Displays the hero content when users visit the root URL.
 

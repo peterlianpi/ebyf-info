@@ -8,16 +8,14 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ReactNode } from "react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { APP_NAME, APP_DEFAULT_TITLE, APP_TITLE_TEMPLATE, APP_DESCRIPTION } from "@/site/site-config";
+import PWADebug from "@/components/PWADebug";
+import PWAServiceWorkerRegister from "@/components/PWAServiceWorkerRegister";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import OnlineStatus from "@/components/OnlineStatus";
 
 // Font
 const inter = Inter({ subsets: ["latin"] });
-
-// Metadata Constants
-const APP_NAME = "EBYF Contacts Info";
-const APP_DEFAULT_TITLE = "EBYF Contacts Info";
-const APP_TITLE_TEMPLATE = "%s - EBYF Contacts Info";
-const APP_DESCRIPTION =
-  "EBYF Contacts Info: Easily connect with church youth. No more typing numbers—just tap and call.";
 
 // Metadata Object (for use with the new Metadata API)
 export const metadata: Metadata = {
@@ -71,12 +69,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* You can include other elements in <head> here if needed */}
       </head>
       <body className={inter.className}>
+        <OnlineStatus />
         <ThemeProvider attribute="class" defaultTheme="light">
           <main className="container max-w-4xl p-4 mx-auto">
             <Toaster />
+            <PWADebug />
             <Header />
             {children}
             <Footer />
+            <PWAServiceWorkerRegister />
+            <PWAInstallPrompt />
           </main>
         </ThemeProvider>
         <Analytics />

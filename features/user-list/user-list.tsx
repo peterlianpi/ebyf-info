@@ -8,7 +8,7 @@ import UserItem from "@/components/user-item";
 import { User } from "@/types";
 
 export default function UserListPage() {
-  const { users, fetchUsers, usersLoading } = useUsers();
+  const { users, fetchUsers, usersLoading } = useUsers("");
 
   // Filter users based on the role "Veng Uk"
   const filteredUsers = users.sort((a: User, b: User) => parseInt(a.id) - parseInt(b.id)); // Sort users by number in ascending order;

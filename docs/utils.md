@@ -1,19 +1,21 @@
 # Utils Documentation
 
-This document describes the utility functions in the `src/utils/` directory.
+This document describes the utility functions in the `utils/` directory.
 
-## crypto.js
+## crypto.ts
 
 **Description:** Encryption and decryption utilities using AES.
 
 **Functions:**
-- `encryptData(data)`: Encrypts data to string.
-- `decryptData(encryptedData)`: Decrypts string to data, with fallback key support.
+- `encryptData(data: any): string | null`: Encrypts data to string.
+- `decryptData(encryptedData: string): any | null`: Decrypts string to data, with fallback key support.
+
+**TypeScript:** Functions typed with explicit return types.
 
 **Dependencies:** `crypto-js`.
 
 **Usage Example:**
-```js
+```typescript
 const encrypted = encryptData({ name: "John" });
 const decrypted = decryptData(encrypted);
 ```
