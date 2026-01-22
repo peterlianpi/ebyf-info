@@ -9,21 +9,29 @@ import Nav from "../Nav";
 import MobileNav from "../MobileNav";
 import { usePathname } from "next/navigation";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const window: any;
+
 const Header = () => {
   const [header, setHeader] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (typeof window !== 'undefined' && (window as any).scrollY > 50) {
         setHeader(true);
       } else {
         setHeader(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    // remove event
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).addEventListener("scroll", handleScroll);
+      // remove event
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return () => (window as any).removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
   return (
