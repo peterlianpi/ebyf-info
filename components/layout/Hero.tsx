@@ -10,12 +10,12 @@ import { APP_DEFAULT_TITLE, APP_DESCRIPTION } from "@/site/site-config";
 const Hero = () => {
   return (
     <section
-      className="py-12 min-h-[70vh] md:h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none"
+      className="w-full mx-auto space-y-2 py-12 min-h-[70vh] md:h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none"
       aria-labelledby="hero-title"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-center mb-8 xl:mb-0">
-          <div className="flex max-w-2xl flex-col justify-center mx-auto text-center space-y-6">
+      <div className="px-4">
+        <div className="flex items-center justify-center mb-8 xl:mb-0">
+          <div className="flex flex-col justify-center mx-auto text-center space-y-6">
             <div>
               <h1
                 id="hero-title"
@@ -28,25 +28,25 @@ const Hero = () => {
               </p>
             </div>
 
-            <div role="search" aria-label="Search for members">
-              <SearchBox />
+            <div className="" role="search" aria-label="Search for members">
+              {/* <SearchBox /> */}
             </div>
 
             <Socials
               containerStyles="flex gap-x-6 mx-auto justify-center"
               iconsStyles="text-foreground text-[22px] hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary"
             />
-
-            <FeedbackForm />
           </div>
         </div>
 
-        <div className="hidden md:flex max-w-xl mt-12 justify-center items-center mx-auto">
+        <div className="flex flex-col max-w-xl mt-12 justify-center items-center mx-auto">
           <ChevronDown
             className="text-3xl text-primary animate-bounce"
             aria-hidden="true"
           />
+            <FeedbackForm />
         </div>
+      
       </div>
     </section>
   );

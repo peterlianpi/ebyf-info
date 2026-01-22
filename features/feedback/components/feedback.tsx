@@ -80,9 +80,11 @@ export default function FeedbackForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" aria-label="Open feedback form">
+        <div>
+          <Button variant="outline" size='lg' aria-label="Open feedback form">
           Give Feedback
         </Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="max-w-md max-md:w-82.5 rounded-lg" role="dialog" aria-labelledby="feedback-title">
         <Form {...form}>
