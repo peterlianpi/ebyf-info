@@ -12,6 +12,7 @@ export default function PWADebug() {
   const [swStatus, setSwStatus] = useState<string>('Checking...');
   const [pwaInstallable, setPwaInstallable] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showPanel, setShowPanel] = useState(false);
 
   useEffect(() => {
     // Online/offline status
@@ -86,22 +87,34 @@ export default function PWADebug() {
   };
 
   return (
-    <div className="p-4 border rounded bg-gray-50 dark:bg-gray-800">
-      <h3 className="font-bold">PWA Debug Info</h3>
-      <p>Online: {isOnline ? 'Yes' : 'No'}</p>
-      <p>Service Worker: {swStatus}</p>
-      <p>PWA Installable: {pwaInstallable ? 'Yes' : 'No'}</p>
-      {pwaInstallable && (
-        <button onClick={handleInstall} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
-          Install PWA
-        </button>
+    <>
+      {showPanel && (
+        <div className="fixed bottom-20 right-4 p-4 border rounded bg-gray-50 dark:bg-gray-800 shadow-lg z-50">
+          <h3 className="font-bold">PWA Debug Info</h3>
+          <p>Online: {isOnline ? 'Yes' : 'No'}</p>
+          <p>Service Worker: {swStatus}</p>
+          <p>PWA Installable: {pwaInstallable ? 'Yes' : 'No'}</p>
+          {pwaInstallable && (
+            <button onClick={handleInstall} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+              Install PWA
+            </button>
+          )}
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-2 ml-2 px-4 py-2 bg-green-500 text-white rounded"
+          >
+            Refresh
+          </button>
+          
+        </div>
       )}
       <button
-        onClick={() => window.location.reload()}
-        className="mt-2 ml-2 px-4 py-2 bg-green-500 text-white rounded"
+        onClick={() => setShowPanel(!showPanel)}
+        className="fixed bottom-4 right-4 w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg z-50 flex items-center justify-center"
+        aria-label="Toggle PWA Debug"
       >
-        Refresh
+        🐛
       </button>
-    </div>
+    </>
   );
 }

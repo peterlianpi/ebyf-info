@@ -13,6 +13,7 @@ import PWADebug from "@/components/PWADebug";
 import PWAServiceWorkerRegister from "@/components/PWAServiceWorkerRegister";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import OnlineStatus from "@/components/OnlineStatus";
+import ProtocolHandler from "@/components/ProtocolHandler";
 
 // Font
 const inter = Inter({ subsets: ["latin"] });
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* You can include other elements in <head> here if needed */}
       </head>
       <body className={inter.className}>
+        <ProtocolHandler />
         <OnlineStatus />
         <ThemeProvider attribute="class" defaultTheme="light">
           <main className="container max-w-4xl p-4 mx-auto">

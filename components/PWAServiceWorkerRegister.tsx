@@ -10,13 +10,16 @@ export default function PWAServiceWorkerRegister() {
         .then((reg) => console.log("SW registered:", reg))
         .catch((err) => console.error("SW registration failed:", err));
 
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (window.confirm("New version available! Reload?")) {
-          window.location.reload();
-        }
-      });
+      if (process.env.NODE_ENV !== "development") {
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (window.confirm("New version available! Reload?")) {
+            window.location.reload();
+          }
+        });
+      }
     }
   }, []);
 
   return null;
 }
+
