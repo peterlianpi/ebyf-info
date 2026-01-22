@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useProfile } from "../UseProfile";
 
 interface UserData {
@@ -127,18 +131,25 @@ export default function UserForm({ user, onSave }: UserFormProps) {
                 alt={"avatar"}
               />
             )}
-            <label>
-              <input
-                type="file"
-                ref={inputFileRef}
-                required
-                className="hidden"
-                onChange={handleFileChange}
-              />
-              <span className="block p-2 text-center border border-gray-300 rounded-lg cursor-pointer">
-                Edit
-              </span>
-            </label>
+            <Input
+              type="file"
+              ref={inputFileRef}
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                if (inputFileRef.current) {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (inputFileRef.current as any).click();
+                }
+              }}
+              className="w-full"
+            >
+              Edit Profile Image
+            </Button>
           </div>
         </div>
         <form

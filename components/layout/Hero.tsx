@@ -13,30 +13,31 @@ const Hero = () => {
       className="py-12 min-h-[70vh] md:h-[84vh] bg-hero bg-no-repeat bg-bottom bg-cover dark:bg-none"
       aria-labelledby="hero-title"
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="flex justify-center mb-8 xl:mb-0">
-          <div className="flex max-w-2xl flex-col justify-center mx-auto text-center">
-            <h1
-              id="hero-title"
-              className="text-sm uppercase font-semibold mb-4 text-primary tracking-[4px]"
-            >
-              {APP_DEFAULT_TITLE}
-            </h1>
-            <p className="subtitle max-w-3xl mx-auto mb-6 text-base md:text-lg">
-              {APP_DESCRIPTION}
-            </p>
-            <div className="mb-8" role="search" aria-label="Search for members">
+          <div className="flex max-w-2xl flex-col justify-center mx-auto text-center space-y-6">
+            <div>
+              <h1
+                id="hero-title"
+                className="text-sm uppercase font-semibold mb-4 text-primary tracking-[4px]"
+              >
+                {APP_DEFAULT_TITLE}
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground">
+                {APP_DESCRIPTION}
+              </p>
+            </div>
+
+            <div role="search" aria-label="Search for members">
               <SearchBox />
             </div>
-            <div className="mb-8">
-              <Socials
-                containerStyles="flex gap-x-6 mx-auto justify-center py-4"
-                iconsStyles="text-foreground text-[22px] hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div className="text-center">
-              <FeedbackForm />
-            </div>
+
+            <Socials
+              containerStyles="flex gap-x-6 mx-auto justify-center"
+              iconsStyles="text-foreground text-[22px] hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+
+            <FeedbackForm />
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalWindow = (globalThis as any).window || {};
@@ -44,7 +45,7 @@ export default function PWAInstallPrompt() {
 
   if (showInstall) {
     return (
-      <button
+      <Button
         onClick={async () => {
           if (deferredPrompt) {
             deferredPrompt.prompt();
@@ -53,10 +54,10 @@ export default function PWAInstallPrompt() {
             setShowInstall(false);
           }
         }}
-        className="fixed bottom-4 right-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2"
+        className="fixed bottom-4 right-4 shadow-lg"
       >
         📲 Install App
-      </button>
+      </Button>
     );
   }
 

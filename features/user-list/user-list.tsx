@@ -4,6 +4,7 @@ import { useUsers } from "@/hooks/useUsers";
 import Refresh from "@/components/icons/Refresh";
 import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import UserItem from "@/components/user-item";
 import { User } from "@/types";
 
@@ -31,13 +32,14 @@ export default function UserListPage() {
           <div className="">
             <div className="flex items-center justify-start">
               <p className="text-3xl font-extrabold w-[80%]">All Members</p>
-              <button
-                className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-15 w-15 "
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={handleRefresh}
                 aria-label="Refresh"
               >
-                <Refresh />
-              </button>
+                <Refresh className="w-4 h-4" />
+              </Button>
             </div>
             {filteredUsers?.map((user) => (
               <div key={user.id} className="my-2">
@@ -59,13 +61,14 @@ const LoadingPage = (handleRefresh: () => void) => {
         <div className="">
           <div className="flex items-center justify-start">
             <p className="text-3xl font-extrabold w-[80%]">All Members</p>
-            <button
-              className="flex items-center justify-center  px-2 py-2 font-sans font-semibold tracking-wide border-none  rounded-lg  h-15 w-15 "
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleRefresh}
               aria-label="Refresh"
             >
-              <Refresh />
-            </button>
+              <Refresh className="w-4 h-4" />
+            </Button>
           </div>
           <div className="flex flex-col gap-4">
             <Skeleton className="w-full h-24" />

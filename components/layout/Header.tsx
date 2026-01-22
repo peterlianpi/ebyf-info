@@ -9,21 +9,28 @@ import Nav from "../Nav";
 import MobileNav from "../MobileNav";
 import { usePathname } from "next/navigation";
 
-
-
-
-
 const Header = () => {
   const [header, setHeader] = useState<boolean>(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setHeader(true);
+      } else {
+        setHeader(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    // remove event
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
       className={`${
-        header
-          ? "py-4 bg-secondary shadow-lg"
-          : "py-6 dark:bg-transparent "
-      } sticky top-2 z-30 transition-all ${pathname === "/" && "shadow-lg"}`}
+        header ? "py-6 bg-muted shadow-lg" : "py-6"
+      } sticky rounded-lg top-2 shadow-lg z-30 transition-all ${pathname === "/" && " bg-background"}`}
     >
       <div className="container mx-auto px-4 sm:px-10 lg:px-16">
         <div className="flex justify-between items-center">

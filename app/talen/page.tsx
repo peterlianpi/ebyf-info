@@ -1,10 +1,15 @@
 import SearchBox from "@/features/talen/components/talen-search";
+import { PageHeader } from "@/components/PageHeader";
 
 const TalentPage = () => {
   return (
-    <section className="h-screen mt-20 items-center max-w-md mx-auto">
+    <div className="max-w-2xl mx-auto space-y-2">
+      <PageHeader
+        title="YF Talen 2025"
+        description="Find YF Talen participants and check contributions"
+      />
       <SearchBox />
-    </section>
+    </div>
   );
 };
 

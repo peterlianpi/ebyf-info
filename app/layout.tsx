@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
 import "./globals.css";
@@ -17,9 +16,6 @@ const PWAServiceWorkerRegister = dynamic(() => import("@/components/PWAServiceWo
 const PWAInstallPrompt = dynamic(() => import("@/components/PWAInstallPrompt"));
 const OnlineStatus = dynamic(() => import("@/components/OnlineStatus"));
 // const ProtocolHandler = dynamic(() => import("@/components/ProtocolHandler"));
-
-// Font
-const inter = Inter({ subsets: ["latin"] });
 
 // Metadata Object (for use with the new Metadata API)
 export const metadata: Metadata = {
@@ -72,7 +68,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         {/* You can include other elements in <head> here if needed */}
       </head>
-      <body className={inter.className}>
+      <body>
         <OnlineStatus />
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="light">

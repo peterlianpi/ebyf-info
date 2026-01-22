@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
 import { User as UserIcon, Phone } from "lucide-react";
 import UserModal from "./ui/user-modal";
 import { User } from "@/types";
@@ -30,19 +31,20 @@ export default function UserItem({ user }: UserItemProps) {
     setSelectedUser(null);
   }
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-4">
-          <Avatar className="border-2 border-primary/20">
+    <Card className="hover:shadow-md transition-shadow ">
+      <CardContent className="px-4">
+        <div className="flex items-center  gap-4">
+          <Avatar className="border-2 border-emerald-600 w-14 h-14">
             <AvatarImage src={image} />
             <AvatarFallback className="bg-primary/10">
               <UserIcon className="text-primary" />
             </AvatarFallback>
           </Avatar>
 
-          <div
-            className="flex-1 cursor-pointer min-w-0"
+          <button
+            className="flex-1 text-left min-w-0 hover:bg-muted/50 rounded p-2 -m-2 transition-colors"
             onClick={() => handleUserClick(user)}
+            aria-label={`View details for ${name}`}
           >
             <div className="font-semibold text-base truncate">{name}</div>
             {roles && roles.length > 0 ? (
@@ -62,15 +64,16 @@ export default function UserItem({ user }: UserItemProps) {
             ) : (
               <div className="text-sm text-muted-foreground">No Role</div>
             )}
-          </div>
+          </button>
 
-          <button
+          <Button
             onClick={() => handleCall(phone)}
-            className="p-2 hover:bg-muted rounded-md transition-colors"
+            variant="ghost"
+            size="sm"
             aria-label={`Call ${name}`}
           >
             <Phone className="w-5 h-5" />
-          </button>
+          </Button>
 
           <UserModal
             user={selectedUser}

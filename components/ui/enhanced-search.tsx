@@ -159,7 +159,7 @@ export default function EnhancedSearch({
 
       {/* Initial State */}
       {!hasSearched && !isLoading && (
-        <div className="text-center py-12 text-muted-foreground">
+        <div className="text-center py-2 text-muted-foreground">
           <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p className="text-lg font-medium mb-2">Ready to search</p>
           <p className="text-sm">{emptyStateMessage}</p>

@@ -1,8 +1,10 @@
 const Footer = () => {
-  const year = '2025'
+  const year = new Date().getFullYear();
   return (
-    <footer className="p-8 mt-16 text-center text-gray-500 border-t">
-      &copy; {year} All rights reserved
+    <footer className="border-t mt-16">
+      <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
+        &copy; {year} All rights reserved
+      </div>
     </footer>
   );
 };

@@ -5,6 +5,7 @@ import UserItem from "@/components/user-item";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 import { useEffect, useState } from "react";
 import { User } from "@/types";
+import { PageHeader } from "@/components/PageHeader";
 
 function VenguktePage() {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
@@ -25,36 +26,27 @@ function VenguktePage() {
     fetchAndFilterUsers();
   }, []);
 
-  if (usersLoading) {
-    return (
-      <div className="flex flex-col max-w-md gap-2 mx-auto">
-        <div>
-          <div className="flex items-center justify-start">
-            <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-            <Skeleton className="w-full h-24" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col max-w-md gap-2 mx-auto">
-      <div>
-        <div className="flex items-center justify-start">
-          <p className="text-2xl mb-4 font-extrabold w-[80%]">Veng-Uk te</p>
+    <div className="max-w-2xl mx-auto space-y-2">
+      <PageHeader
+        title="Veng-Uk te"
+        description="Veng Uk division members"
+      />
+
+      {usersLoading ? (
+        <div className="space-y-4">
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full h-24" />
         </div>
-        {filteredUsers.map((user) => (
-          <div key={user.id} className="mb-2">
-            <UserItem user={user} />
-          </div>
-        ))}
-      </div>
+      ) : (
+        <div className="space-y-4">
+          {filteredUsers.map((user) => (
+            <UserItem key={user.id} user={user} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

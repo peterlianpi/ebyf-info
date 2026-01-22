@@ -42,14 +42,14 @@ export default function CombinedContactsPage() {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-2">
       <PageHeader
         title="Contacts"
         description="Find and connect with church members"
       />
 
       <Tabs defaultValue={TABS[0].label} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full mb-2 grid-cols-3 h-12">
           {TABS.map((tab) => (
             <TabsTrigger key={tab.label} value={tab.label}>
               {tab.label}

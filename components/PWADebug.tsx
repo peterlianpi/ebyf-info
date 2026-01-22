@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalWindow = (globalThis as any).window || {};
@@ -98,26 +99,28 @@ export default function PWADebug() {
           <p>Service Worker: {swStatus}</p>
           <p>PWA Installable: {pwaInstallable ? 'Yes' : 'No'}</p>
           {pwaInstallable && (
-            <button onClick={handleInstall} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+            <Button onClick={handleInstall} className="mt-2">
               Install PWA
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             onClick={() => globalWindow.location.reload()}
-            className="mt-2 ml-2 px-4 py-2 bg-green-500 text-white rounded"
+            variant="outline"
+            className="mt-2 ml-2"
           >
             Refresh
-          </button>
+          </Button>
           
         </div>
       )}
-      <button
+      <Button
         onClick={() => setShowPanel(!showPanel)}
-        className="fixed bottom-4 right-4 w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg z-50 flex items-center justify-center"
+        className="fixed bottom-4 right-4 w-12 h-12 rounded-full shadow-lg z-50"
+        size="icon"
         aria-label="Toggle PWA Debug"
       >
         🐛
-      </button>
+      </Button>
     </>
   );
 }
