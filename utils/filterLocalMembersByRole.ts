@@ -10,7 +10,7 @@ import { User, FilterOptions } from "@/types";
 export async function filterLocalMembersByRole(
   options: FilterOptions = {}
 ): Promise<User[]> {
-  const { includedRoles = [], excludedRoles = [], keywords = "", searchQuery = "" } = options;
+  const { includedRoles = [], excludedRoles = [], keywords = "", searchQuery = "", year } = options;
 
   const encrypted = await getFromDB("users_all") as string | null;
   const allUsers: User[] = encrypted ? (decryptData(encrypted) as User[]) : [];
@@ -63,6 +63,17 @@ export async function filterLocalMembersByRole(
       )
     ) {
       return false;
+    }
+
+    // 📅 Year filter
+    if (year) {
+      const hasActiveRoleInYear = (user.roles || []).some((role) => {
+        if (!role.startedAt) return false;
+        const startedYear = new Date(role.startedAt).getFullYear();
+        const endedYear = role.endedAt ? new Date(role.endedAt).getFullYear() : Infinity;
+        return startedYear <= year && year <= endedYear;
+      });
+      if (!hasActiveRoleInYear) return false;
     }
 
     return true;

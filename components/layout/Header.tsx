@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 // components
 import ThemeToggler from "../ThemeToggler";
@@ -45,16 +45,20 @@ const Header = () => {
           <Logo />
           <div className="flex items-center gap-x-6">
             {/* nav */}
-            <Nav
-              containerStyles="hidden xl:flex gap-x-4 items-center"
-              linkStyles="relative hover:text-primary transition-all"
-              underlineStyles="absolute left-0 top-full h-[2px] bg-primary w-full"
-            />
+            <Suspense fallback={<div />}>
+              <Nav
+                containerStyles="hidden xl:flex gap-x-4 items-center"
+                linkStyles="relative hover:text-primary transition-all"
+                underlineStyles="absolute left-0 top-full h-[2px] bg-primary w-full"
+              />
+            </Suspense>
             <ThemeToggler />
 
             {/* mobile nav */}
             <div className="xl:hidden ">
-              <MobileNav />
+              <Suspense fallback={<div />}>
+                <MobileNav />
+              </Suspense>
             </div>
           </div>
         </div>

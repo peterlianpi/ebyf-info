@@ -6,7 +6,11 @@ import UserItem from "@/components/user-item";
 import { filterLocalMembersByRole } from "@/utils/filterLocalMembersByRole";
 import { User } from "@/types";
 
-export function MakaiteClient() {
+interface MakaiteClientProps {
+  year?: number;
+}
+
+export function MakaiteClient({ year }: MakaiteClientProps) {
   const [usersLoading, setUsersLoading] = useState<boolean>(true);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
@@ -23,6 +27,7 @@ export function MakaiteClient() {
           "EBYF - Accountant",
           "EBYF - Member",
         ],
+        year,
       });
 
       const sorted = users.sort((a, b) => (a.number || 0) - (b.number || 0));
@@ -31,7 +36,7 @@ export function MakaiteClient() {
     };
 
     fetchAndFilterUsers();
-  }, []);
+  }, [year]);
 
   if (usersLoading) {
     return (

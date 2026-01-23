@@ -1,9 +1,14 @@
+"use client";
+
 // link (next js)
 import Link from "next/link";
 // next hooks
 import { usePathname } from "next/navigation";
 // framer motion
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { getAvailableYears } from "@/lib/years";
+import { useYearParam } from "@/lib/useYearParam";
 
 interface NavProps {
   containerStyles?: string;
@@ -20,16 +25,26 @@ const links = [
   // { path: "/hun-gelna", name: "Service" },
   { path: "/policy", name: "Policy" },
 ];
+
+const yearBasedPaths = ["/makaite", "/vengukte", "/talen", "/contacts"];
+
 const Nav = ({ containerStyles, linkStyles, underlineStyles }: NavProps) => {
   const path = usePathname();
+  const [availableYears, setAvailableYears] = useState<number[]>([]);
+  const { year } = useYearParam({ availableYears });
+
+  useEffect(() => {
+    getAvailableYears().then(setAvailableYears);
+  }, []);
 
   return (
     <div className={`${containerStyles}`}>
       {links.map((link, index) => {
+        const href = yearBasedPaths.includes(link.path) ? `${link.path}?year=${year}` : link.path;
         return (
           <Link
             key={index}
-            href={link.path}
+            href={href}
             className={`capitalize ${linkStyles}`}
           >
             {link.path === path && (

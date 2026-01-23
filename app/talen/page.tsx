@@ -1,15 +1,17 @@
-import SearchBox from "@/features/talen/components/talen-search";
-import { PageHeader } from "@/components/PageHeader";
+import { Suspense } from "react";
+import { TalenYearWrapper } from "./talen-year-wrapper";
 
 const TalentPage = () => {
   return (
-    <div className="max-w-2xl mx-auto space-y-2">
-      <PageHeader
-        title="YF Talen 2025"
-        description="Find YF Talen participants and check contributions"
-      />
-      <SearchBox />
-    </div>
+    <Suspense
+      fallback={
+        <div className="max-w-2xl mx-auto space-y-2">
+          <div className="h-16 bg-muted animate-pulse rounded" />
+        </div>
+      }
+    >
+      <TalenYearWrapper />
+    </Suspense>
   );
 };
 

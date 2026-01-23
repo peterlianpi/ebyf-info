@@ -40,6 +40,7 @@ export interface FilterOptions {
   excludedRoles?: string[];
   keywords?: string;
   searchQuery?: string;
+  year?: number;
 }
 
 export interface UserFormData {
