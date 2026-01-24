@@ -1,0 +1,53 @@
+import type { MetadataRoute } from 'next'
+import { APP_NAME, APP_SHORT_NAME, APP_DESCRIPTION } from '@/site/site-config'
+
+export default function manifest(): MetadataRoute.Manifest {
+    return {
+        id: "/",
+        name: APP_NAME,
+        short_name: APP_SHORT_NAME,
+        description: APP_DESCRIPTION,
+        icons: [
+            {
+                src: "/icons/icon-192x192.png",
+                sizes: "192x192",
+                type: "image/png",
+                purpose: "maskable"
+            },
+            {
+                src: "/icons/icon-384x384.png",
+                sizes: "384x384",
+                type: "image/png"
+            },
+            {
+                src: "/icons/icon-512x512.png",
+                sizes: "512x512",
+                type: "image/png"
+            }
+        ],
+        theme_color: "#fff",
+        background_color: "#000",
+        start_url: "/",
+        display: "standalone",
+        orientation: "portrait",
+        screenshots: [
+            {
+                src: "/screenshot-wide.png",
+                sizes: "1280x720",
+                type: "image/png",
+                form_factor: "wide"
+            },
+            {
+                src: "/screenshot-mobile.png",
+                sizes: "390x844",
+                type: "image/png"
+            }
+        ],
+        protocol_handlers: [
+            {
+                protocol: "web+ebyf",
+                url: "/?url=%s"
+            }
+        ]
+    }
+}
